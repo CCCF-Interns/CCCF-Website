@@ -28,6 +28,11 @@ a {
 button {
     outline: none;
     border: none;
+    cursor: pointer;
+}
+
+a, button, img, div {
+    user-select: none;
 }
 
 .title {
@@ -59,6 +64,7 @@ button {
     height: 72px;
     margin: -8px;
     padding: 8px;
+    padding-top: 12px;
     justify-content: space-between;
     background-color: #FAEDCB;
 }
@@ -67,6 +73,7 @@ button {
     width: 200px;
     height: 68px;
     margin-left: 64px;
+    gap: 8px;
 }
 
 .header-logo-ribbon {
