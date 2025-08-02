@@ -27,7 +27,7 @@ app.get('/header.html', (req, res) => {
     res.sendFile(path.join(__dirname, 'views', 'header.html'));
 });
 
-app.get('/about.html', (req, res) => {
+app.get('/AboutUs', (req, res) => {
     res.sendFile(path.join(__dirname, 'views', 'about.html'));
 });
 
