@@ -51,13 +51,6 @@
     display: block;
 }
 
-.bg-yellow {
-    background-color: #FFD34B;
-}
-.bg-cream {
-    background-color: #FAEDCB;
-}
-
 .about-section {
     display: flex;
     justify-content: center;
