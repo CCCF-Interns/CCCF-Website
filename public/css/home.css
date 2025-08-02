@@ -1,0 +1,34 @@
+#hero {
+    width: 100%;
+    height: 645px;
+    z-index: 1;
+    align-items: center;
+}
+
+#hero-cover {
+    position: absolute;
+    width: 100%;
+    height: 645px;
+    overflow: hidden;
+    background-color: white;
+    z-index: 1;
+}
+
+.hero-text-section {
+    position: relative;
+    padding: 64px;
+    justify-content: space-between;
+    z-index: 3;
+}
+
+.hero-text {
+    flex-direction: column;
+    color: white;
+    width: 50%;
+    align-items: start;
+    gap: 24px;
+}
+
+.hero-buttons {
+    gap: 24px;
+}
