@@ -5,9 +5,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CCCF</title>
     <link rel="stylesheet" href="/css/style.css">
-    <script src="/script/script.js" defer></script>
+    <script>
+        fetch('/header.html')
+            .then(res => res.text())
+            .then(async data => {
+                document.querySelector('#header-container').innerHTML = data;
+            });
+    </script>
 </head>
 <body>
-    <div class="test">This is a fancy text line</div>
+    <div id="header-container"></div>
 </body>
 </html>
