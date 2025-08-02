@@ -47,6 +47,12 @@ a, button, img, div {
     font-weight: 700;
 }
 
+.heading {
+    font-size: 2rem;
+    font-family: "Open Sans", sans-serif;
+    font-weight: 700;
+}
+
 .sub-text, .sub-white-text {
     font-weight: 700;
 }
