@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CCCF</title>
     <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/home.css">
     <script>
         fetch('/header.html')
             .then(res => res.text())
@@ -15,5 +16,31 @@
 </head>
 <body>
     <div id="header-container"></div>
+    <div id="hero" class="flex-container">
+        <div id="hero-cover">
+            <img class="image" id="hero-cover-1" src="./assets/images/cover.webp"/>
+            <div class="shadow"></div>
+        </div>
+        <div class="hero-text-section flex-container">
+            <div class="hero-text flex-container">
+                <div class="title">Together We Can Conquer Childhood Cancer</div>
+                <div class="sub-text">
+                    Our foundation is dedicated to providing support and hope to 
+                    children battling cancer and their families. Join us in our 
+                    mission to raise awareness and funds for vital research and 
+                    care.
+                </div>
+                <div class="hero-buttons flex-container">
+                    <button class="button">Support Us</button>
+                    <button class="button-invert white-text">Learn More</button>
+                </div>
+            </div>
+            <div class="radio-form flex-container">
+                <button class="radio-button radio-clicked" id="hero-page-1"></button>
+                <button class="radio-button" id="hero-page-2"></button>
+                <button class="radio-button" id="hero-page-3"></button>
+            </div>
+        </div>
+    </div>
 </body>
 </html>
