@@ -23,6 +23,10 @@ app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, 'views', 'index.html'));
 });
 
+app.get('/header.html', (req, res) => {
+    res.sendFile(path.join(__dirname, 'views', 'header.html'));
+});
+
 app.listen(port, () => {
     console.log(`Server running on port: ${port}`);
 });
