@@ -162,3 +162,11 @@ a, button, img, div {
     background-color: #fac71d;
     border-color: #fac71d;
 }
+
+/* Background colors */
+.bg-yellow {
+    background-color: #FFD34B;
+}
+.bg-cream {
+    background-color: #FAEDCB;
+}
