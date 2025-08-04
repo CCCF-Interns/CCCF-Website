@@ -12,6 +12,11 @@
             .then(data => {
                 document.querySelector('#header-container').innerHTML = data;
             });
+        fetch('/footer.html')
+            .then(res => res.text())
+            .then(data => {
+                document.querySelector('#footer-container').innerHTML = data;
+            });
     </script>
 </head>
 <body>
@@ -80,5 +85,6 @@
             </div>
         </section>
     </main>
+    <div id="footer-container"></div>
 </body>
 </html>
