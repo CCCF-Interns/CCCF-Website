@@ -3,12 +3,18 @@ import express from 'express';
 import dotenv from 'dotenv';
 import session from 'express-session';
 import memorystore from 'memorystore';
+import { fileURLToPath } from 'url';
+import { dirname } from 'path';
+
 
 const MemoryStore = memorystore(session);
 dotenv.config();
 
 const app = express();
 const port = process.env.PORT || 4000;
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
 
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.json());
