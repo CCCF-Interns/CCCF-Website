@@ -14,7 +14,7 @@
 
 /* General things */
 * {
-    font-family: "Open Sans", sans-serif;
+    font-family: 'Open Sans', sans-serif;
     font-optical-sizing: auto;
     font-style: normal;
     font-size: 1rem;
@@ -43,13 +43,13 @@ a, button, img, div {
 
 .title {
     font-size: 72px;
-    font-family: "Raleway", sans-serif;
+    font-family: 'Raleway', sans-serif;
     font-weight: 700;
 }
 
 .heading {
     font-size: 2rem;
-    font-family: "Open Sans", sans-serif;
+    font-family: 'Open Sans', sans-serif;
     font-weight: 700;
 }
 
