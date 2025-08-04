@@ -12,6 +12,11 @@
             .then(async data => {
                 document.querySelector('#header-container').innerHTML = data;
             });
+        fetch('/footer.html')
+            .then(res => res.text())
+            .then(async data => {
+                document.querySelector('#footer-container').innerHTML = data;
+            });
     </script>
     <script src='/script/home.js' defer></script>
 </head>
@@ -103,4 +108,5 @@
     <div class='secondary-container flex-container bg-cream'>
     </div>
 </body>
+<div id='footer-container'></div>
 </html>
