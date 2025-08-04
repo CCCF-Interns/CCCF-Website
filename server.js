@@ -1,9 +1,13 @@
-const express = require("express");
-const path = require("path");
+import path from 'path';
+import express from 'express';
+import dotenv from 'dotenv';
+import session from 'express-session';
+import memorystore from 'memorystore';
+
+const MemoryStore = memorystore(session);
+dotenv.config();
+
 const app = express();
-const session = require('express-session');
-const MemoryStore = require('memorystore')(session);
-require('dotenv').config();
 const port = process.env.PORT || 4000;
 
 app.use(express.static(path.join(__dirname, 'public')));
