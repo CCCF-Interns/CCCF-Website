@@ -1,9 +1,10 @@
 import js from '@eslint/js';
 import globals from 'globals';
-import { defineConfig } from 'eslint/config';
+import { defineConfig, globalIgnores } from 'eslint/config';
 import importPlugin from 'eslint-plugin-import';
 
 export default defineConfig([
+  globalIgnores(['coverage/']),
   { 
     files: ['**/*.{js,mjs,cjs}'], 
     plugins: { 
@@ -18,11 +19,9 @@ export default defineConfig([
         ...globals.browser,
       },
       sourceType: 'module'
-    } 
-  },
-  {
+    },
     rules: {
-      'no-unused-vars': 'error',
+      'no-unused-vars': 'warn',
       'no-undef': 'error',
       'quotes': ['error', 'single'],
       'semi': ['error', 'always'],

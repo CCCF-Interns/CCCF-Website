@@ -15,7 +15,7 @@ const config = {
   // cacheDirectory: '/tmp/jest_rs',
 
   // Automatically clear mock calls, instances, contexts and results before every test
-  clearMocks: true,
+  // clearMocks: false,
 
   // Indicates whether the coverage information should be collected while executing the test
   collectCoverage: true,
@@ -135,7 +135,7 @@ const config = {
   // runner: 'jest-runner',
 
   // The paths to modules that run some code to configure or set up the testing environment before each test
-  // setupFiles: [],
+  setupFiles: ['./jest.setup.js'],
 
   // A list of paths to modules that run some code to configure or set up the testing framework before each test
   // setupFilesAfterEnv: [],
@@ -176,8 +176,7 @@ const config = {
   // testRunner: 'jest-circus/runner',
 
   // A map from regular expressions to paths to transformers
-  // transform: undefined,
-
+  transform: {},
   // An array of regexp pattern strings that are matched against all source file paths, matched files will skip transformation
   // transformIgnorePatterns: [
   //   '/node_modules/',
