@@ -18,7 +18,7 @@ function createServer () {
             }),
             resave: false,
             saveUninitialized: false,
-            secret: process.env.SESSION_SECRET
+            secret: process.env.SESSION_SECRET || 'The Secret'
         })
     );
 
