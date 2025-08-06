@@ -19,16 +19,16 @@ function changeCover() {
         e.classList.remove("radio-clicked");
     });
     covers.forEach((e) => {
-        e.style.opacity = '0';
+        e.style.opacity = "0";
     });
     texts.forEach((e) => {
-        e.style.display = 'none';
+        e.style.display = "none";
     });
 
     document.querySelector(`#hero-page-${currentCover}`).classList.add(
-        'radio-clicked');
-    document.querySelector(`#hero-cover-${currentCover}`).style.opacity = '1';
-    document.querySelector(`#hero-text-${currentCover}`).style.display = 'flex';
+        "radio-clicked");
+    document.querySelector(`#hero-cover-${currentCover}`).style.opacity = "1";
+    document.querySelector(`#hero-text-${currentCover}`).style.display = "flex";
 }
 
 function startCoverTimer() {
