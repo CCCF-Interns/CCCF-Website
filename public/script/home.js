@@ -1,7 +1,6 @@
 const heroRadioButtons = document.querySelectorAll(".radio-button");
 const heroCover = document.querySelector("#hero-cover");
 const heroText = document.querySelector("#hero-text-section");
-const buttons = document.querySelectorAll("button");
 
 let currentCover = 1;
 let coverTimer;
