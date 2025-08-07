@@ -1,6 +1,7 @@
 const heroRadioButtons = document.querySelectorAll(".radio-button");
 const heroCover = document.querySelector("#hero-cover");
 const heroText = document.querySelector("#hero-text-section");
+const faqItems = document.querySelectorAll(".faq-item");
 
 let currentCover = 1;
 let coverTimer;
@@ -43,5 +44,22 @@ heroRadioButtons.forEach((e, index) => {
         startCoverTimer();
     });
 });
+
+faqItems.forEach((e) => {
+    let expanded = false;
+    let arrow = e.querySelector("img");
+    e.addEventListener("click", () => {
+        if (!expanded) {
+            e.style.height = e.scrollHeight + "px";
+            arrow.src = "/assets/svg/arrow_up.svg";
+            expanded = true;
+        }
+        else {
+            e.style.height = "48px";
+            arrow.src = "/assets/svg/arrow_down.svg";
+            expanded = false;
+        }
+    });
+})
 
 startCoverTimer();

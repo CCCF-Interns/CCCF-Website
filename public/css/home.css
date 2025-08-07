@@ -179,12 +179,21 @@
     width: 100%;
     padding-top: 24px;
     padding-bottom: 24px;
+    z-index: 2;
+}
+
+.faq-question {
+    z-index: 1;
 }
 
 .faq-item {
     flex-direction: column;
+    justify-content: start;
     align-items: start;
     margin-bottom: 24px;
+    overflow: hidden;
+    height: 48px;
+    transition: 0.3s ease height;
 }
 
 /* Section separator line */
