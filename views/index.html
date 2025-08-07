@@ -12,6 +12,7 @@
             .then(res => res.text())
             .then(async data => {
                 document.querySelector('#header-container').innerHTML = data;
+                await import('/script/header.js');
             });
         fetch('/footer.html')
             .then(res => res.text())
