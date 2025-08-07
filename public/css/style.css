@@ -129,11 +129,28 @@ a, button, img, div {
 
 .header-links {
     gap: 24px;
+    height: 64px;
+}
+
+.header-link {
+    height: 100%;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
 }
 
 .header-buttons {
     gap: 24px;
     margin-right: 64px;
+}
+
+.underline {
+    transform: translate(0, 12px);
+    height: 2px;
+    width: 0%;
+    background-color: black;
+    transition: 0.3s ease width;
 }
 
 /* Buttons */
