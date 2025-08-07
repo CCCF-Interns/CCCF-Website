@@ -60,6 +60,6 @@ faqItems.forEach((e) => {
             expanded = false;
         }
     });
-})
+});
 
 startCoverTimer();
