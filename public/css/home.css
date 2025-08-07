@@ -34,6 +34,11 @@
     justify-content: space-between;
     z-index: 3;
     width: 100%;
+    pointer-events: none;
+}
+
+#hero-text-section .radio-button {
+    pointer-events: all;
 }
 
 .hero-text {
@@ -44,7 +49,12 @@
     gap: 24px;
 }
 
+.hero-text .title, .hero-text .sub-text {
+    pointer-events: none;
+}
+
 .hero-buttons {
+    pointer-events: all;
     gap: 24px;
 }
 
