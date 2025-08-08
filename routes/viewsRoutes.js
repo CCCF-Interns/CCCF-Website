@@ -11,11 +11,17 @@ router.get("/", (req, res) => {
 router.get("/header.html", (req, res) => {
     res.sendFile(path.join(__dirname, "views", "header.html"));
 });
+
 router.get("/footer.html", (req, res) => {
     res.sendFile(path.join(__dirname, "views", "footer.html"));
 });
+
 router.get("/about-us", (req, res) => {
     res.sendFile(path.join(__dirname, "views", "about.html"));
+});
+
+router.get("/gallery", (req, res) => {
+    res.sendFile(path.join(__dirname, "views", "gallery.html"));
 });
 
 export default router;
