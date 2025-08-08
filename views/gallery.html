@@ -13,9 +13,15 @@
                 document.querySelector('#header-container').innerHTML = data;
                 await import('/script/header.js');
             });
+        fetch('/footer.html')
+            .then(res => res.text())
+            .then(async data => {
+                document.querySelector('#footer-container').innerHTML = data;
+            });
     </script>
 </head>
 <body>
     <div id="header-container"></div>
+    <div id="footer-container"></div>
 </body>
 </html>
