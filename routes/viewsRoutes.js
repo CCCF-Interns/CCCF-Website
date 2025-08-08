@@ -14,7 +14,7 @@ router.get("/header.html", (req, res) => {
 router.get("/footer.html", (req, res) => {
     res.sendFile(path.join(__dirname, "views", "footer.html"));
 });
-router.get("/AboutUs", (req, res) => {
+router.get("/about-us", (req, res) => {
     res.sendFile(path.join(__dirname, "views", "about.html"));
 });
 
