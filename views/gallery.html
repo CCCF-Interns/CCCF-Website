@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gallery | CCCF</title>
+    <link rel='stylesheet' href='/css/style.css' />
+    <link rel='stylesheet' href='/css/gallery.css' />
+    <link rel='stylesheet' href='/css/footer.css' />
+    <script>
+        fetch('/header.html')
+            .then(res => res.text())
+            .then(async data => {
+                document.querySelector('#header-container').innerHTML = data;
+                await import('/script/header.js');
+            });
+        fetch('/footer.html')
+            .then(res => res.text())
+            .then(async data => {
+                document.querySelector('#footer-container').innerHTML = data;
+            });
+    </script>
+</head>
+<body>
+    <div id="header-container"></div>
+    <h1 class="heading">Gallery</h1>
+    <div class="grid" id="images-container">
+        <div class="grid-item">
+            <img class="image" src="/assets/images/cover.webp">
+        </div>
+        <div class="grid-item">
+            <img class="image" src="/assets/images/cover.webp">
+        </div>
+        <div class="grid-item">
+            <img class="image" src="/assets/images/cover.webp">
+        </div>
+        <div class="grid-item">
+            <img class="image" src="/assets/images/cover.webp">
+        </div>
+        <div class="grid-item">
+            <img class="image" src="/assets/images/cover.webp">
+        </div>
+        <div class="grid-item">
+            <img class="image" src="/assets/images/cover.webp">
+        </div>
+    </div>
+    <div id="footer-container"></div>
+</body>
+</html>

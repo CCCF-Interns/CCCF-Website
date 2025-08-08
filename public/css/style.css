@@ -153,6 +153,10 @@ a, button, img, div {
     transition: 0.3s ease width;
 }
 
+.clickable {
+    cursor: pointer;
+}
+
 /* Buttons */
 .button, .button-invert, .transparent-button {
     background-color: #FFCF3A;
