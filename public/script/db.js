@@ -1,22 +1,20 @@
 import dotenv from "dotenv";
 import pkg from "pg";
-const { Client } = pkg;
+const { Pool } = pkg;
 
-let client;
+let pool;
 
 export function connectClient() {
-    client = new Client({
+    pool = new Pool({
         connectionString: process.env.DATABASE_URL,
         ssl: {
             rejectUnauthorized: false,
         },
     });
-
-    client.connect();
 }
 
-export function getData(query, callback) {
-    client.query(query, (err, res) => {
+export async function getData(query, callback) {
+    await pool.query(query, (err, res) => {
         if (err) {
             callback(err, null);
         } else {
@@ -26,13 +24,13 @@ export function getData(query, callback) {
 }
 
 export async function insertData(query, valuesArray) {
-    const result = await client.query(query, valuesArray);
+    const result = await pool.query(query, valuesArray);
     return result;
 }
 
 process.on('SIGINT', async () => {
     console.log("shutting down...");
-    await client.end();
+    await pool.end();
     console.log("Disconnected from database");
     process.exit(0);
 });
