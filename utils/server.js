@@ -3,6 +3,7 @@ import express from "express";
 import memorystore from "memorystore";
 import session from "express-session";
 import viewsRoutes from "../routes/viewsRoutes.js";
+import dbRoutes from "../routes/dbRoutes.js";
 import __dirname from "../dirname.js";
 
 function createServer () {
@@ -23,7 +24,7 @@ function createServer () {
     );
 
     app.use(viewsRoutes);
-    
+    app.use(dbRoutes);
 
     app.use((err, req, res, next) => {
         console.error(err.stack);
