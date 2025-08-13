@@ -1,7 +1,8 @@
 import express from "express";
 import pkg from "jsonwebtoken";
 import { checkUser, checkRefreshToken } from "../middleware/authentication.js";
-import { deleteDataByValue, insertData } from "../public/script/db.js";
+import { deleteDataByValue, insertData } from "../utils/db.js";
+import bcrypt from "bcrypt"
 
 const router = express.Router();
 const jwt = pkg;
@@ -67,7 +68,8 @@ router.post("/api/login", async (req, res) => {
 
     try {
         const data = await checkUser(email, password);
-        if (data[0].islogged === 0) return res.status(401).json( {
+        const islogged = await bcrypt.compare(password, data[0].password)
+        if (!islogged) return res.status(401).json( {
             message: "Wrong email or password" 
         });
 
@@ -101,7 +103,9 @@ router.post("/api/login", async (req, res) => {
         res.json({ message: "Logged in" });
     }
     catch(err) {
-        res.status(500).json({ message: `Failed to authenticate user: ${err}` });
+        res.status(401).json({
+            message: "Wrong email or password"
+        }) 
     }
 });
 
