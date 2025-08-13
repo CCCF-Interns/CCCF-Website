@@ -47,7 +47,7 @@ export async function runQuery(query) {
     return result;
 }
 
-process.on('SIGINT', async () => {
+process.on("SIGINT", async () => {
     console.log("shutting down...");
     await pool.end();
     console.log("Disconnected from database");

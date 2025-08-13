@@ -1,5 +1,5 @@
-import pkg from 'jsonwebtoken';
-import { getData, getDataByValueArray } from '../public/script/db.js';
+import pkg from "jsonwebtoken";
+import { getDataByValueArray } from "../public/script/db.js";
 
 const jwt = pkg;
 

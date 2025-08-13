@@ -19,6 +19,8 @@ submitButton.addEventListener("click", async () => {
 
         const data = await response.json();
         
+        console.log(data);
+        
         window.location.href = "/admin";
     }
     catch(error) {

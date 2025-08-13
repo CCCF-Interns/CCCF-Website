@@ -37,7 +37,7 @@ router.get("/api/logout", async (req, res) => {
     const value = [req.cookies.refreshToken];
 
     try {
-        const data = await deleteDataByValue(query, value);
+        await deleteDataByValue(query, value);
 
         res.clearCookie("accessToken", {
             httpOnly: true,
@@ -96,12 +96,12 @@ router.post("/api/login", async (req, res) => {
 
         const values = [refreshToken];
 
-        await insertData(query, values)
+        await insertData(query, values);
 
         res.json({ message: "Logged in" });
     }
     catch(err) {
-        res.status(500).json({ message: "Failed to authenticate user" });
+        res.status(500).json({ message: `Failed to authenticate user: ${err}` });
     }
 });
 
