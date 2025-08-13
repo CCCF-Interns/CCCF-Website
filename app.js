@@ -1,7 +1,7 @@
 import dotenv from "dotenv";
 dotenv.config();
 import createServer from "./utils/server.js";
-import { connectClient } from "./public/script/db.js";
+import { connectClient } from "./utils/db.js";
 import "./utils/schedules.js";
 
 const app = createServer();

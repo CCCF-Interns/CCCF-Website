@@ -1,5 +1,5 @@
 import pkg from "jsonwebtoken";
-import { getDataByValueArray } from "../public/script/db.js";
+import { getDataByValueArray } from "../utils/db.js";
 
 const jwt = pkg;
 
@@ -40,12 +40,12 @@ export default function authAdmin(req, res, next) {
     });
 }
 
-export async function checkUser(email, password) {
+export async function checkUser(email) {
     const query = `
-        SELECT 1 as isLogged FROM administrator WHERE email=$1 AND password=$2;
+        SELECT * FROM administrator WHERE email = $1;
     `;
     
-    const values = [email, password];
+    const values = [email];
     return new Promise((resolve, reject) => {
         getDataByValueArray(query, values, (err, data) => {
             if (err) return reject(err);
