@@ -32,10 +32,10 @@ function createServer () {
             chalk.blue(tokens.method(req, res)),
             chalk.green(tokens.url(req, res)),
             chalk.yellow(tokens.status(req, res)),
-            chalk.red(tokens['response-time'](req, res) + ' ms'),
-            chalk.magenta("length", tokens.res(req, res, 'content-length'))
-        ].join(' ');
-    }))
+            chalk.red(tokens["response-time"](req, res) + " ms"),
+            chalk.magenta("length", tokens.res(req, res, "content-length"))
+        ].join(" ");
+    }));
 
     app.use(viewsRoutes);
     app.use(dbRoutes);

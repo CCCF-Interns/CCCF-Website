@@ -40,7 +40,7 @@ export default function authAdmin(req, res, next) {
     });
 }
 
-export async function checkUser(email, password) {
+export async function checkUser(email) {
     const query = `
         SELECT * FROM administrator WHERE email = $1;
     `;

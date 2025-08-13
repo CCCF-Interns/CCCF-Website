@@ -67,7 +67,7 @@ router.post("/api/login", async (req, res) => {
     };
 
     try {
-        const data = await checkUser(email, password);
+        const data = await checkUser(email);
         const islogged = await bcrypt.compare(password, data[0].password)
         if (!islogged) return res.status(401).json( {
             message: "Wrong email or password" 

@@ -2,8 +2,8 @@
 
 const repl = await import("repl");
 const pg = await import("pg");
-const dotenv = await import("dotenv")
-dotenv.config()
+const dotenv = await import("dotenv");
+dotenv.config();
 
 const client = new pg.Client({
     connectionString: process.env.DATABASE_URL,
