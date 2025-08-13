@@ -20,16 +20,12 @@ if (burger && headerEl && mobileMenu) {
     headerEl.classList.remove('menu-open');
     burger.setAttribute('aria-expanded', 'false');
     mobileMenu.hidden = true;
-    document.documentElement.classList.remove('no-scroll');
-    document.body.classList.remove('no-scroll');
     burger.setAttribute('aria-label', 'Open menu');
   }
   function openMenu() {
     headerEl.classList.add('menu-open');
     burger.setAttribute('aria-expanded', 'true');
     mobileMenu.hidden = false;
-    document.documentElement.classList.add('no-scroll');
-    document.body.classList.add('no-scroll');
     burger.setAttribute('aria-label', 'Close menu');
   }
   burger.addEventListener('click', () => {
