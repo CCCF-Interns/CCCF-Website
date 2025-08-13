@@ -1,0 +1,161 @@
+.header {
+    width: 100%;
+    height: 72px;
+    padding-top: 12px;
+    padding-bottom: 8px;
+    justify-content: space-between;
+    background-color: #FAEDCB;
+}
+
+.header-logo {
+    width: 200px;
+    height: 68px;
+    margin-left: 64px;
+    gap: 8px;
+}
+
+.header-logo-ribbon {
+    width: 68px;
+    height: auto;
+}
+
+.header-logo-text {
+    width: 124px;
+    height: auto;
+}
+
+.header-links {
+    gap: 24px;
+    height: 64px;
+}
+
+.header-link {
+    height: 100%;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
+.header-buttons {
+    gap: 24px;
+    margin-right: 64px;
+}
+
+.underline {
+    transform: translate(0, 12px);
+    height: 2px;
+    width: 0%;
+    background-color: black;
+    transition: 0.3s ease width;
+}
+
+.clickable {
+    cursor: pointer;
+}
+
+/* Mobile / responsive header additions */
+.burger {
+  display: none;
+  position: relative;
+  width: 44px;
+  height: 44px;
+  margin-right: 16px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  z-index: 110;
+}
+.burger span {
+  position: absolute;
+  width: 26px;
+  height: 2.5px;
+  background: #222;
+  left: 50%;
+  transform: translateX(-50%);
+  transition: transform .35s ease, opacity .35s ease, top .35s ease;
+}
+.burger span:nth-child(1) { top: 14px; }
+.burger span:nth-child(2) { top: 20px; }
+.burger span:nth-child(3) { top: 26px; }
+
+.header.menu-open .burger span:nth-child(1) {
+  top: 20px;
+  transform: translateX(-50%) rotate(45deg);
+}
+.header.menu-open .burger span:nth-child(2) { opacity: 0; }
+.header.menu-open .burger span:nth-child(3) {
+  top: 20px;
+  transform: translateX(-50%) rotate(-45deg);
+}
+
+.mobile-nav-panel {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  padding: 20px 64px 40px 64px;
+  background: #FAEDCB;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+  max-height: 0;
+  overflow: hidden;
+  opacity: 0;
+  transition: max-height .45s ease, opacity .35s ease;
+  z-index: 100;
+  border-top: 1px solid rgba(0,0,0,0.08);
+  align-items: center;
+  transform: translateY(-8px);
+}
+.header.menu-open .mobile-nav-panel {
+  max-height: 520px;
+  opacity: 1;
+  transform: translateY(0);
+}
+.mobile-nav-panel a {
+  font-size: 1.05rem;
+  font-weight: 600;
+  padding: 6px 0;
+  text-decoration: none;
+  color: #222;
+}
+.mobile-nav-panel a:active { opacity: .65; }
+.mobile-links { display:flex; flex-direction:column; align-items:center; gap:12px; width:100%; }
+.mobile-actions { display:flex; flex-direction:column; align-items:center; gap:16px; width:100%; }
+.mobile-actions .button, .mobile-actions .button-invert { min-width:220px; }
+
+.mobile-nav-panel [data-anim] { opacity:0; transform:translateY(10px); transition:opacity .4s ease, transform .4s ease; }
+.header.menu-open .mobile-nav-panel [data-anim] { opacity:1; transform:translateY(0); }
+.mobile-nav-panel [data-anim]:nth-child(1) { transition-delay:.05s; }
+.mobile-nav-panel [data-anim]:nth-child(2) { transition-delay:.1s; }
+.mobile-nav-panel [data-anim]:nth-child(3) { transition-delay:.15s; }
+.mobile-nav-panel [data-anim]:nth-child(4) { transition-delay:.2s; }
+.mobile-nav-panel [data-anim]:nth-child(5) { transition-delay:.25s; }
+.mobile-actions [data-anim]:nth-child(1) { transition-delay:.3s; }
+.mobile-actions [data-anim]:nth-child(2) { transition-delay:.35s; }
+
+html.no-scroll, body.no-scroll { overflow: hidden; touch-action: none; }
+
+@media (max-width: 1040px) {
+  .header { padding-left: 16px; padding-right: 8px; }
+  .header-logo { margin-left: 0; }
+  .header-buttons { margin-right: 0; }
+}
+
+@media (max-width: 840px) {
+  .burger { display: flex; }
+  .header { position: sticky; top: 0; z-index: 200; }
+  .header-links, .header-buttons { display: none !important; }
+  .mobile-nav-panel { padding: 20px 24px 32px 24px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .burger span, .mobile-nav-panel { transition: none; }
+  .mobile-nav-panel { transform:none !important; }
+  .mobile-nav-panel [data-anim] { opacity:1 !important; transform:none !important; transition:none !important; }
+}
