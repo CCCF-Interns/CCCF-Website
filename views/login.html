@@ -6,6 +6,7 @@
     <title>Login</title>
     <link rel="stylesheet" href="/css/style.css" />
     <link rel="stylesheet" href="/css/footer.css" />
+    <link rel="stylesheet" href="/css/login.css" />
     <script>
         fetch("/header.html")
             .then(res => res.text())
@@ -19,12 +20,19 @@
                 document.querySelector("#footer-container").innerHTML = data;
             });
     </script>
+    <script src="/script/login.js" defer></script>
 </head>
 <body>
     <div id="header-container"></div>
-    <input type="text" placeholder="email">
-    <input type="text" placeholder="password">
-    <button class="button">Login</button>
+    <div class="login-form flex-container bg-yellow">
+        <h1 class="heading">Login</h1>
+        <input type="text" placeholder="email" id="email">
+        <div class="password-container flex-container">
+            <input type="password" placeholder="password" id="password">
+            <img src="/assets/svg/visibility_off.svg" id="password-visibility">
+        </div>
+        <button class="button" id="submit">Login</button>
+    </div>
     <div id="footer-container"></div>
 </body>
 </html>
