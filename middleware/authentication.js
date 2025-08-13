@@ -4,13 +4,39 @@ import { getData, getDataByValueArray } from '../public/script/db.js';
 const jwt = pkg;
 
 export default function authAdmin(req, res, next) {
-    const token = req.cookies.accessToken;
-    if (!token) return res.redirect("/login");
+    const accessToken = req.cookies.accessToken;
+    const refreshToken = req.cookies.refreshToken;
 
-    jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, decoded) => {
-        if (err) return res.status(403).send("Invalid Token");
-        req.user = decoded;
-        next();
+    if (!accessToken) {
+        if (!refreshToken) return res.redirect("/login");
+
+        jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET, 
+        (refreshErr, refDecoded) => {
+            if (refreshErr) return res.redirect("/login");
+
+            const newAccessToken = jwt.sign(
+                { email: refDecoded.email, password: refDecoded.password },
+                process.env.ACCESS_TOKEN_SECRET,
+                { expiresIn: "15s" }
+            );
+
+            res.cookie("accessToken", newAccessToken, {
+                httpOnly: true,
+                secure: false,
+                sameSite: "strict",
+                maxAge: 15 * 1000
+            });
+
+            req.user = refDecoded;
+            return next();
+        });
+    }
+    return jwt.verify(accessToken, process.env.ACCESS_TOKEN_SECRET, 
+    (err, decoded) => {
+        if (!err) {
+            req.user = decoded;
+            return next();
+        }
     });
 }
 
