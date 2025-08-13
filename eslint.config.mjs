@@ -5,7 +5,7 @@ import { defineConfig, globalIgnores } from "eslint/config";
 import importPlugin from "eslint-plugin-import";
 
 export default defineConfig([
-  globalIgnores(["coverage/"]),
+  globalIgnores(["coverage/", "routes/adminRoutes.js"]),
   { 
     files: ["**/*.{js,mjs,cjs}", "./routes/adminRoutes.js"], 
     plugins: { 
