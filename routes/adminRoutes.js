@@ -2,7 +2,6 @@ import express from "express";
 import pkg from "jsonwebtoken";
 import { checkUser, checkRefreshToken } from "../middleware/authentication.js";
 import { deleteDataByValue, insertData } from "../public/script/db.js";
-import session from "express-session";
 
 const router = express.Router();
 const jwt = pkg;
@@ -68,7 +67,7 @@ router.post("/api/login", async (req, res) => {
 
     try {
         const data = await checkUser(email, password);
-        if (data.islogged === 0) return res.status(401).json( {
+        if (data[0].islogged === 0) return res.status(401).json( {
             message: "Wrong email or password" 
         });
 
@@ -92,7 +91,9 @@ router.post("/api/login", async (req, res) => {
             maxAge: 7 * 24 * 60 * 60 * 1000
         });
 
-        const query = `INSERT INTO token VALUES ($1)`;
+        const query = `INSERT INTO token VALUES ($1, CURRENT_TIMESTAMP + 
+        INTERVAL '7 days')`;
+
         const values = [refreshToken];
 
         await insertData(query, values)
