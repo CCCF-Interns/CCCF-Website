@@ -2,6 +2,8 @@ import path from "path";
 import express from "express";
 import memorystore from "memorystore";
 import session from "express-session";
+import morgan from "morgan";
+import chalk from "chalk";
 import viewsRoutes from "../routes/viewsRoutes.js";
 import dbRoutes from "../routes/dbRoutes.js";
 import adminRoutes from "../routes/adminRoutes.js";
@@ -25,6 +27,15 @@ function createServer () {
         })
     );
     app.use(cookieParser());
+    app.use(morgan((tokens, req, res) => {
+        return [
+            chalk.blue(tokens.method(req, res)),
+            chalk.green(tokens.url(req, res)),
+            chalk.yellow(tokens.status(req, res)),
+            chalk.red(tokens['response-time'](req, res) + ' ms'),
+            chalk.magenta("length", tokens.res(req, res, 'content-length'))
+        ].join(' ');
+    }))
 
     app.use(viewsRoutes);
     app.use(dbRoutes);
