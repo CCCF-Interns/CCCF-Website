@@ -4,147 +4,147 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Donate | CCCF</title>
-    <link rel='stylesheet' href='/css/style.css'>
-    <link rel='stylesheet' href='/css/home.css'> <!-- Reuse FAQ / shared section styles -->
-    <link rel='stylesheet' href='/css/donate.css'>
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/home.css"> <!-- Reuse FAQ / shared section styles -->
+    <link rel="stylesheet" href="/css/donate.css">
     <link rel="stylesheet" href="/css/footer.css">
     <script>
-        fetch('/header.html')
+        fetch("/header.html")
             .then(res => res.text())
             .then(async data => {
-                document.querySelector('#header-container').innerHTML = data;
-                await import('/script/header.js');
+                document.querySelector("#header-container").innerHTML = data;
+                await import("/script/header.js");
             });
-        fetch('/footer.html')
+        fetch("/footer.html")
             .then(res => res.text())
-            .then(data => { document.querySelector('#footer-container').innerHTML = data; });
+            .then(data => { document.querySelector("#footer-container").innerHTML = data; });
     </script>
-    <script src='/script/home.js' defer></script>
-    <script src='/script/donate.js' defer></script>
+    <script src="/script/home.js" defer></script>
+    <script src="/script/donate.js" defer></script>
 </head>
 <body>
-    <div id='header-container'></div>
-    <section class='donate-hero'>
-        <div class='donate-inner hero-center'>
-            <h1 class='heading'>Give Hope. Fuel Strength.</h1>
-            <p class='lead'>Your gift provides emotional care, education continuity, and critical support to children fighting cancer and their families. Every contribution becomes a lifeline.</p>
-            <a href='#give' id='hero-donate-btn' class='button pill-button hero-cta'>Donate Now</a>
+    <div id="header-container"></div>
+    <section class="donate-hero">
+        <div class="donate-inner hero-center">
+            <h1 class="heading">Give Hope. Fuel Strength.</h1>
+            <p class="lead">Your gift provides emotional care, education continuity, and critical support to children fighting cancer and their families. Every contribution becomes a lifeline.</p>
+            <a href="#give" id="hero-donate-btn" class="button pill-button hero-cta">Donate Now</a>
         </div>
     </section>
-    <section id='give' class='donation-options-section bg-cream'>
-        <div class='donate-inner'>
-            <h2 class='heading'>Choose Your Impact</h2>
-            <form class='donation-form' action='#' method='post'>
-                <fieldset class='frequency-group'>
-                    <legend class='sub-heading'>Frequency</legend>
-                    <label class='freq-option'>
-                        <input type='radio' name='frequency' value='once' checked>
+    <section id="give" class="donation-options-section bg-cream">
+        <div class="donate-inner">
+            <h2 class="heading">Choose Your Impact</h2>
+            <form class="donation-form" action="#" method="post">
+                <fieldset class="frequency-group">
+                    <legend class="sub-heading">Frequency</legend>
+                    <label class="freq-option">
+                        <input type="radio" name="frequency" value="once" checked>
                         <span>One-Time</span>
                     </label>
-                    <label class='freq-option'>
-                        <input type='radio' name='frequency' value='monthly'>
+                    <label class="freq-option">
+                        <input type="radio" name="frequency" value="monthly">
                         <span>Monthly</span>
                     </label>
                 </fieldset>
-                <fieldset class='amount-group'>
-                    <legend class='sub-heading'>Amount</legend>
-                    <div class='amount-buttons'>
-                        <label><input type='radio' name='amount' value='10'><span>$10</span></label>
-                        <label><input type='radio' name='amount' value='25' checked><span>$25</span></label>
-                        <label><input type='radio' name='amount' value='50'><span>$50</span></label>
-                        <label><input type='radio' name='amount' value='100'><span>$100</span></label>
-                        <label class='custom'>
-                            <input type='radio' name='amount' value='custom'>
+                <fieldset class="amount-group">
+                    <legend class="sub-heading">Amount</legend>
+                    <div class="amount-buttons">
+                        <label><input type="radio" name="amount" value="10"><span>$10</span></label>
+                        <label><input type="radio" name="amount" value="25" checked><span>$25</span></label>
+                        <label><input type="radio" name="amount" value="50"><span>$50</span></label>
+                        <label><input type="radio" name="amount" value="100"><span>$100</span></label>
+                        <label class="custom">
+                            <input type="radio" name="amount" value="custom">
                             <span>Custom</span>
                         </label>
                     </div>
-                    <div class='custom-amount-row'>
-                        <label for='custom-amount' class='visually-hidden'>Custom amount</label>
-                        <input id='custom-amount' name='customAmount' type='number' min='1' placeholder='Enter amount' disabled>
+                    <div class="custom-amount-row">
+                        <label for="custom-amount" class="visually-hidden">Custom amount</label>
+                        <input id="custom-amount" name="customAmount" type="number" min="1" placeholder="Enter amount" disabled>
                     </div>
                 </fieldset>
-                <fieldset class='details-group'>
-                    <legend class='sub-heading'>Your Info</legend>
-                    <div class='input-row'>
-                        <input type='text' name='name' placeholder='Full Name' required>
-                        <input type='email' name='email' placeholder='Email' required>
+                <fieldset class="details-group">
+                    <legend class="sub-heading">Your Info</legend>
+                    <div class="input-row">
+                        <input type="text" name="name" placeholder="Full Name" required>
+                        <input type="email" name="email" placeholder="Email" required>
                     </div>
                 </fieldset>
-                <div class='donate-submit-row'>
-                    <button type='submit' class='button large-button pill-button'>Continue to Payment</button>
-                    <div class='security-note'>Secure & Encrypted</div>
+                <div class="donate-submit-row">
+                    <button type="submit" class="button large-button pill-button">Continue to Payment</button>
+                    <div class="security-note">Secure & Encrypted</div>
                 </div>
             </form>
         </div>
     </section>
-    <section class='impact-section bg-yellow'>
-        <div class='donate-inner'>
-            <h2 class='heading'>Where Your Donation Goes</h2>
-            <div class='impact-grid'>
-                <div class='impact-card'>
+    <section class="impact-section bg-yellow">
+        <div class="donate-inner">
+            <h2 class="heading">Where Your Donation Goes</h2>
+            <div class="impact-grid">
+                <div class="impact-card">
                     <h3>Psychosocial Support</h3>
                     <p>Counseling and family sessions that reduce fear and emotional isolation.</p>
                 </div>
-                <div class='impact-card'>
+                <div class="impact-card">
                     <h3>Education Continuity</h3>
                     <p>Hospital-based learning keeps children connected to growth and normalcy.</p>
                 </div>
-                <div class='impact-card'>
+                <div class="impact-card">
                     <h3>Resource Navigation</h3>
                     <p>Guidance toward treatment aid, transport assistance, and relief grants.</p>
                 </div>
-                <div class='impact-card'>
+                <div class="impact-card">
                     <h3>Community & Events</h3>
                     <p>Moments of joy that build resilience and belonging during treatment.</p>
                 </div>
             </div>
-            <div class='transparency-line'>We practice full transparency—annual impact summaries and allocation reports are published for supporters.</div>
+            <div class="transparency-line">We practice full transparency—annual impact summaries and allocation reports are published for supporters.</div>
         </div>
     </section>
-    <section class='donate-faq bg-cream'>
-        <div class='donate-inner'>
-            <div class='faq-container flex-container'>
-                <div class='faq-section-left flex-container'>
-                    <h2 class='heading'>Donation FAQs</h2>
+    <section class="donate-faq bg-cream">
+        <div class="donate-inner">
+            <div class="faq-container flex-container">
+                <div class="faq-section-left flex-container">
+                    <h2 class="heading">Donation FAQs</h2>
                     <p>Quick answers about giving and impact.</p>
                 </div>
-                <div class='faq-section-right flex-container'>
-                    <div class='faq-item flex-container'>
-                        <div class='faq-question-title flex-container'>
-                            <div class='sub-text'>Is my gift tax-deductible?</div>
+                <div class="faq-section-right flex-container">
+                    <div class="faq-item flex-container">
+                        <div class="faq-question-title flex-container">
+                            <div class="sub-text">Is my gift tax-deductible?</div>
                             <img src="/assets/svg/arrow_down.svg" alt="toggle">
                         </div>
-                        <p class='faq-question'>Yes. A receipt is emailed immediately for your records.</p>
+                        <p class="faq-question">Yes. A receipt is emailed immediately for your records.</p>
                     </div>
-                    <div class='separator-line'></div>
-                    <div class='faq-item flex-container'>
-                        <div class='faq-question-title flex-container'>
-                            <div class='sub-text'>Can I change my monthly donation?</div>
+                    <div class="separator-line"></div>
+                    <div class="faq-item flex-container">
+                        <div class="faq-question-title flex-container">
+                            <div class="sub-text">Can I change my monthly donation?</div>
                             <img src="/assets/svg/arrow_down.svg" alt="toggle">
                         </div>
-                        <p class='faq-question'>Anytime—contact us and we can pause, adjust, or cancel within one business day.</p>
+                        <p class="faq-question">Anytime—contact us and we can pause, adjust, or cancel within one business day.</p>
                     </div>
-                    <div class='separator-line'></div>
-                    <div class='faq-item flex-container'>
-                        <div class='faq-question-title flex-container'>
-                            <div class='sub-text'>Where does my money go?</div>
+                    <div class="separator-line"></div>
+                    <div class="faq-item flex-container">
+                        <div class="faq-question-title flex-container">
+                            <div class="sub-text">Where does my money go?</div>
                             <img src="/assets/svg/arrow_down.svg" alt="toggle">
                         </div>
-                        <p class='faq-question'>Directly into psychosocial care, education continuity, family navigation, and community resilience programs.</p>
+                        <p class="faq-question">Directly into psychosocial care, education continuity, family navigation, and community resilience programs.</p>
                     </div>
-                    <div class='separator-line'></div>
-                    <div class='faq-item flex-container'>
-                        <div class='faq-question-title flex-container'>
-                            <div class='sub-text'>Is payment secure?</div>
+                    <div class="separator-line"></div>
+                    <div class="faq-item flex-container">
+                        <div class="faq-question-title flex-container">
+                            <div class="sub-text">Is payment secure?</div>
                             <img src="/assets/svg/arrow_down.svg" alt="toggle">
                         </div>
-                        <p class='faq-question'>Processed through encrypted PCI-compliant platforms—your data is protected.</p>
+                        <p class="faq-question">Processed through encrypted PCI-compliant platforms—your data is protected.</p>
                     </div>
-                    <div class='separator-line'></div>
+                    <div class="separator-line"></div>
                 </div>
             </div>
         </div>
     </section>
-    <div id='footer-container'></div>
+    <div id="footer-container"></div>
 </body>
 </html>

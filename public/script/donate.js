@@ -1,11 +1,11 @@
 // filepath: f:\Documents\CCCF Actual\CCCF-Website\public\script\donate.js
 // Fixed-duration smooth scroll (ignores browser instant anchor jump)
 (function() {
-  const heroBtn = document.getElementById('hero-donate-btn');
+  const heroBtn = document.getElementById("hero-donate-btn");
   if (heroBtn) {
-    heroBtn.addEventListener('click', (e) => {
+    heroBtn.addEventListener("click", (e) => {
       e.preventDefault();
-      const target = document.getElementById('give');
+      const target = document.getElementById("give");
       if (!target) return;
       smoothScrollTo(target, 650); // 650ms duration
     });
@@ -29,16 +29,16 @@
   }
 
   // Donation custom amount toggle
-  const customInput = document.getElementById('custom-amount');
+  const customInput = document.getElementById("custom-amount");
   const amountRadios = document.querySelectorAll("input[name='amount']");
   if (customInput && amountRadios.length) {
-    amountRadios.forEach(r => r.addEventListener('change', () => {
-      if (r.value === 'custom') {
+    amountRadios.forEach(r => r.addEventListener("change", () => {
+      if (r.value === "custom") {
         customInput.disabled = false;
         customInput.focus();
       } else if (r.checked) {
         customInput.disabled = true;
-        customInput.value = '';
+        customInput.value = "";
       }
     }));
   }
