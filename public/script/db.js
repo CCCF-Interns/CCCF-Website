@@ -1,4 +1,3 @@
-import dotenv from "dotenv";
 import pkg from "pg";
 const { Pool } = pkg;
 
@@ -23,8 +22,28 @@ export async function getData(query, callback) {
     });       
 }
 
+export async function getDataByValueArray(query, valueArray, callback) {
+    await pool.query(query, valueArray, (err, res) => {
+        if (err) {
+            callback(err, null);
+        } else {
+            callback (null, res.rows);
+        }
+    });
+}
+
 export async function insertData(query, valuesArray) {
     const result = await pool.query(query, valuesArray);
+    return result;
+}
+
+export async function deleteDataByValue(query, value) {
+    const result = await pool.query(query, value);
+    return result;
+}
+
+export async function runQuery(query) {
+    const result = await pool.query(query);
     return result;
 }
 
