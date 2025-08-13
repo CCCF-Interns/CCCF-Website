@@ -4,7 +4,9 @@ import memorystore from "memorystore";
 import session from "express-session";
 import viewsRoutes from "../routes/viewsRoutes.js";
 import dbRoutes from "../routes/dbRoutes.js";
+import adminRoutes from "../routes/adminRoutes.js";
 import __dirname from "../dirname.js";
+import cookieParser from "cookie-parser";
 
 function createServer () {
     const app = express();
@@ -22,9 +24,11 @@ function createServer () {
             secret: process.env.SESSION_SECRET || "The Secret"
         })
     );
+    app.use(cookieParser());
 
     app.use(viewsRoutes);
     app.use(dbRoutes);
+    app.use(adminRoutes);
 
     app.use((err, req, res, next) => {
         console.error(err.stack);

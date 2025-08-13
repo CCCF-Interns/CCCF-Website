@@ -2,6 +2,7 @@ import dotenv from "dotenv";
 dotenv.config();
 import createServer from "./utils/server.js";
 import { connectClient } from "./public/script/db.js";
+import "./utils/schedules.js";
 
 const app = createServer();
 const port = process.env.PORT || 4000;

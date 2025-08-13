@@ -152,6 +152,16 @@
 .card-category {
     border: 1px solid gray;
     padding: 2px 8px;
+    color: black;
+    background-color: white;
+    transition: color ease 0.3s;
+    transition: background-color ease 0.3s;
+    cursor: pointer;
+}
+
+.card-category:hover {
+    color: white;
+    background-color: black;
 }
 
 .card-section-2 button {
