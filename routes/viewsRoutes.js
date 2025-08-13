@@ -20,6 +20,10 @@ router.get("/about-us", (req, res) => {
     res.sendFile(path.join(__dirname, "views", "about.html"));
 });
 
+router.get("/donate", (req, res) => {
+    res.sendFile(path.join(__dirname, "views", "donate.html"));
+});
+
 router.get("/gallery", (req, res) => {
     res.sendFile(path.join(__dirname, "views", "gallery.html"));
 });
