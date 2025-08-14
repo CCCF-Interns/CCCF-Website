@@ -74,7 +74,7 @@ router.post("/api/login", async (req, res) => {
         });
 
         const accessToken = jwt.sign(user, process.env.ACCESS_TOKEN_SECRET, { 
-            expiresIn: "15s" 
+            expiresIn: "15m" 
         });
 
         const refreshToken = jwt.sign(user, process.env.REFRESH_TOKEN_SECRET);
@@ -83,7 +83,7 @@ router.post("/api/login", async (req, res) => {
             httpOnly: true,
             secure: false,
             sameSite: "strict",
-            maxAge: 15 * 1000
+            maxAge: 15 * 60 * 1000
         });
         
         res.cookie("refreshToken", refreshToken, {
