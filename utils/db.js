@@ -4,6 +4,9 @@ const { Pool } = pkg;
 let pool;
 
 export function connectClient() {
+    if (!process.env.TEST_DATABASE_URL) {
+        console.log("Secrets missing!");
+    };
     pool = new Pool({
         connectionString: process.env.TESTING == "true" ? process.env.TEST_DATABASE_URL : process.env.DATABASE_URL,
         ssl: {
