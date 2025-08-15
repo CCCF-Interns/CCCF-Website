@@ -13,7 +13,10 @@ jobs:
   build:
     runs-on: ubuntu-latest
     env:
-      DATABASE_URL: ${{ secrets.TEST_DATABASE_URL }}
+      TEST_DATABASE_URL: ${{ secrets.TEST_DATABASE_URL }}
+      TESTING: ${{ secrets.TESTING }}
+      ACCESS_TOKEN_SECRET: ${{ secrets.ACCESS_TOKEN_SECRET }}
+      REFRESH_TOKEN_SECRET: ${{ secrets.REFRESH_TOKEN_SECRET }}
     strategy:
       matrix:
         node-version: [18.x, 20.x, 22.x]
@@ -29,3 +32,4 @@ jobs:
     - run: npm ci --loglevel=error
     - run: npm run lint
     - run: npm test
+    
