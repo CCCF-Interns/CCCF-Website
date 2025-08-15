@@ -28,8 +28,9 @@ jobs:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
     - run: npm ci --loglevel=error
-    - run: npm run lint
-    - run: npm test
     - run: |
         echo "DATABASE_URL is set: ${{ secrets.TEST_DATABASE_URL != '' }}"
         echo "TESTING is set: ${{ secrets.TESTING != '' }}"
+    - run: npm run lint
+    - run: npm test
+    
