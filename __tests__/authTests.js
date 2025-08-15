@@ -11,25 +11,25 @@ describe("Testing authentication", () => {
             const response = await request(app).post("/api/login").send({
                 email: "something@example.com",
                 password: "something"
-            })
+            });
             expect(response.status).toBe(200);
-            expect(response.body["message"]).toBe("Logged in")
+            expect(response.body["message"]).toBe("Logged in");
         });
         test("User should not be able to login with incorrect credentials", async () => {
             const response = await request(app).post("/api/login").send({
                 email: "something@example.com",
                 password: "something1"
-            })
+            });
             expect(response.status).toBe(401);
-            expect(response.body["message"]).toBe("Wrong email or password")
-        })
+            expect(response.body["message"]).toBe("Wrong email or password");
+        });
         test("Missing Credentials should be handled", async () => {
             const response = await request(app).post("/api/login").send({
                 email: "something@example.com"
-            })
+            });
             expect(response.status).toBe(400);
-            expect(response.body["message"]).toBe("Please provide the appropriate fields")
-        })
+            expect(response.body["message"]).toBe("Please provide the appropriate fields");
+        });
     });
 });
 
