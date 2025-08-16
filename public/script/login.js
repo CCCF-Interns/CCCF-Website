@@ -4,7 +4,7 @@ const submitButton = document.querySelector("#submit");
 const passwordVisibility = document.querySelector("#password-visibility");
 let isVisible = false;
 
-submitButton.addEventListener("click", async () => {
+async function submit() {
     try {
         const response = await fetch("/api/login", {
             method: "POST",
@@ -19,13 +19,18 @@ submitButton.addEventListener("click", async () => {
 
         const data = await response.json();
         
-        console.log(data);
-        
-        window.location.href = "/admin";
+        if (data.islogged === 1) {
+            window.location.href = "/admin";
+        }
     }
+    
     catch(error) {
         console.error(error);
     }
+}
+
+submitButton.addEventListener("click", async () => {
+    await submit();
 });
 
 passwordVisibility.addEventListener("mouseenter", () => {
@@ -52,5 +57,17 @@ passwordVisibility.addEventListener("click", () => {
         passwordVisibility.src = "/assets/svg/visibility.svg";
         passwordInput.type = "text";
         isVisible = true;
+    }
+});
+
+emailInput.addEventListener("keypress", (e) => {
+    if (e.key === "Enter") {
+        submit();
+    }
+});
+
+passwordInput.addEventListener("keypress", (e) => {
+    if (e.key === "Enter") {
+        submit();
     }
 });

@@ -76,11 +76,12 @@ router.post("/api/login", async (req, res) => {
         const data = await checkUser(email);
         const islogged = await bcrypt.compare(password, data[0].password)
         if (!islogged) return res.status(401).json( {
-            message: "Wrong email or password" 
+            message: "Wrong email or password",
+            islogged: 0
         });
 
         const accessToken = jwt.sign(user, process.env.ACCESS_TOKEN_SECRET, { 
-            expiresIn: "15s" 
+            expiresIn: "15m" 
         });
 
         const refreshToken = jwt.sign(user, process.env.REFRESH_TOKEN_SECRET);
@@ -89,7 +90,7 @@ router.post("/api/login", async (req, res) => {
             httpOnly: true,
             secure: false,
             sameSite: "strict",
-            maxAge: 15 * 1000
+            maxAge: 15 * 60 * 1000
         });
         
         res.cookie("refreshToken", refreshToken, {
@@ -106,11 +107,15 @@ router.post("/api/login", async (req, res) => {
 
         await insertData(query, values);
 
-        res.json({ message: "Logged in" });
+        res.json({ 
+            message: "Logged in", 
+            islogged: 1
+        });
     }
     catch(err) {
         res.status(401).json({
-            message: "Wrong email or password"
+            message: "Wrong email or password",
+            islogged: 0
         }) 
     }
 });

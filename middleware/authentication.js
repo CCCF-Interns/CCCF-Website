@@ -17,14 +17,14 @@ export default function authAdmin(req, res, next) {
             const newAccessToken = jwt.sign(
                 { email: refDecoded.email, password: refDecoded.password },
                 process.env.ACCESS_TOKEN_SECRET,
-                { expiresIn: "15s" }
+                { expiresIn: "15m" }
             );
 
             res.cookie("accessToken", newAccessToken, {
                 httpOnly: true,
                 secure: false,
                 sameSite: "strict",
-                maxAge: 15 * 1000
+                maxAge: 15 * 60 * 1000
             });
 
             req.user = refDecoded;
