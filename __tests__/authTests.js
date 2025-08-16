@@ -1,6 +1,7 @@
 import request from "supertest";
 import createServer from "../utils/server";
 import { connectClient } from "../utils/db";
+import jwt from "jsonwebtoken";
 
 const app = createServer();
 connectClient();
@@ -35,6 +36,24 @@ describe("Testing authentication", () => {
 
 describe("Testing authorization", () => {
     describe("Only admins should have access to CMS", () => {
-        // To be implemented
+        test("Users without refresh token and access token should not be able to access /admin route and should be redirected to /login", async () => {
+            const response = await request(app).get("/admin");
+            expect(response.status).toBe(302);
+            expect(response.header.location).toBe("/login");
+        }); 
+        test("Users with refresh token and access token should be able to access /admin route", async () => {
+            const user = {
+                email: "something@example.com",
+                password: "something"
+            };
+            const accessToken = jwt.sign(user, process.env.ACCESS_TOKEN_SECRET, { 
+                expiresIn: "15m" 
+            });
+            const refreshToken = jwt.sign(user, process.env.REFRESH_TOKEN_SECRET); 
+            const response = await request(app).
+                                get("/admin").
+                                set("Cookie", [`accessToken=${accessToken};refreshToken=${refreshToken}`]);
+            expect(response.status).toBe(200);
+        }); 
     });
 });
