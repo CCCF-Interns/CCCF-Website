@@ -5,6 +5,7 @@
     padding-bottom: 8px;
     justify-content: space-between;
     background-color: #FAEDCB;
+    box-sizing: border-box;
 }
 
 .header-logo {
@@ -97,6 +98,7 @@
 }
 
 .mobile-nav-panel {
+  box-sizing: border-box;
   position: absolute;
   top: 100%;
   left: 0;
