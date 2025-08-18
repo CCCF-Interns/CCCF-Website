@@ -60,7 +60,13 @@ router.get("/api/logout", async (req, res) => {
 });
 
 router.post("/api/login", async (req, res) => {
-    const { email, password } = req.body;
+    const email = req.body.email;
+    const password = req.body.password;
+    if (!email || !password) {
+        res.status(400).json({
+            message: "Please provide the appropriate fields"
+        })
+    }
     const user = {
         email: email,
         password: password

@@ -9,11 +9,10 @@
             </div>
         </div>
     </a>
-    <!-- burger (hidden on desktop) -->
-    <button class="burger" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-menu">
+    <input type="checkbox" id="menu-toggle" class="menu-toggle-checkbox" />
+    <label for="menu-toggle" class="burger menu-toggle" aria-label="Open menu" aria-controls="mobile-menu">
         <span></span><span></span><span></span>
-    </button>
-    <!-- desktop nav -->
+    </label>
     <nav class="flex-container center header-links">
         <div class="header-link flex-container">
             <a href="/">Home</a>
@@ -40,8 +39,7 @@
         <button class="button-invert">Learn</button>
         <a href="/donate"><button class="button">Support Us</button></a>
     </div>
-    <!-- mobile dropdown panel -->
-    <div id="mobile-menu" class="mobile-nav-panel" hidden>
+    <div id="mobile-menu" class="mobile-nav-panel">
         <nav class="mobile-links">
             <a data-anim href="/">Home</a>
             <a data-anim href="/about-us">About Us</a>
