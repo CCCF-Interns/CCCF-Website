@@ -133,17 +133,18 @@
   outline: none;
   box-shadow: none;
   border-radius: 0;
-  transition: color 0.2s;
+  transition: color 0.2s, box-shadow 0.2s, background 0.2s;
 }
 
 .mobile-nav-panel a:active {
   color: #222;
   background: #e0cfa3;
+  box-shadow: 0 1px 6px rgba(49,82,91,0.18) inset;
+  transition: color 0.2s, box-shadow 0.2s, background 0.2s;
 }
 
 .mobile-nav-panel .button,
 .mobile-nav-panel .button-invert {
-  /* Use the same styles as .button and .button-invert from the normal header */
   display: block;
   width: 100%;
   margin-bottom: 10px;
@@ -162,8 +163,8 @@
   .mobile-nav-panel { display: block; }
 }
 
-@media (prefers-reduced-motion: reduce) {
+/* @media (prefers-reduced-motion: reduce) {
   .burger span, .mobile-nav-panel { transition: none; }
   .mobile-nav-panel { transform:none !important; }
   .mobile-nav-panel [data-anim] { opacity:1 !important; transform:none !important; transition:none !important; }
-}
+} */
