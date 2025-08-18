@@ -28,10 +28,17 @@
     <div id="header-container"></div>
     <h1 class="heading">Gallery</h1>
     <div class="grid" id="images-container"></div>
-    <div class="image-overlay">
+    <div id="image-overlay">
         <div class="background-blur flex-container">
-            <div class="preview-container">
-                <img id="image-preview" src="/assets/images/cover2.jpg">
+            <img id="preview-close" src="/assets/svg/close_white.svg" />
+            <div class="preview flex-container">
+                <img src="/assets/svg/chevron_left_white.svg" 
+                    class="preview-arrow" id="preview-left">
+                <div class="preview-container flex-container">
+                    <img id="image-preview" src="/assets/images/cover2.jpg">
+                </div>
+                <img src="/assets/svg/chevron_right_white.svg" 
+                class="preview-arrow" id="preview-right">
             </div>
         </div>
     </div>
