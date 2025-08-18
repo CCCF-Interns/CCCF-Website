@@ -24,26 +24,15 @@
     <script src="/script/gallery.js" defer></script>
 </head>
 <body>
+    <div id="loader" class="bg-white"></div>
     <div id="header-container"></div>
     <h1 class="heading">Gallery</h1>
-    <div class="grid" id="images-container">
-        <div class="grid-item">
-            <img class="image" src="/assets/images/cover.webp">
-        </div>
-        <div class="grid-item">
-            <img class="image" src="/assets/images/cover.webp">
-        </div>
-        <div class="grid-item">
-            <img class="image" src="/assets/images/cover.webp">
-        </div>
-        <div class="grid-item">
-            <img class="image" src="/assets/images/cover.webp">
-        </div>
-        <div class="grid-item">
-            <img class="image" src="/assets/images/cover.webp">
-        </div>
-        <div class="grid-item">
-            <img class="image" src="/assets/images/cover.webp">
+    <div class="grid" id="images-container"></div>
+    <div class="image-overlay">
+        <div class="background-blur flex-container">
+            <div class="preview-container">
+                <img id="image-preview" src="/assets/images/cover2.jpg">
+            </div>
         </div>
     </div>
     <div id="footer-container"></div>

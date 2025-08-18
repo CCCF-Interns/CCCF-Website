@@ -18,14 +18,15 @@ router.post("/api/gallery/insert", async (req, res) => {
         INSERT INTO gallery (id, title, image_url) VALUES ($1, $2, $3);
     `;
     const itemData = req.body;
+
     const valuesArray = [
-        itemData.id,
-        itemData.title,
-        itemData.image_url
+        itemData.data.id,
+        itemData.data.title,
+        itemData.data.image_url
     ];
 
     await insertData(query, valuesArray);
-    res.send("Inserted");
+    res.json("Inserted");
 });
 
 export default router;
