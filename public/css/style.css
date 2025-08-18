@@ -161,3 +161,14 @@ a, button, img, div {
     background-color: black;
     color: white;
 }
+
+/* Loader */
+#loader {
+    position: fixed;
+    top: 0;
+    left: 0;
+    display: block;
+    z-index: 105;
+    width: 100%;
+    height: 100%;
+}
