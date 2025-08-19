@@ -11,7 +11,8 @@ imageInput.addEventListener("change", async () => {
     if (!files) return;
 
     for (let x of files) {
-        const fileExt = x.name.split(".")[1];
+        const fileSplit = x.name.split(".");
+        const fileExt = fileSplit[fileSplit.length - 1];
         const allowedExt = ["png", "jpg", "webp", "svg", "gif"];
 
         if (!allowedExt.includes(fileExt)) {
