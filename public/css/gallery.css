@@ -90,6 +90,27 @@ h1 {
     max-height: 720px;
 }
 
+.page-buttons {
+    margin-top: 32px;
+    margin-bottom: 32px;
+    gap: 16px;
+}
+
+.page-button {
+    width: 48px;
+    height: 32px;
+    border-radius: 8px;
+}
+
+.page-arrow {
+    width: 32px;
+    height: 32px;
+}
+
+.pad-top-6 {
+    padding-top: 6px;
+}
+
 @media(max-width: 1456px) {
     #images-container {
         width: 1060px;

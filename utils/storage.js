@@ -25,12 +25,4 @@ async function uploadFile(key, file) {
     }).promise();
 }
 
-// async function readFile(key) {
-//     const res = await readR2.getObject({
-//         Bucket: process.env.R2_BUCKET,
-//         Key: key,
-//     }).promise();
-//     return res.Body.json();
-// }
-
 export default uploadFile;
