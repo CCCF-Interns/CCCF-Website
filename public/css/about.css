@@ -74,7 +74,7 @@
 
 .mission-container, .story-container {
     display: flex;
-    height: 700px;
+    height: auto;
     padding: 24px 264px;
     justify-content: space-between;
     gap: 128px;
@@ -83,7 +83,7 @@
 }
 
 .story-container {
-    height: 1200px;
+    height: auto;
 }
 
 .mission-image-container {
@@ -154,4 +154,92 @@
     margin-bottom: 36px;
 }
 
+.work-container {
+    display: flex;
+    flex-direction: column;
+    padding: 32px 264px 48px 264px;
+    gap: 32px;
+}
 
+.work-row {
+    display: flex;
+    justify-content: center;
+    gap: 32px;
+}
+
+.team-container {
+    height: auto;
+}
+
+.work-heading {
+    font-size: 48px;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 0px;
+}
+
+.modal-heading {
+    margin-bottom: 24px;
+}
+
+.work-modal {
+    height: 350px;
+    width: 650px;
+    background-color: whitesmoke;
+    border-radius: 12px;
+    padding: 24px;
+}
+
+.work-modal-bold {
+    font-size: larger;
+    font-weight: bold;
+    display: block;
+    padding-bottom: 6px;
+}
+
+.work-modal p {
+    margin: 12px 0px;
+    font-size: larger;
+}
+
+.team-container {
+    padding: 48px 264px;
+}
+
+.team-members-container {
+    padding-top: 24px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    gap: 62px;
+}
+
+.team-subheading {
+    font-size: larger;
+    margin-top: 16px;
+}
+
+.team-member {
+    height: 450px;
+    width: 300px;
+}
+
+.team-member img{
+    height: 300px;
+    width: 300px;
+}
+
+.member-name{
+    font-size: larger;
+    font-weight: bold;
+    padding: 8px 0px;
+}
+
+.member-title{
+    font-size: larger;
+    padding-bottom: 8px;
+}
+
+.member-description {
+    padding-top: 8px;
+}
