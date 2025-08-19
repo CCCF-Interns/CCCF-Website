@@ -24,28 +24,26 @@
     <script src="/script/gallery.js" defer></script>
 </head>
 <body>
+    <div id="loader" class="bg-white"></div>
     <div id="header-container"></div>
     <h1 class="heading">Gallery</h1>
-    <div class="grid" id="images-container">
-        <div class="grid-item">
-            <img class="image" src="/assets/images/cover.webp">
-        </div>
-        <div class="grid-item">
-            <img class="image" src="/assets/images/cover.webp">
-        </div>
-        <div class="grid-item">
-            <img class="image" src="/assets/images/cover.webp">
-        </div>
-        <div class="grid-item">
-            <img class="image" src="/assets/images/cover.webp">
-        </div>
-        <div class="grid-item">
-            <img class="image" src="/assets/images/cover.webp">
-        </div>
-        <div class="grid-item">
-            <img class="image" src="/assets/images/cover.webp">
+    <div class="page-buttons flex-container" id="page-buttons-top"></div>
+    <div class="grid" id="images-container"></div>
+    <div id="image-overlay">
+        <div class="background-blur flex-container">
+            <img id="preview-close" src="/assets/svg/close_white.svg" />
+            <div class="preview flex-container">
+                <img src="/assets/svg/chevron_left_white.svg" 
+                    class="preview-arrow" id="preview-left">
+                <div class="preview-container flex-container">
+                    <img id="image-preview" src="/assets/images/cover2.jpg">
+                </div>
+                <img src="/assets/svg/chevron_right_white.svg" 
+                class="preview-arrow" id="preview-right">
+            </div>
         </div>
     </div>
+    <div class="page-buttons flex-container" id="page-buttons-bottom"></div>
     <div id="footer-container"></div>
 </body>
 </html>
