@@ -20,7 +20,7 @@ router.post("/api/upload", authAdmin, upload.single("image"),
             id: crypto.randomUUID(),
             title: req.file.originalname,
             image_url: image_url,
-        }
+        };
 
         res.json({ values });
     }
