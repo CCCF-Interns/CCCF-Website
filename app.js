@@ -12,8 +12,8 @@ export const writeR2 = new AWS.S3({
     endpoint: `https://${process.env.R2_ID}.r2.cloudflarestorage.com`,
     accessKeyId: process.env.R2_WRITE_KEY,
     secretAccessKey: process.env.R2_WRITE_SECRET,
-    signatureVersion: 'v4',
-    region: 'auto',
+    signatureVersion: "v4",
+    region: "auto",
 });
 
 app.listen(port, () => {
