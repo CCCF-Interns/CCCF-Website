@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link rel="stylesheet" href="/css/style.css" />
+    <link rel="stylesheet" href="/css/header.css" />
+    <link rel="stylesheet" href="/css/footer.css" />
+    <link rel="stylesheet" href="/css/login.css" />
+    <script>
+        fetch("/header.html")
+            .then(res => res.text())
+            .then(async data => {
+                document.querySelector("#header-container").innerHTML = data;
+                await import("/script/header.js");
+            });
+        fetch("/footer.html")
+            .then(res => res.text())
+            .then(async data => {
+                document.querySelector("#footer-container").innerHTML = data;
+            });
+    </script>
+    <script src="/script/login.js" defer></script>
+</head>
+<body>
+    <div id="header-container"></div>
+    <div class="login-form flex-container bg-yellow">
+        <h1 class="heading">Login</h1>
+        <input type="text" placeholder="email" id="email">
+        <div class="password-container flex-container">
+            <input type="password" placeholder="password" id="password">
+            <img src="/assets/svg/visibility_off.svg" id="password-visibility">
+        </div>
+        <button class="button" id="submit">Login</button>
+    </div>
+    <div id="footer-container"></div>
+</body>
+</html>
