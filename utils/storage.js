@@ -1,4 +1,7 @@
 import AWS from "aws-sdk";
+import dotenv from "dotenv";
+
+dotenv.config()
 
 const writeR2 = new AWS.S3({
     endpoint: `https://${process.env.R2_ID}.r2.cloudflarestorage.com`,
