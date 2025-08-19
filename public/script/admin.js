@@ -18,20 +18,20 @@ imageInput.addEventListener("change", async () => {
             return;
         }
         
-        const img = document.createElement('img');
+        const img = document.createElement("img");
         img.src = URL.createObjectURL(x);
         img.style.maxWidth = "200px";
-        preview.innerHTML = '';
+        preview.innerHTML = "";
         preview.appendChild(img);
 
         console.log("Selected File:", x);
 
         const formData = new FormData();
-        formData.append('image', x);
+        formData.append("image", x);
 
         try {
-            const response = await fetch('/api/upload', {
-                method: 'POST',
+            const response = await fetch("/api/upload", {
+                method: "POST",
                 body: formData
             });
 
@@ -41,7 +41,7 @@ imageInput.addEventListener("change", async () => {
                 method: "POST",
                 headers: { "Content-Type" : "application/json" },
                 body: JSON.stringify({ data: result.values })
-            })
+            });
 
             const result2 = await resp.json();
 

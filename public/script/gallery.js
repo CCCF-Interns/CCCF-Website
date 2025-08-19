@@ -20,7 +20,7 @@ function createImage(title, link, index) {
 
     container.addEventListener("click", () => {
         imagePreview.src = link;
-        imageOverlay.style.display = 'block';
+        imageOverlay.style.display = "block";
         document.body.style.overflow = "hidden";
         currentImageIndex = index;
     });
