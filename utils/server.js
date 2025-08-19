@@ -7,6 +7,7 @@ import chalk from "chalk";
 import viewsRoutes from "../routes/viewsRoutes.js";
 import dbRoutes from "../routes/dbRoutes.js";
 import adminRoutes from "../routes/adminRoutes.js";
+import storageRoutes from "../routes/storageRoutes.js";
 import __dirname from "../dirname.js";
 import cookieParser from "cookie-parser";
 
@@ -40,7 +41,8 @@ function createServer () {
     app.use(viewsRoutes);
     app.use(dbRoutes);
     app.use(adminRoutes);
-
+    app.use(storageRoutes);
+    
     app.use((err, req, res, next) => {
         console.error(err.stack);
         res.status(500).send("Something broke!");

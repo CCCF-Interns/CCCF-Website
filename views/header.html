@@ -9,44 +9,42 @@
             </div>
         </div>
     </a>
-    <!-- burger (hidden on desktop) -->
-    <button class="burger" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-menu">
+    <input type="checkbox" id="menu-toggle" class="menu-toggle-checkbox" />
+    <label for="menu-toggle" class="burger menu-toggle" aria-label="Open menu" aria-controls="mobile-menu">
         <span></span><span></span><span></span>
-    </button>
-    <!-- desktop nav -->
+    </label>
     <nav class="flex-container center header-links">
-        <div class="header-link flex-container">
-            <a href="/">Home</a>
+        <a href="/" class="header-link flex-container">
+            Home
             <div class="underline"></div>
-        </div>
-        <div class="header-link flex-container">
-            <a href="/about-us">About Us</a>
+        </a>
+        <a href="/about-us" class="header-link flex-container">
+            About Us
             <div class="underline"></div>
-        </div>
-        <div class="header-link flex-container">
-            <a href="#">Blog</a>
+        </a>
+        <a href="#" class="header-link flex-container">
+            Blog
             <div class="underline"></div>
-        </div>
-        <div class="header-link flex-container">
-            <a href="/gallery">Gallery</a>
+        </a>
+        <a href="/gallery?page=1" class="header-link flex-container">
+            Gallery
             <div class="underline"></div>
-        </div>
-        <div class="header-link flex-container">
-            <a href="#">Contact Us</a>
+        </a>
+        <a href="#" class="header-link flex-container">
+            Contact Us
             <div class="underline"></div>
-        </div>
+        </a>
     </nav>
     <div class="flex-container header-buttons">
         <button class="button-invert">Learn</button>
         <a href="/donate"><button class="button">Support Us</button></a>
     </div>
-    <!-- mobile dropdown panel -->
-    <div id="mobile-menu" class="mobile-nav-panel" hidden>
+    <div id="mobile-menu" class="mobile-nav-panel">
         <nav class="mobile-links">
             <a data-anim href="/">Home</a>
             <a data-anim href="/about-us">About Us</a>
             <a data-anim href="#">Blog</a>
-            <a data-anim href="/gallery">Gallery</a>
+            <a data-anim href="/gallery?page=1">Gallery</a>
             <a data-anim href="#">Contact Us</a>
         </nav>
         <div class="mobile-actions">
