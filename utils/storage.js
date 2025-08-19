@@ -1,5 +1,12 @@
 import AWS from "aws-sdk";
-import { writeR2 } from "../app.js";
+
+const writeR2 = new AWS.S3({
+    endpoint: `https://${process.env.R2_ID}.r2.cloudflarestorage.com`,
+    accessKeyId: process.env.R2_WRITE_KEY,
+    secretAccessKey: process.env.R2_WRITE_SECRET,
+    signatureVersion: 'v4',
+    region: 'auto',
+});
 
 const readR2 = new AWS.S3({
     endpoint: `https://${process.env.R2_ID}.r2.cloudflarestorage.com`,
