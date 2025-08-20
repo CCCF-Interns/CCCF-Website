@@ -100,8 +100,9 @@ a, button, img, div {
     pointer-events: none;
 }
 
-/* Header */
-
+.clickable {
+    cursor: pointer;
+}
 
 /* Buttons */
 .button, .button-invert, .transparent-button {

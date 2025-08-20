@@ -1,0 +1,49 @@
+#image-progress {
+    position: fixed;
+    display: none;
+    bottom: 32px;
+    right: 32px;
+    flex-direction: column;
+    gap: 16px;
+    padding: 32px;
+    border-radius: 16px;
+}
+
+#image-progress-bar {
+    height: 100%;
+    width: 0;
+    background-color: black;
+    border-radius: 25px;
+    transition: 0.3s ease width;
+}
+
+.image-progress-bar-container {
+    width: 180px;
+    height: 16px;
+    border-radius: 25px;
+}
+
+#notification-bar {
+    display: none;
+    position: fixed;
+    top: 0;
+    right: 32px;
+    width: 300px;
+    padding: 32px;
+    border-bottom-right-radius: 16px;
+    border-bottom-left-radius: 16px;
+    flex-direction: column;
+    align-items: end;
+    gap: 16px;
+}
+
+.notification {
+    gap: 12px;
+    overflow: hidden;
+}
+
+.notification-text {
+    height: auto;
+    width: 234px;
+    overflow: hidden;
+}

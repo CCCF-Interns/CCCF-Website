@@ -5,11 +5,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Panel</title>
     <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/admin.css">
     <script src="/script/admin.js" defer></script>
 </head>
 <body>
     <input type="file" id="imageInput" accept="image/*" multiple hidden />
     <button class="button" id="upload-button">Upload Image</button>
     <div id="preview"></div>
+    <div id="notification-bar" class="flex-container bg-yellow"></div>
+    <div id="image-progress" class="flex-container bg-yellow">
+        <div id="image-progress-text">Uploading 522 images...</div>
+        <div class="image-progress-bar-container bg-cream">
+            <div id="image-progress-bar"></div>
+        </div>
+    </div>
 </body>
 </html>

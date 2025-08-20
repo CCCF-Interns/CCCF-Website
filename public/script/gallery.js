@@ -19,7 +19,8 @@ function createImage(title, link, index) {
 
     container.classList.add("grid-item");
     image.classList.add("image");
-
+    image.classList.add("border-radius-8");
+    
     image.src = link;
 
     container.addEventListener("click", () => {
