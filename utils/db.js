@@ -1,4 +1,3 @@
-import dotenv from "dotenv";
 import pkg from "pg";
 const { Pool } = pkg;
 
@@ -6,7 +5,7 @@ let pool;
 
 export function connectClient() {
     pool = new Pool({
-        connectionString: process.env.DATABASE_URL,
+        connectionString: process.env.TESTING == "true" ? process.env.TEST_DATABASE_URL : process.env.DATABASE_URL,
         ssl: {
             rejectUnauthorized: false,
         },
@@ -23,12 +22,32 @@ export async function getData(query, callback) {
     });       
 }
 
+export async function getDataByValueArray(query, valueArray, callback) {
+    await pool.query(query, valueArray, (err, res) => {
+        if (err) {
+            callback(err, null);
+        } else {
+            callback (null, res.rows);
+        }
+    });
+}
+
 export async function insertData(query, valuesArray) {
     const result = await pool.query(query, valuesArray);
     return result;
 }
 
-process.on('SIGINT', async () => {
+export async function deleteDataByValue(query, value) {
+    const result = await pool.query(query, value);
+    return result;
+}
+
+export async function runQuery(query) {
+    const result = await pool.query(query);
+    return result;
+}
+
+process.on("SIGINT", async () => {
     console.log("shutting down...");
     await pool.end();
     console.log("Disconnected from database");

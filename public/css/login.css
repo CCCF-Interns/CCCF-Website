@@ -1,0 +1,25 @@
+.login-form {
+    flex-direction: column;
+    gap: 32px;
+    height: 512px;
+    width: 400px;
+    margin: 64px auto;
+    border-radius: 25px;
+}
+
+input {
+    width: 256px;
+    height: 24px;
+    padding: 4px 8px;
+    border: none;
+    outline: none;
+}
+
+.password-container {
+    padding-right: 8px;
+}
+
+#password-visibility {
+    margin-left: -32px;
+    cursor: pointer;
+}

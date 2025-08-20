@@ -115,6 +115,9 @@
     align-items: center;
     gap: 8px;
 }
+.card button:hover {
+    text-decoration: underline;
+}
 
 /* Secondary Sections */
 .secondary-container {
@@ -152,6 +155,16 @@
 .card-category {
     border: 1px solid gray;
     padding: 2px 8px;
+    color: black;
+    background-color: white;
+    transition: color ease 0.3s;
+    transition: background-color ease 0.3s;
+    cursor: pointer;
+}
+
+.card-category:hover {
+    color: white;
+    background-color: black;
 }
 
 .card-section-2 button {
@@ -211,4 +224,84 @@
     height: 1px;
     width: 100%;
     background-color: rgba(0, 0, 0, 0.15);
+}
+
+@media (max-width: 1600px) and (min-width: 850px) {
+  .hero-text .title {
+    font-size: clamp(1.3rem, 1.5rem + 2vw, 2.5rem);
+  }
+  .hero-text .sub-text {
+    font-size: clamp(1rem, 1rem + 1vw, 1.2rem);
+  }
+}
+
+@media (max-width: 850px) {
+  .hero-text .title {
+    font-size: clamp(1rem, 1rem + 3vw, 1.7rem);
+  }
+  .hero-text .sub-text {
+    font-size: clamp(0.8rem, 0.8rem + 2vw, 1rem);
+  }
+}
+
+@media (max-width: 1100px) {
+  .primary-container {
+    padding: 24px;
+    gap: 32px;
+  }
+  .primary-container .heading {
+    width: 100%;
+    font-size: 2rem;
+    padding: 0 8px;
+  }
+  .cards-container {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 24px;
+  }
+  .card {
+    width: 100%;
+    max-width: 420px;
+    margin: 0 auto;
+  }
+  .card-image {
+    height: 180px;
+  }
+}
+
+@media (max-width: 700px) {
+  .primary-container {
+    padding: 8px;
+    gap: 32px;
+  }
+  .primary-container .heading {
+    font-size: 1.8rem;
+    padding: 0 2px;
+  }
+  .card {
+    max-width: 98vw;
+  }
+  .card-image {
+    height: 120px;
+  }
+}
+
+@media (max-width: 1100px) {
+  .cards-container {
+    flex-direction: column;
+    align-items: center;
+    gap: 24px;
+  }
+  .card {
+    width: 96vw;
+    max-width: 600px;
+    margin: 0 auto;
+  }
+}
+
+@media (max-width: 700px) {
+  .card {
+    width: 98vw;
+    max-width: 98vw;
+  }
 }
