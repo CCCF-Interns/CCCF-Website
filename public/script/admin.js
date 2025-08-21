@@ -23,6 +23,8 @@ const addMemberJob = document.querySelector("#add-member-job");
 const addMemberLevel = document.querySelector("#add-member-level");
 const addMemberDesc = document.querySelector("#add-member-description");
 
+
+const checkCircle = "/assets/svg/check_circle_green.svg";
 let socials = 0;
 let totalNotifs = 0;
 
@@ -361,9 +363,13 @@ submitAddMember.addEventListener("click", async () => {
 
     console.log(result2);
     console.log(result3);
-    
+
     addMemberForm.style.display = "none";
     clearFields();
+
+    createNotification(
+        checkCircle, `Inserted member ${values.name} succesfully!`
+    );
 });
 
 closeAddMember.addEventListener("click", () => {

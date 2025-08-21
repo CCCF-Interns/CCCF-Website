@@ -77,11 +77,21 @@ router.post("/api/member/socials/insert", authAdmin, async (req, res) => {
             itemData.data.socials[i], 
             itemData.data.social_types[i]
         ];
-        
+
         await insertData(query, valuesArray);
     }
     
     res.json("Inserted");
+});
+
+router.get("/api/member", authAdmin, async (req, res) => {
+    const query = "SELECT * FROM team_member ORDER BY job_level DESC, name ASC";
+    getData(query, (err, data) => {
+        if (err) return res.status(500).json({ 
+            message: "Failed to get team members" 
+        });
+        res.json({ data });
+    });
 });
 
 export default router;

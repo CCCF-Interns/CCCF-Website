@@ -1,4 +1,13 @@
 let teamMembers = document.querySelector(".team-members-container");
+let loader = document.querySelector("#loader");
+let membersData;
+
+async function loadData() {
+    const response = await fetch ("/api/member");
+    const result = await response.json();
+
+    membersData = result.data;
+}
 
 function addEmployee(name, title, description, imageSource) {
 
@@ -31,4 +40,13 @@ function addEmployee(name, title, description, imageSource) {
     teamMembers.appendChild(newMember);
 }
 
-addEmployee("Khamzat Chimaev", "Woo", "I kill everybody");
+async function initializeMembers() {
+    await loadData();
+    for (let x of membersData) {
+        addEmployee(x.name, x.job_title, x.description, x.image_url);
+    }
+    document.body.style.overflow = "auto";
+    loader.style.display = "none";
+}
+
+initializeMembers();
