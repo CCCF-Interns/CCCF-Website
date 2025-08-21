@@ -1,3 +1,17 @@
+body {
+    margin-left: 64px;
+    margin-top: 16px;
+}
+
+input {
+    width: 320px;
+    height: 32px;
+    padding: 4px 12px;
+    border-radius: 25px;
+    outline: none;
+    border: 1px solid gray;
+}
+
 #image-progress {
     position: fixed;
     display: none;
@@ -46,4 +60,102 @@
     height: auto;
     width: 234px;
     overflow: hidden;
+}
+
+.heading {
+    margin-top: 32px;
+    margin-bottom: 16px;
+}
+
+.members-container {
+    gap: 16px;
+    justify-content: flex-start;
+}
+
+#add-member-form {
+    display: none;
+    width: 600px;
+    padding: 32px;
+    position: fixed;
+    border-radius: 25px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.add-member-section-1 {
+    gap: 24px;
+}
+
+#add-member-preview {
+    width: 180px;
+}
+
+.add-member-section-1-right {
+    flex-direction: column;
+    gap: 16px;
+}
+
+.add-member-section-2 {
+    margin-top: 16px;
+    flex-direction: column;   
+    gap: 16px;
+}
+
+.add-member-section-2 input {
+    width: 500px;
+}
+
+#add-member-socials-container {
+    flex-direction: column;
+    gap: 16px;
+}
+
+#add-member-description {
+    height: 64px;
+    width: 520px;
+    border-radius: 25px;
+    padding: 12px;
+    resize: none;
+}
+
+textarea:focus {
+    outline: none;
+}
+
+.add-member-social input {
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+    width: 396px;
+}
+
+.add-member-social select {
+    height: 41px;
+    border: 1px solid gray;
+    width: 100px;
+    border-top-right-radius: 25px;
+    border-bottom-right-radius: 25px;
+    border-left: 0
+}
+
+.add-member-social select:focus {
+    outline: 0;
+}
+
+.add-member-social option {
+    outline: 0;
+    border: 0;
+}
+
+.add-member-buttons {
+    gap: 16px;
+    margin-top: 16px;
+}
+
+#add-member-add-social {
+    flex-direction: column;
+}
+
+#add-member-add-social p {
+    font-size: 0.9rem;
 }
