@@ -84,7 +84,7 @@ router.post("/api/member/socials/insert", authAdmin, async (req, res) => {
     res.json("Inserted");
 });
 
-router.get("/api/member", authAdmin, async (req, res) => {
+router.get("/api/member", async (req, res) => {
     const query = "SELECT * FROM team_member ORDER BY job_level DESC, name ASC";
     getData(query, (err, data) => {
         if (err) return res.status(500).json({ 
