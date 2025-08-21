@@ -1,3 +1,7 @@
+body {
+    overflow: hidden;
+}
+
 /* Team Section in about us*/
 .team-section {
     display: flex;
