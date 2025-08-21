@@ -76,7 +76,8 @@ router.post("/api/member/socials/insert", authAdmin, async (req, res) => {
             itemData.data.id,
             itemData.data.socials[i], 
             itemData.data.social_types[i]
-        ]
+        ];
+        
         await insertData(query, valuesArray);
     }
     

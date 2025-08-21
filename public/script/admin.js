@@ -223,7 +223,7 @@ imageInput.addEventListener("change", async () => {
             totalSpeed += progressSpeed;
             imageProgressBar.style.width = `${totalSpeed}%`;
             const errorText = `Could not upload file: ${x.name}`;
-            createNotification("/assets/svg/error_red.svg", errorText)
+            createNotification("/assets/svg/error_red.svg", errorText);
             continue;
         }
         
@@ -259,7 +259,7 @@ imageInput.addEventListener("change", async () => {
         catch(error) {
             console.error(error);
             const errorText = `Could not upload file: ${x.name}`;
-            createNotification("/assets/svg/error_red.svg", errorText)
+            createNotification("/assets/svg/error_red.svg", errorText);
         }
 
         totalSpeed += progressSpeed;
@@ -283,7 +283,7 @@ addMemberImageInput.addEventListener("change", () => {
 
     if (!allowedExt.includes(fileExt)) {
         const errorText = `Could not read file extension: ${file.name}`;
-        createNotification("/assets/svg/error_red.svg", errorText)
+        createNotification("/assets/svg/error_red.svg", errorText);
         return;
     }
 
@@ -316,7 +316,7 @@ submitAddMember.addEventListener("click", async () => {
         catch(error) {
             console.error(error);
             const errorText = `Could not upload file: ${file.name}`;
-            createNotification("/assets/svg/error_red.svg", errorText)
+            createNotification("/assets/svg/error_red.svg", errorText);
         }
     }
     
@@ -357,7 +357,11 @@ submitAddMember.addEventListener("click", async () => {
     });
 
     const result2 = await resp.json();
+    const result3 = await resp2.json();
 
+    console.log(result2);
+    console.log(result3);
+    
     addMemberForm.style.display = "none";
     clearFields();
 });
