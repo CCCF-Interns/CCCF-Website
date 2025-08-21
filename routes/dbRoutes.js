@@ -43,4 +43,45 @@ router.post("/api/gallery/insert", authAdmin, async (req, res) => {
     res.json("Inserted");
 });
 
+router.post("/api/member/insert", authAdmin, async (req, res) => {
+    const query = `
+        INSERT INTO team_member (id, name, job_title, job_level, description, 
+        image_url) VALUES ($1, $2, $3, $4, $5, $6);
+    `;
+    const itemData = req.body;
+
+    const valuesArray = [
+        itemData.data.id,
+        itemData.data.name,
+        itemData.data.job,
+        itemData.data.level,
+        itemData.data.description,
+        itemData.data.image_url
+    ];
+
+    await insertData(query, valuesArray);
+
+    res.json("Inserted");
+});
+
+router.post("/api/member/socials/insert", authAdmin, async (req, res) => {
+    const query = `
+        INSERT INTO team_member_socials (id, social_type, social_url) VALUES (
+        $1, $2, $3);
+    `;
+    const itemData = req.body;
+
+    for (let i = 0; i < itemData.data.socials.length; i++) {
+        const valuesArray = [
+            itemData.data.id,
+            itemData.data.socials[i], 
+            itemData.data.social_types[i]
+        ];
+        
+        await insertData(query, valuesArray);
+    }
+    
+    res.json("Inserted");
+});
+
 export default router;
