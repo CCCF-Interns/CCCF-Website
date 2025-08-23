@@ -362,3 +362,79 @@ body {
         display: block;
     }
 }
+
+/* 1080p (and other middle resolutions) fix */
+@media (min-width: 901px) and (max-width: 1399px) {
+    .team-container {
+        max-width: 1000px;
+        padding: 32px 32px;
+        margin: 0 auto;
+        box-sizing: border-box;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+    .team-members-container {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 32px;
+        width: 100%;
+        max-width: 1000px;
+        margin: 0 auto;
+        box-sizing: border-box;
+    }
+    .team-member {
+        max-width: 220px;
+        width: 100%;
+        border-radius: 16px;
+        background: #f7f7f7;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+        text-align: center;
+        padding: 1rem;
+    }
+    .team-member img {
+        max-width: 180px;
+        width: 100%;
+        height: auto;
+        border-radius: 16px;
+        margin: 0 auto 1rem auto;
+        display: block;
+    }
+}
+
+@media (min-width: 901px) and (max-width: 1399px) {
+    .mission-container,
+    .story-container {
+        padding: 24px 64px;
+        gap: 48px;
+    }
+    .mission-image-container img,
+    .story-image-1,
+    .story-image-2 {
+        max-width: 320px;
+        width: 100%;
+        height: auto;
+        border-radius: 16px;
+    }
+    .mission-text-container,
+    .story-text-container {
+        font-size: 1rem;
+        line-height: 1.6;
+    }
+}
+
+@media (min-width: 901px) and (max-width: 1399px) {
+    .work-container {
+        padding: 32px 32px 48px 32px;
+        gap: 32px;
+    }
+    .work-modal {
+        max-width: 520px;
+        width: 100%;
+        height: auto;
+        font-size: 1rem;
+        border-radius: 16px;
+    }
+}
