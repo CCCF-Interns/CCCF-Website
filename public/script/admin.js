@@ -273,7 +273,7 @@ function addEmployee(id, name, title, level, description, imageSource) {
 
     let values = {
         id: id,
-        key: imageSource.split('/')[3].trim()
+        key: imageSource.split("/")[3].trim()
     };
 
     newMember.addEventListener("click", () => {
