@@ -1,5 +1,5 @@
 import express from "express";
-import { getData, insertData } from "../utils/db.js";
+import { deleteDataByValue, getData, insertData } from "../utils/db.js";
 import authAdmin from "../middleware/authentication.js";
 
 const router = express.Router();
@@ -92,6 +92,28 @@ router.get("/api/member", async (req, res) => {
         });
         res.json({ data });
     });
+});
+
+router.post("/api/member/socials/delete", async (req, res) => {
+    const query = "DELETE FROM team_member_socials WHERE id = $1";
+    try {
+        await deleteDataByValue(query, [req.body.id]);
+        res.json({ message: "socials deleted" });
+    }
+    catch (error) {
+        res.json({ message: "Could not delete socials" });
+    }
+});
+
+router.post("/api/member/delete", async (req, res) => {
+    const query = "DELETE FROM team_member WHERE id = $1";
+    try {
+        await deleteDataByValue(query, [req.body.id]);
+        res.json({ message: "member deleted" });
+    }
+    catch (error) {
+        res.json({ message: "Could not delete member" });
+    }
 });
 
 export default router;

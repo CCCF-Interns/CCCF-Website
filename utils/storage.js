@@ -1,5 +1,6 @@
 import AWS from "aws-sdk";
 import dotenv from "dotenv";
+import { ListObjectsV2Command } from "@aws-sdk/client-s3";
 
 dotenv.config();
 
@@ -19,7 +20,7 @@ const readR2 = new AWS.S3({
     region: "auto",
 });
 
-async function uploadFile(key, file) {
+export async function uploadFile(key, file) {
     await writeR2.putObject({
         Bucket: process.env.R2_BUCKET,
         Key: key,
@@ -28,4 +29,15 @@ async function uploadFile(key, file) {
     }).promise();
 }
 
-export default uploadFile;
+export async function deleteFile(key) {
+  try {
+    await writeR2.deleteObject({
+        Bucket: process.env.R2_BUCKET,
+        Key: key
+    }).promise();
+
+    console.log(`Deleted: ${key}`);
+  } catch (err) {
+    console.error("Error deleting file:", err);
+  }
+}

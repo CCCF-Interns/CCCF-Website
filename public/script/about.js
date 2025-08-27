@@ -22,6 +22,7 @@ function addEmployee(name, title, description, imageSource) {
     let memberTitle = document.createElement("div");
     let memberDescription = document.createElement("div");
 
+    memberImage.classList.add("member-image");
     memberImage.src = imageSource;
     newMember.appendChild(memberImage);
 
