@@ -1,5 +1,6 @@
 const buttonMeow = document.querySelector("#upload-button");
 const imageInput = document.querySelector("#imageInput");
+const bgBlur = document.querySelector("#blur");
 const preview = document.querySelector("#preview");
 const imageProgressContainer = document.querySelector("#image-progress");
 const imageProgressBar = document.querySelector("#image-progress-bar");
@@ -23,10 +24,24 @@ const addMemberJob = document.querySelector("#add-member-job");
 const addMemberLevel = document.querySelector("#add-member-level");
 const addMemberDesc = document.querySelector("#add-member-description");
 
+// Edit and Delete member
+const editMemberButton = document.querySelector("#edit-member");
+const editMemberSubmit = document.querySelector("#edit-member-submit");
+const deleteMemberButton = document.querySelector("#remove-member");
+const deleteMemberSubmit = document.querySelector("#remove-member-submit");
+const deleteMemberClose = document.querySelector("#remove-member-exit");
+
+// team members
+let teamMembers = document.querySelector(".team-members-container");
+let loader = document.querySelector("#loader");
+let membersData;
 
 const checkCircle = "/assets/svg/check_circle_green.svg";
+let isEditing = false;
+let isRemoving = false;
 let socials = 0;
 let totalNotifs = 0;
+let removingMembers = [];
 
 function calculateProgressSpeed(n) {
     return 100/n;
@@ -203,6 +218,106 @@ function clearFields() {
     updateAddSocial();
 }
 
+function closeAll() {
+    addMemberForm.style.display = "none";
+    bgBlur.style.display = "none";
+    teamMembers.style.display = "none";
+    document.querySelector("#edit-member-text").style.display = "none";
+    document.querySelector("#remove-member-container").style.display = "none";
+    isEditing = false;
+    isRemoving = false;
+}
+
+// Creating team members
+async function loadData() {
+    const response = await fetch ("/api/member");
+    const result = await response.json();
+
+    membersData = result.data;
+}
+
+function addEmployee(id, name, title, level, description, imageSource) {
+
+    imageSource = imageSource || "/assets/images/dummyProfile.png";
+
+    let newMember = document.createElement("div");
+    let isClicked = false;
+
+    newMember.classList.add("team-member");
+
+    let memberImage = document.createElement("img");
+    let memberName = document.createElement("div");
+    let memberTitle = document.createElement("div");
+    let memberDescription = document.createElement("div");
+    let memberClicked = document.createElement("img");
+
+    memberImage.classList.add("member-image");
+    memberImage.src = imageSource;
+    newMember.appendChild(memberImage);
+
+    memberName.classList.add("member-name");
+    memberName.textContent = name;
+    newMember.appendChild(memberName);
+
+    memberTitle.classList.add("member-title");
+    memberTitle.textContent = title;
+    newMember.appendChild(memberTitle);
+
+    memberDescription.classList.add("member-description");
+    memberDescription.textContent = description;
+    newMember.appendChild(memberDescription);
+
+    memberClicked.classList.add("clicked");
+    memberClicked.src = checkCircle;
+    newMember.appendChild(memberClicked);
+
+    let values = {
+        id: id,
+        key: imageSource.split("/")[3].trim()
+    };
+
+    newMember.addEventListener("click", () => {
+        if (isEditing) {
+            addMemberImage.src = imageSource;
+            addMemberName.value = name;
+            addMemberJob.value = title;
+            addMemberLevel.value = level;
+            addMemberDesc.value = description;
+            bgBlur.style.display = "block";
+            addMemberForm.style.display = "block";
+        }
+        else if (isRemoving) {
+            if (!isClicked) {
+                removingMembers.push(values);
+                document.querySelector("#select-text").textContent = 
+                    `Selected members: ${removingMembers.length}`;
+                memberClicked.style.display = "block";
+                isClicked = true;
+            }
+            else {
+                removingMembers = removingMembers.filter(x => x !== values);
+                document.querySelector("#select-text").textContent =
+                    `Selected members: ${removingMembers.length}`;
+                memberClicked.style.display = "none";
+                isClicked = false;
+            }
+        }
+    });
+
+    teamMembers.appendChild(newMember);
+}
+
+async function initializeMembers() {
+    await loadData();
+    for (let x of membersData) {
+        addEmployee(x.id, x.name, x.job_title, x.job_level, x.description, 
+            x.image_url);
+    }
+    document.body.style.overflow = "auto";
+    loader.style.display = "none";
+}
+
+// All the event listeners
 buttonMeow.addEventListener("click", () => {
     imageInput.click();
 });
@@ -269,6 +384,8 @@ imageInput.addEventListener("change", async () => {
     }
 
     imageProgressContainer.style.display = "none";
+    const notif = `Successfully uploaded ${files.length} images!`;
+    createNotification(checkCircle, notif);
 });
 
 addMemberPreview.addEventListener("click", () => {
@@ -365,18 +482,102 @@ submitAddMember.addEventListener("click", async () => {
     console.log(result3);
 
     addMemberForm.style.display = "none";
+    bgBlur.style.display = "none";
     clearFields();
 
     createNotification(
-        checkCircle, `Inserted member ${values.name} succesfully!`
+        checkCircle, `Inserted member "${values.name}" succesfully!`
     );
 });
 
 closeAddMember.addEventListener("click", () => {
-    addMemberForm.style.display = "none";
     clearFields();
+    submitAddMember.style.display = "none";
+    addMemberForm.style.display = "none";
+    bgBlur.style.display = "none";
 });
 
 addMemberButton.addEventListener("click", () => {
+    closeAll();
+    submitAddMember.style.display = "flex";
+    editMemberSubmit.style.display = "none";
     addMemberForm.style.display = "block";
+    bgBlur.style.display = "block";
 });
+
+editMemberButton.addEventListener("click", () => {
+    if (!isEditing) {
+        closeAll();
+        teamMembers.style.display = "flex";
+        submitAddMember.style.display = "none";
+        editMemberSubmit.style.display = "flex";
+        document.querySelector("#edit-member-text").style.display = "block";
+        isEditing = true;
+    }
+    else {
+        closeAll();
+        isEditing = false;
+    }
+});
+
+deleteMemberButton.addEventListener("click", () => {
+    const element = document.querySelector("#remove-member-container");
+    if (!isRemoving) {
+        closeAll();
+        teamMembers.style.display = "flex";
+        element.style.display = "flex";
+        isRemoving = true;
+    }
+    else {
+        closeAll();
+        isRemoving = false;
+    }
+});
+
+deleteMemberSubmit.addEventListener("click", async () => {
+    if (removingMembers.length <= 0)
+        return;
+
+    for (let x of removingMembers) {
+        let response = await fetch("/api/delete", {
+            method: "POST",
+            headers: { "Content-Type" : "application/json" },
+            body: JSON.stringify({ key: x.key })
+        });
+
+        let result = await response.json();
+
+        console.log(result);
+
+        response = await fetch("/api/member/socials/delete", {
+            method: "POST",
+            headers: { "Content-Type" : "application/json" },
+            body: JSON.stringify({ id: x.id })
+        });
+
+        result = await response.json();
+
+        console.log(result);
+
+        response = await fetch("/api/member/delete", {
+            method: "POST",
+            headers: { "Content-Type" : "application/json" },
+            body: JSON.stringify({ id: x.id })
+        });
+
+        result = await response.json();
+        
+        console.log(result);
+    }
+
+    removingMembers = [];
+
+    window.location.reload();
+});
+
+deleteMemberClose.addEventListener("click", () => {
+    removingMembers = [];
+    closeAll();
+});
+
+initializeMembers();

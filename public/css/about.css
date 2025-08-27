@@ -228,7 +228,7 @@ body {
     width: 300px;
 }
 
-.team-member img{
+.member-image {
     height: 300px;
     width: 300px;
 }
@@ -353,7 +353,7 @@ body {
         text-align: center;
         padding: 1rem;
     }
-    .team-member img {
+    .member-image {
         width: 100%;
         max-width: 300px;
         height: auto;
@@ -394,7 +394,7 @@ body {
         text-align: center;
         padding: 1rem;
     }
-    .team-member img {
+    .member-image {
         max-width: 180px;
         width: 100%;
         height: auto;
