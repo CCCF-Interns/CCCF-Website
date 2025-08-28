@@ -47,7 +47,6 @@ router.get("/api/blogs/:start/:end", async (req, res) => {
   }`;
     try {
         const blogs = await client.fetch(QUERY);
-        console.log(blogs)
         res.json(blogs);
     } catch (err) {
         res.status(500).json({ 
