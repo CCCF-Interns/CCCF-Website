@@ -33,7 +33,7 @@ router.get("/api/blogs/:start/:end", async (req, res) => {
 });
 
 router.get("/api/blogs/total/", async (req, res) => {
-  const QUERY = `count(*[_type == "post"])`
+  const QUERY = "count(*[_type == \"post\"])";
 
   try {
         const number = await client.fetch(QUERY);
@@ -46,10 +46,10 @@ router.get("/api/blogs/total/", async (req, res) => {
             reason: err
         });
     }
-})
+});
 
 router.get("/api/blog/:id", async (req, res) => {
-    const id = req.params.id
+    const id = req.params.id;
     const QUERY = `*[_type == "post" && _id == "${id}"]{
     title,
     "poster" : mainImage.asset->url,
