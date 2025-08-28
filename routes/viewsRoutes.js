@@ -29,6 +29,10 @@ router.get("/gallery", (req, res) => {
     res.sendFile(path.join(__dirname, "views", "gallery.html"));
 });
 
+router.get("/blogs", (req, res) => {
+    res.sendFile(path.join(__dirname, "views", "blog.html"));
+});
+
 router.get("/admin", adminAuth, (req, res) => {
     console.log("Working");
     res.sendFile(path.join(__dirname, "views", "admin.html"));
