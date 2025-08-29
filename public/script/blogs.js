@@ -14,6 +14,9 @@ async function renderBlogs(start, end) {
         for (const item of data) {
             const card = document.createElement("div");
             card.className = "card";
+            card.addEventListener("click", () => {
+                window.location.href = `/blogs/${item._id}`;
+            });
 
             const posterContainer = document.createElement("div");
             posterContainer.className = "card-poster";

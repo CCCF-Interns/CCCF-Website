@@ -20,18 +20,67 @@
             .then(async data => {
                 document.querySelector('#footer-container').innerHTML = data;
             });
+            
+        const id = window.location.pathname.split("/").pop();
+        fetch(`/api/blog/${id}`)
+            .then(res => res.json())
+            .then(data => {
+                const container = document.querySelector(".container")
+                if (data.error) {
+                    const error = document.createElement("div")
+                    error.className = "error";
+                    error.innerText = "404: No Content";
+                    container.appendChild(error);
+                }
+                else {
+                    const details = data.details[0]
+                    const hero = document.createElement("div")
+                    hero.className = "blog-hero"
+                    const poster = document.createElement("img")
+                    poster.src = details.poster
+                    hero.appendChild(poster)
+
+                    const postInfo = document.createElement("div")
+                    postInfo.className = "post-info"
+                    const title = document.createElement("h1")
+                    title.innerText = details.title
+                    const author = document.createElement("h2")
+                    if (details.author)
+                        author.innerText = details.author.name
+                    const publishedAt = document.createElement("p")
+                    publishedAt.innerText = details.publishedAt.split("T")[0]
+                    const categories = document.createElement("div")
+                    categories.className = "categories"
+                    if (details.categories)
+                        for (category of details.categories) {
+                            const div = document.createElement("div")
+                            div.innerText = category.title
+                            categories.appendChild(div)
+                        }
+                    postInfo.appendChild(title)
+                    postInfo.appendChild(author)
+                    postInfo.appendChild(publishedAt)
+                    postInfo.appendChild(categories)
+
+                    hero.appendChild(postInfo)
+
+                    const body = document.createElement("div")
+                    body.className = "blog-body"
+                    body.innerHTML = data.content;
+
+                    container.appendChild(hero)
+                    container.appendChild(body)
+                }
+            })
     </script>
     <script src='/script/home.js' defer></script>
-    <script src="/script/blogs.js"></script>
 </head>
 <body>
     <div id='header-container'></div>
-    <h1>Blogs</h1>
+
     <div class="container">
         
     </div>
-
-    <div class="paginator"></div>
 
     <div id='footer-container'></div>
 </body>
