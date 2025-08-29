@@ -30,6 +30,10 @@ router.get("/gallery", (req, res) => {
 });
 
 router.get("/blogs", (req, res) => {
+    res.sendFile(path.join(__dirname, "views", "blogs.html"));
+});
+
+router.get("/blogs/:id", (req, res) => {
     res.sendFile(path.join(__dirname, "views", "blog.html"));
 });
 

@@ -1,5 +1,8 @@
 import express from "express";
 import client from "../utils/sanity.js";
+import { toHTML } from "@portabletext/to-html";
+import htm from "htm";
+import vhtml from "vhtml";
 
 const router = express.Router();
 
@@ -65,38 +68,51 @@ router.get("/api/blog/:id", async (req, res) => {
     publishedAt,
     "body": body[]{
       ...,
-      // expand markDefs (annotations, like links)
-      markDefs[]{
-        ...,
-        _type == "link" => {
-          _type,
-          _key,
-          href
-        }
-      },
-      // expand images
+      // if it's an image block, resolve the asset
       _type == "image" => {
         ...,
         asset->{
           _id,
           url,
-          metadata {
-            dimensions,
-            lqip
-          }
+          metadata { lqip, dimensions }
+        }
+      },
+      // if it's a block with marks/annotations, expand them too
+      markDefs[]{
+        ...,
+        _type == "link" => {
+          ...,
+          href
         }
       }
     }
   }`;
+    let content;
     try {
-        const content = await client.fetch(QUERY);
-        res.json(content);
+        content = await client.fetch(QUERY);
     } catch (err) {
-        res.status(500).json({ 
-            error: "Failed to fetch content",
+        return res.json({ 
+            error: "No Content",
             reason: err
         });
     }
+
+    const html = htm.bind(vhtml);
+
+    const myPortableTextComponents = {
+      types: {
+        image: ({value}) => html`<img src="${value.asset.url}" />`,
+      },
+    };
+
+    const htmlContent = toHTML(content[0].body, {
+      components: myPortableTextComponents
+    });
+
+    res.json({
+      details: content,
+      content: htmlContent
+    });
 });
 
 export default router;
