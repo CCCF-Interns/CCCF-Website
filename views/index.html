@@ -140,58 +140,12 @@
                 Stay informed about childhood cancer and our initiatives
             </span>
         </div>
-        <div class='cards-container flex-container'>
-            <div class='card flex-container'>
-                <div class='card-image secondary-image'>
-                    <img class='image' src='#'>
-                </div>
-                <div class='card-section-2 bg-white flex-container'>
-                    <div class='card-header flex-container'>
-                        <div class='card-category'>Awareness</div>
-                        <div class='sub-text'>21 July 2025</div>
-                    </div>
-                    <h3 class='card-heading'>Understanding Childhood Cancer Symptoms</h3>
-                    <div>Learn how to recognize early signs of childhood cancer in your child</div>
-                    <button class='transparent-button button-container'>
-                        Donate
-                        <img src='/assets/svg/chevron_right.svg'>
-                    </button>
-                </div>
+        <div style="position:relative;">
+            <button id="blogs-prev-btn" class="button-invert blogs-nav-btn" style="display:none; position:absolute; left:-60px; top:50%; transform:translateY(-50%); z-index:2;">&#60;</button>
+            <div class='cards-container flex-container' id='latest-blogs'>
+                <!-- Blog cards will be injected here -->
             </div>
-            <div class='card flex-container'>
-                <div class='card-image secondary-image'>
-                    <img class='image' src='#'>
-                </div>
-                <div class='card-section-2 bg-white flex-container'>
-                    <div class='card-header flex-container'>
-                        <div class='card-category'>Awareness</div>
-                        <div class='sub-text'>21 July 2025</div>
-                    </div>
-                    <h3 class='card-heading'>Understanding Childhood Cancer Symptoms</h3>
-                    <div>Learn how to recognize early signs of childhood cancer in your child</div>
-                    <button class='transparent-button button-container'>
-                        Donate
-                        <img src='/assets/svg/chevron_right.svg'>
-                    </button>
-                </div>
-            </div>
-            <div class='card flex-container'>
-                <div class='card-image secondary-image'>
-                    <img class='image' src='./assets/images/cover.webp'/>
-                </div>
-                <div class='card-section-2 bg-white flex-container'>
-                    <div class='card-header flex-container'>
-                        <div class='card-category'>Awareness</div>
-                        <div class='sub-text'>21 July 2025</div>
-                    </div>
-                    <h3 class='card-heading'>Understanding Childhood Cancer Symptoms</h3>
-                    <div>Learn how to recognize early signs of childhood cancer in your child</div>
-                    <button class='transparent-button button-container'>
-                        Donate
-                        <img src='/assets/svg/chevron_right.svg'>
-                    </button>
-                </div>
-            </div>
+            <button id="blogs-next-btn" class="button-invert blogs-nav-btn" style="position:absolute; right:-60px; top:50%; transform:translateY(-50%); z-index:2;">&#62;</button>
         </div>
     </div>
     <div class='secondary-container bg-yellow flex-container align-start'>
