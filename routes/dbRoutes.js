@@ -66,7 +66,7 @@ router.post("/api/member/insert", authAdmin, async (req, res) => {
 
 router.post("/api/member/socials/insert", authAdmin, async (req, res) => {
     const query = `
-        INSERT INTO team_member_socials (id, social_type, social_url) VALUES (
+        INSERT INTO team_member_socials (id, social_url, social_type) VALUES (
         $1, $2, $3);
     `;
     const itemData = req.body;
@@ -89,6 +89,16 @@ router.get("/api/member", async (req, res) => {
     getData(query, (err, data) => {
         if (err) return res.status(500).json({ 
             message: "Failed to get team members" 
+        });
+        res.json({ data });
+    });
+});
+
+router.get("/api/member/socials", async (req, res) => {
+    const query = "SELECT * FROM team_member_socials";
+    getData(query, (err, data) => {
+        if (err) return res.status(500).json({ 
+            message: "Failed to get team members social" 
         });
         res.json({ data });
     });
