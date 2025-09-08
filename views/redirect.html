@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+    <meta charset='UTF-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+    <meta http-equiv="refresh" id="meta"/>
+    <title>CCCF</title>
+    <link rel='stylesheet' href='/css/style.css' />
+    <link rel='stylesheet' href='/css/header.css'>
+    <link rel="stylesheet" href="/css/footer.css">
+    <link rel="stylesheet" href="/css/redirect.css">
+    <script>
+        fetch('/header.html')
+            .then(res => res.text())
+            .then(async data => {
+                document.querySelector('#header-container').innerHTML = data;
+                await import('/script/header.js');
+            });
+        fetch('/footer.html')
+            .then(res => res.text())
+            .then(async data => {
+                document.querySelector('#footer-container').innerHTML = data;
+            });
+    </script>
+    <script src='/script/redirect.js' defer></script>
+</head>
+<body>
+    <div id='header-container'></div>
+    <h2 id="text" class="redirect-text"></h2>
+    <p class="redirect-sub-text">If it doesn't happen automatically, 
+        <a id="link" href="#"><u>click here</u></a>
+    </p>
+    <div id='footer-container'></div>
+</body>
+</html>
