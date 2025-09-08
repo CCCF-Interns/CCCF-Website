@@ -2,18 +2,52 @@
     box-sizing: border-box;
 }
 
-.container {
-    display: flex;
-    justify-content: center;
-    padding: 5rem 3rem;
-    gap: 2rem;
-    flex-wrap: wrap;
-}
-
 h1 {
     text-align: center;
     font-size: 2rem;
     margin-top: 1rem;
+}
+
+.selections {
+    margin-top: 1.5rem;
+    display: flex;
+    background-color: black;
+    color: white;
+    gap: 1rem;
+    padding: 1rem;
+    justify-content: center;
+    align-items: center;
+}
+
+.selections input {
+    width: 20rem;
+}
+
+.selections input, .selections select, .selections button {
+    padding: 0.2rem 0.8rem;
+    border-radius: 8px;
+}
+
+.selections input {
+    border: 3px solid black;
+}
+
+.selections input:focus {
+    outline: none; 
+    border: 3px solid blue;
+}
+
+.selections button:hover {
+    padding: 0.2rem 0.8rem;
+    border-radius: 8px;
+}
+
+.container {
+    display: flex;
+    justify-content: center;
+    padding: 3rem 3rem;
+    gap: 2rem;
+    flex-wrap: wrap;
 }
 
 .card {
