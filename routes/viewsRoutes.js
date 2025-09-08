@@ -46,4 +46,8 @@ router.get("/login", (req, res) => {
     res.sendFile(path.join(__dirname, "views", "login.html"));
 });
 
+router.get("/redirect/:name", (req, res) => {
+    res.sendFile(path.join(__dirname, "views", "redirect.html"));
+});
+
 export default router;
