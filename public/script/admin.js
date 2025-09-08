@@ -35,6 +35,7 @@ const deleteMemberClose = document.querySelector("#remove-member-exit");
 let teamMembers = document.querySelector(".team-members-container");
 let loader = document.querySelector("#loader");
 let membersData;
+let membersSocials;
 
 const checkCircle = "/assets/svg/check_circle_green.svg";
 let isEditing = false;
@@ -93,7 +94,7 @@ function updateNotificationBar() {
     }
 }
 
-function createSocialInput() {
+function createSocialInput(url, select_val) {
     const container = document.createElement("div");
     const input = document.createElement("input");
     const select = document.createElement("select");
@@ -119,7 +120,9 @@ function createSocialInput() {
     option3.text = "Facebook";
     option4.value = "I";
     option4.text = "Instagram";
-    
+
+    input.value = url || "";
+
     remove.addEventListener("click", () => {
         socialsContainer.removeChild(container);
         --socials;
@@ -131,6 +134,9 @@ function createSocialInput() {
     select.appendChild(option3);
     select.appendChild(option4);
     container.appendChild(input);
+
+    select.value = select_val || "X";
+
     container.appendChild(select);
     container.appendChild(remove);
 
@@ -141,6 +147,7 @@ function createSocialInput() {
 }
 
 function updateAddSocial() {
+    console.log(socials);
     if (socials >= 3) {
         addSocialContainer.style.display = "none";
     }
@@ -197,6 +204,7 @@ function checkFields() {
 }
 
 function clearFields() {
+    addMemberImage.src = "/assets/images/dummyProfile.png";
     addMemberName.value = "";
     addMemberJob.value = "";
     addMemberLevel.value = "";
@@ -230,10 +238,15 @@ function closeAll() {
 
 // Creating team members
 async function loadData() {
-    const response = await fetch ("/api/member");
-    const result = await response.json();
-
+    let response = await fetch ("/api/member");
+    let result = await response.json();
     membersData = result.data;
+
+    response = await fetch("/api/member/socials");
+    result = await response.json();
+    membersSocials = result.data;
+
+    console.log(membersSocials);
 }
 
 function addEmployee(id, name, title, level, description, imageSource) {
@@ -276,15 +289,28 @@ function addEmployee(id, name, title, level, description, imageSource) {
         key: imageSource.split("/")[3].trim()
     };
 
-    newMember.addEventListener("click", () => {
+    let socialValues = membersSocials.filter(item => item.id === id);
+
+    newMember.addEventListener("click", async () => {
         if (isEditing) {
             addMemberImage.src = imageSource;
             addMemberName.value = name;
             addMemberJob.value = title;
             addMemberLevel.value = level;
             addMemberDesc.value = description;
+
             bgBlur.style.display = "block";
             addMemberForm.style.display = "block";
+
+            for (let i = 0; i < socialValues.length; i++) {
+                const socialUrl = socialValues[i]["social_url"];
+                const socialType = socialValues[i]["social_type"];
+                createSocialInput(socialUrl, socialType);
+            }
+
+            updateAddSocial();
+            await setFileInputFromUrl(imageSource, addMemberImageInput);
+            removingMembers.push(values);
         }
         else if (isRemoving) {
             if (!isClicked) {
@@ -315,6 +341,157 @@ async function initializeMembers() {
     }
     document.body.style.overflow = "auto";
     loader.style.display = "none";
+}
+
+async function removeMembers(imageDelete) {
+    if (removingMembers.length <= 0)
+        return;
+
+    let response;
+    let result;
+    
+    for (let x of removingMembers) {
+        if (imageDelete) {
+            response = await fetch("/api/delete", {
+                method: "POST",
+                headers: { "Content-Type" : "application/json" },
+                body: JSON.stringify({ key: x.key })
+            });
+
+            result = await response.json();
+
+            console.log(result);
+        }
+
+        response = await fetch("/api/member/socials/delete", {
+            method: "POST",
+            headers: { "Content-Type" : "application/json" },
+            body: JSON.stringify({ id: x.id })
+        });
+
+        result = await response.json();
+
+        console.log(result);
+
+        response = await fetch("/api/member/delete", {
+            method: "POST",
+            headers: { "Content-Type" : "application/json" },
+            body: JSON.stringify({ id: x.id })
+        });
+
+        result = await response.json();
+        
+        console.log(result);
+    }
+
+    removingMembers = [];
+}
+
+async function addMember() {
+    if (checkFields() === false) {
+        return;
+    }
+
+    const file = addMemberImageInput.files[0];
+    let result = null;
+    if (file) {
+        console.log("Selected File:", file);
+
+        const formData = new FormData();
+        formData.append("image", file);
+
+        try {
+            const response = await fetch("/api/upload", {
+                method: "POST",
+                body: formData
+            });
+
+            result = await response.json();
+        }
+        catch(error) {
+            console.error(error);
+            const errorText = `Could not upload file: ${file.name}`;
+            createNotification("/assets/svg/error_red.svg", errorText);
+        }
+    }
+    
+    const image_url = result.values.image_url || null;
+
+    let values = {
+        id: crypto.randomUUID(),
+        name: addMemberName.value,
+        job: addMemberJob.value,
+        level: addMemberLevel.value,
+        image_url: image_url,
+        description: addMemberDesc.value,
+        socials: [],
+        social_types: []
+    };
+
+    if (socials > 0) {
+        const socialConts = document.querySelectorAll(".add-member-social");
+        socialConts.forEach((e) => {
+            const social = e.querySelector("input");
+            const type = e.querySelector(".add-member-social-dropdown");
+            
+            values.socials.push(social.value);
+            values.social_types.push(type.value);
+        });
+    }
+
+    const resp = await fetch("/api/member/insert", {
+        method: "POST",
+        headers: { "Content-Type" : "application/json" },
+        body: JSON.stringify({ data: values })
+    });
+
+    const resp2 = await fetch("/api/member/socials/insert", {
+        method: "POST",
+        headers: { "Content-Type" : "application/json" },
+        body: JSON.stringify({ data: values })
+    });
+
+    const result2 = await resp.json();
+    const result3 = await resp2.json();
+
+    console.log(result2);
+    console.log(result3);
+
+    addMemberForm.style.display = "none";
+    bgBlur.style.display = "none";
+    clearFields();
+
+    createNotification(
+        checkCircle, `Inserted member "${values.name}" succesfully!`
+    );
+}
+
+function loadAddImage() {
+    const file = addMemberImageInput.files[0];
+    if (!file) return;
+
+    const fileSplit = file.name.split(".");
+    const fileExt = fileSplit[fileSplit.length - 1];
+    const allowedExt = ["png", "jpg", "webp", "svg", "gif"];
+
+    if (!allowedExt.includes(fileExt)) {
+        const errorText = `Could not read file extension: ${file.name}`;
+        createNotification("/assets/svg/error_red.svg", errorText);
+        return;
+    }
+
+    addMemberImage.src = URL.createObjectURL(file);
+}
+
+async function setFileInputFromUrl(url, input) {
+    const response = await fetch(url);
+    const blob = await response.blob();
+    const fileName = url.split("/").pop();
+    const file = new File([blob], fileName, { type: blob.type });
+
+    const dataTransfer = new DataTransfer();
+    dataTransfer.items.add(file);
+    input.files = dataTransfer.files;
 }
 
 // All the event listeners
@@ -393,108 +570,24 @@ addMemberPreview.addEventListener("click", () => {
 });
 
 addMemberImageInput.addEventListener("change", () => {
-    const file = addMemberImageInput.files[0];
-    if (!file) return;
-
-    const fileSplit = file.name.split(".");
-    const fileExt = fileSplit[fileSplit.length - 1];
-    const allowedExt = ["png", "jpg", "webp", "svg", "gif"];
-
-    if (!allowedExt.includes(fileExt)) {
-        const errorText = `Could not read file extension: ${file.name}`;
-        createNotification("/assets/svg/error_red.svg", errorText);
-        return;
-    }
-
-    addMemberImage.src = URL.createObjectURL(file);
+    loadAddImage();
 });
 
-addSocial.addEventListener("click", createSocialInput);
+addSocial.addEventListener("click", () => {
+    createSocialInput(null, null);
+});
 
 submitAddMember.addEventListener("click", async () => {
-    if (checkFields() === false) {
-        return;
-    }
-
-    const file = addMemberImageInput.files[0];
-    let result = null;
-    if (file) {
-        console.log("Selected File:", file);
-
-        const formData = new FormData();
-        formData.append("image", file);
-
-        try {
-            const response = await fetch("/api/upload", {
-                method: "POST",
-                body: formData
-            });
-
-            result = await response.json();
-        }
-        catch(error) {
-            console.error(error);
-            const errorText = `Could not upload file: ${file.name}`;
-            createNotification("/assets/svg/error_red.svg", errorText);
-        }
-    }
-    
-    const image_url = result.values.image_url || null;
-
-    let values = {
-        id: crypto.randomUUID(),
-        name: addMemberName.value,
-        job: addMemberJob.value,
-        level: addMemberLevel.value,
-        image_url: image_url,
-        description: addMemberDesc.value,
-        socials: [],
-        social_types: []
-    };
-
-    if (socials > 0) {
-        const socialConts = document.querySelectorAll(".add-member-social");
-        socialConts.forEach((e) => {
-            const social = e.querySelector("input");
-            const type = e.querySelector(".add-member-social-dropdown");
-            
-            values.socials.push(social.value);
-            values.social_types.push(type.value);
-        });
-    }
-
-    const resp = await fetch("/api/member/insert", {
-        method: "POST",
-        headers: { "Content-Type" : "application/json" },
-        body: JSON.stringify({ data: values })
-    });
-
-    const resp2 = await fetch("/api/member/socials/insert", {
-        method: "POST",
-        headers: { "Content-Type" : "application/json" },
-        body: JSON.stringify({ data: values })
-    });
-
-    const result2 = await resp.json();
-    const result3 = await resp2.json();
-
-    console.log(result2);
-    console.log(result3);
-
-    addMemberForm.style.display = "none";
-    bgBlur.style.display = "none";
-    clearFields();
-
-    createNotification(
-        checkCircle, `Inserted member "${values.name}" succesfully!`
-    );
+    await addMember();
 });
 
 closeAddMember.addEventListener("click", () => {
     clearFields();
+    socialsContainer.textContent = "";
     submitAddMember.style.display = "none";
     addMemberForm.style.display = "none";
     bgBlur.style.display = "none";
+    removingMembers = [];
 });
 
 addMemberButton.addEventListener("click", () => {
@@ -513,11 +606,20 @@ editMemberButton.addEventListener("click", () => {
         editMemberSubmit.style.display = "flex";
         document.querySelector("#edit-member-text").style.display = "block";
         isEditing = true;
+        loadAddImage();
+        removingMembers = [];
     }
     else {
         closeAll();
         isEditing = false;
+        removingMembers = [];
     }
+});
+
+editMemberSubmit.addEventListener("click", async () => {
+    loadAddImage();
+    await addMember();
+    await removeMembers(false);
 });
 
 deleteMemberButton.addEventListener("click", () => {
@@ -527,52 +629,17 @@ deleteMemberButton.addEventListener("click", () => {
         teamMembers.style.display = "flex";
         element.style.display = "flex";
         isRemoving = true;
+        removingMembers = [];
     }
     else {
         closeAll();
         isRemoving = false;
+        removingMembers = [];
     }
 });
 
 deleteMemberSubmit.addEventListener("click", async () => {
-    if (removingMembers.length <= 0)
-        return;
-
-    for (let x of removingMembers) {
-        let response = await fetch("/api/delete", {
-            method: "POST",
-            headers: { "Content-Type" : "application/json" },
-            body: JSON.stringify({ key: x.key })
-        });
-
-        let result = await response.json();
-
-        console.log(result);
-
-        response = await fetch("/api/member/socials/delete", {
-            method: "POST",
-            headers: { "Content-Type" : "application/json" },
-            body: JSON.stringify({ id: x.id })
-        });
-
-        result = await response.json();
-
-        console.log(result);
-
-        response = await fetch("/api/member/delete", {
-            method: "POST",
-            headers: { "Content-Type" : "application/json" },
-            body: JSON.stringify({ id: x.id })
-        });
-
-        result = await response.json();
-        
-        console.log(result);
-    }
-
-    removingMembers = [];
-
-    window.location.reload();
+    await removeMembers(true);
 });
 
 deleteMemberClose.addEventListener("click", () => {
