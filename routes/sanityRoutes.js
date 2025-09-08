@@ -9,7 +9,25 @@ const router = express.Router();
 router.get("/api/blogs/:start/:end", async (req, res) => {
     const start = req.params.start;
     const end = req.params.end;
-    const QUERY = `*[_type == "post"] | order(publishedAt desc) [${start}..${end}]{
+    let category, searchString, sortBy;
+    try {
+      category = req.body.category
+      searchString = req.body.searchString
+      sortBy = req.body.sortBy
+    }
+    catch (e) {
+        category = category ? category : "*"
+        searchString = searchString ? `*${searchString}*` : "*"
+        sortBy = !sortBy ? "publishedAt desc" : sortBy
+    }
+
+    if (sortBy == "name")
+      sortBy = "title asc"
+
+    let QUERY = `*[_type == "post" &&
+    title match "${searchString}"`
+    QUERY += category != "*" ? `&& ${category} in categories[]->title` : ""
+    QUERY += `] | order(${sortBy}) [${start}..${end}] {
     _id,
     title,
     "poster" : mainImage.asset->url,
@@ -26,22 +44,10 @@ router.get("/api/blogs/:start/:end", async (req, res) => {
   }`;
     try {
         const blogs = await client.fetch(QUERY);
-        res.json(blogs);
-    } catch (err) {
-        res.status(500).json({ 
-            error: "Failed to fetch content",
-            reason: err
-        });
-    }
-});
-
-router.get("/api/blogs/total/", async (req, res) => {
-  const QUERY = "count(*[_type == \"post\"])";
-
-  try {
-        const number = await client.fetch(QUERY);
+        const total = blogs.length;
         res.json({
-          "number": number
+          blogs: blogs,
+          total: total 
         });
     } catch (err) {
         res.status(500).json({ 
@@ -113,6 +119,21 @@ router.get("/api/blog/:id", async (req, res) => {
       details: content,
       content: htmlContent
     });
+});
+
+router.get("/api/blogs/categories", async (req, res) => {
+  const QUERY = `*[_type == "category"] | order(title asc) {
+  title
+  }`;
+    try {
+        const categories = await client.fetch(QUERY);
+        res.json(categories);
+    } catch (err) {
+        res.status(500).json({ 
+            error: "Failed to fetch content",
+            reason: err
+        });
+    }
 });
 
 export default router;

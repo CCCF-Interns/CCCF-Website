@@ -11,8 +11,8 @@ h1 {
 .selections {
     margin-top: 1.5rem;
     display: flex;
-    background-color: black;
-    color: white;
+    background-color: #FFD34B;
+    color: black;
     gap: 1rem;
     padding: 1rem;
     justify-content: center;
@@ -29,7 +29,7 @@ h1 {
 }
 
 .selections input {
-    border: 3px solid black;
+    border: 3px solid #FFD34B;
 }
 
 .selections input:focus {
@@ -37,9 +37,13 @@ h1 {
     border: 3px solid blue;
 }
 
+.selections button {
+    background-color: black;
+    color: white;
+}
+
 .selections button:hover {
-    padding: 0.2rem 0.8rem;
-    border-radius: 8px;
+    background-color: gray;
 }
 
 .container {
