@@ -35,13 +35,50 @@ router.get("/api/blogs/:start/:end", async (req, res) => {
     }
 });
 
-router.get("/api/blogs/total/", async (req, res) => {
-  const QUERY = "count(*[_type == \"post\"])";
+router.get("/api/blogs/:category/:sortBy/:searchString/:start/:end", async (req, res) => {
+    const start = req.params.start;
+    const end = req.params.end;
+    let category = req.params.category;
+    let sortBy = req.params.sortBy;
+    let searchString = req.params.searchString;
+    if (searchString !== "_all_")
+      searchString = searchString.replaceAll("_", " ");
 
-  try {
-        const number = await client.fetch(QUERY);
+    const range = `[${start}..${end}]`;
+
+    category = category !== "all" ? category : "*";
+    searchString = searchString === "_all_" ? "*" : `*${searchString}*`;
+    sortBy = sortBy !== "name" ? "publishedAt desc" : "title asc";
+
+    let QUERY = `*[_type == "post" &&
+    title match "${searchString}"`;
+    QUERY += category != "*" ? `&& "${category}" in categories[]->title` : "";
+    QUERY += `] | order(${sortBy}) ${range} {
+      _id,
+      title,
+      "poster" : mainImage.asset->url,
+      author-> {
+        name,
+        "image" : image.asset->url,
+        bio
+      },
+      categories[]-> {
+        title, 
+        description
+      },
+      publishedAt
+    }`;
+  
+    let countQUERY = QUERY.split("{")[0];
+    countQUERY = "count(" + countQUERY + ")";
+    countQUERY = countQUERY.replace(range, "");
+
+    try {
+        const blogs = await client.fetch(QUERY);
+        const total = await client.fetch(countQUERY);
         res.json({
-          "number": number
+          blogs: blogs,
+          total: total 
         });
     } catch (err) {
         res.status(500).json({ 
@@ -113,6 +150,21 @@ router.get("/api/blog/:id", async (req, res) => {
       details: content,
       content: htmlContent
     });
+});
+
+router.get("/api/blogs/categories", async (req, res) => {
+  const QUERY = `*[_type == "category"] | order(title asc) {
+  title
+  }`;
+    try {
+        const categories = await client.fetch(QUERY);
+        res.json(categories);
+    } catch (err) {
+        res.status(500).json({ 
+            error: "Failed to fetch content",
+            reason: err
+        });
+    }
 });
 
 export default router;

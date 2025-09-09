@@ -88,7 +88,7 @@ document.addEventListener("DOMContentLoaded", () => {
         <div class='card-header flex-container'>
           <div class='card-category'>${blog.categories?.[0]?.title || "Awareness"}</div>
           <div class='sub-text'>
-            ${blog.publishedAt ? new Date(blog.publishedAt).toLocaleDateString('en-GB',{day:'2-digit',month:'long',year:'numeric'}) : ""}
+            ${blog.publishedAt ? new Date(blog.publishedAt).toLocaleDateString("en-GB",{day:"2-digit",month:"long",year:"numeric"}) : ""}
           </div>
         </div>
         <h3 class='card-heading'>${blog.title}</h3>
