@@ -9,25 +9,7 @@ const router = express.Router();
 router.get("/api/blogs/:start/:end", async (req, res) => {
     const start = req.params.start;
     const end = req.params.end;
-    let category, searchString, sortBy;
-    try {
-      category = req.body.category
-      searchString = req.body.searchString
-      sortBy = req.body.sortBy
-    }
-    catch (e) {
-        category = category ? category : "*"
-        searchString = searchString ? `*${searchString}*` : "*"
-        sortBy = !sortBy ? "publishedAt desc" : sortBy
-    }
-
-    if (sortBy == "name")
-      sortBy = "title asc"
-
-    let QUERY = `*[_type == "post" &&
-    title match "${searchString}"`
-    QUERY += category != "*" ? `&& ${category} in categories[]->title` : ""
-    QUERY += `] | order(${sortBy}) [${start}..${end}] {
+    const QUERY = `*[_type == "post"] | order(publishedAt desc) [${start}..${end}]{
     _id,
     title,
     "poster" : mainImage.asset->url,
@@ -44,7 +26,52 @@ router.get("/api/blogs/:start/:end", async (req, res) => {
   }`;
     try {
         const blogs = await client.fetch(QUERY);
-        const total = blogs.length;
+        res.json(blogs);
+    } catch (err) {
+        res.status(500).json({ 
+            error: "Failed to fetch content",
+            reason: err
+        });
+    }
+});
+
+router.get("/api/blogsP/:start/:end", async (req, res) => {
+    const start = req.params.start;
+    const end = req.params.end;
+    let category, searchString, sortBy;
+    if (req.body) {
+      category = req.body.category
+      searchString = req.body.searchString
+      sortBy = req.body.sortBy
+    }
+
+    category = category !== "all" && category ? category : "*"
+    searchString = searchString ? `*${searchString}*` : "*"
+    sortBy = sortBy !== "name" ? "publishedAt desc" : "title asc"
+
+    let QUERY = `*[_type == "post" &&
+    title match "${searchString}"`
+    QUERY += category != "*" ? `&& "${category}" in categories[]->title` : ""
+    QUERY += `] | order(${sortBy}) [${start}..${end}] {
+    _id,
+    title,
+    "poster" : mainImage.asset->url,
+    author-> {
+      name,
+      "image" : image.asset->url,
+      bio
+    },
+    categories[]-> {
+      title, 
+      description
+    },
+    publishedAt
+  }`;
+    let countQUERY = QUERY.split("{")[0]
+    countQUERY = "count(" + countQUERY + ")";
+    try {
+        const blogs = await client.fetch(QUERY);
+        const total = await client.fetch(countQUERY);
         res.json({
           blogs: blogs,
           total: total 
