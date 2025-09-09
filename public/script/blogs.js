@@ -1,7 +1,7 @@
 let lastActive;
-let globCategory = "all"
-let globSortBy = "date"
-let globSearchString = "_all_"
+let globCategory = "all";
+let globSortBy = "date";
+let globSearchString = "_all_";
 
 document.addEventListener("DOMContentLoaded", function () {
     renderCategories();
@@ -14,15 +14,15 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 async function renderBlogs(start, end, category, sortBy, searchString) {
-    searchString = searchString.replaceAll(" ", "_")
+    searchString = searchString.replaceAll(" ", "_");
     fetch(`/api/blogs/${category}/${sortBy}/${searchString}/${start}/${end}`)
     .then(res => res.json())
     .then(res => {
         const container = document.querySelector(".container");
-        const data = res.blogs 
-        const total = res.total
+        const data = res.blogs; 
+        const total = res.total;
         if (document.querySelector(".paginator").innerHTML === "")
-            renderPaginator(total)
+            renderPaginator(total);
 
         for (const item of data) {
             const card = document.createElement("div");
@@ -91,7 +91,7 @@ async function renderPaginator(total) {
     }
     const container = document.querySelector(".paginator");
     container.appendChild(paginator);
-    document.querySelectorAll(".page").forEach((page) => page.addEventListener("click", changePage))
+    document.querySelectorAll(".page").forEach((page) => page.addEventListener("click", changePage));
 }
 
 async function changePage(e) {
@@ -112,12 +112,12 @@ async function changePage(e) {
 }
 
 async function handleFilter() {
-    globCategory = document.querySelector("#categories").value
-    globSortBy = document.querySelector("#sort").value
-    let search = document.querySelector(".selections input").value
-    globSearchString = search !== "" ? search : "_all_"
-    document.querySelector(".container").innerHTML = ""
-    document.querySelector(".paginator").innerHTML = ""
+    globCategory = document.querySelector("#categories").value;
+    globSortBy = document.querySelector("#sort").value;
+    let search = document.querySelector(".selections input").value;
+    globSearchString = search !== "" ? search : "_all_";
+    document.querySelector(".container").innerHTML = "";
+    document.querySelector(".paginator").innerHTML = "";
     renderBlogs(0, 5, globCategory, globSortBy, globSearchString);
 }
 
@@ -125,12 +125,12 @@ async function renderCategories() {
     fetch("/api/blogs/categories")
     .then(res => res.json())
     .then(data => {
-        const categories = document.querySelector("#categories")
+        const categories = document.querySelector("#categories");
         for (const cat of data) {
-            const option = document.createElement("option")
-            option.value = cat.title
-            option.text = cat.title
-            categories.appendChild(option)
+            const option = document.createElement("option");
+            option.value = cat.title;
+            option.text = cat.title;
+            categories.appendChild(option);
         }
-    })
+    });
 }
