@@ -18,7 +18,10 @@
             });
         fetch("/footer.html")
             .then(res => res.text())
-            .then(data => { document.querySelector("#footer-container").innerHTML = data; });
+            .then(async data => { 
+                document.querySelector("#footer-container").innerHTML = data; 
+                await import("/script/footer.js");
+            });
     </script>
     <script src="/script/home.js" defer></script>
     <script src="/script/donate.js" defer></script>
