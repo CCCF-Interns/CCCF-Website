@@ -19,6 +19,7 @@
             .then(res => res.text())
             .then(async data => {
                 document.querySelector("#footer-container").innerHTML = data;
+                await import("/script/footer.js");
             });
     </script>
     <script src="/script/login.js" defer></script>

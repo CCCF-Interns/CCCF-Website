@@ -93,7 +93,7 @@ document.addEventListener("DOMContentLoaded", () => {
         </div>
         <h3 class='card-heading'>${blog.title}</h3>
         <div>${blog.excerpt || "Learn how to recognize early signs of childhood cancer in your child"}</div>
-        <a href="/blog/${blog._id}" class='transparent-button button-container'>
+        <a href="/blogs/${blog._id}" class='transparent-button button-container'>
           Read More
           <img src='/assets/svg/chevron_right.svg' alt='Read More'>
         </a>

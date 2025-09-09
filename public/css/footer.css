@@ -115,6 +115,7 @@
     bottom: 32px;
     height: 72px;
     width: 72px;
+    transition: 0.25s ease transform;
 }
 #whatsapp-button {
     border-radius: 100%;
@@ -122,6 +123,39 @@
     height: 100%;
     padding: 12px;
     box-shadow: 0px 4px 0px rgba(0, 0, 0, 0.15);
+    background-color: whitesmoke;
+}
+#bubble {
+    position: absolute;
+    background: whitesmoke;
+    color: #000000;
+    font-family: Arial;
+    font-size: 1rem;
+    line-height: 48px;
+    text-align: center;
+    width: 128px;
+    height: 48px;
+    border-radius: 10px;
+    bottom: 64px;     
+    right: 64px;
+    margin-bottom: 8px;
+    padding: 0px;
+    opacity: 0%;
+    transition: 0.25s ease opacity;
+    display: none;
+}
+#bubble:after {
+    content: '';
+    position: absolute;
+    display: block;
+    width: 0;
+    z-index: 1;
+    border-style: solid;
+    border-width: 0 20px 20px 0;
+    border-color: transparent whitesmoke transparent transparent;
+    bottom: -10px;    
+    right: 20px; 
+    margin-left: -10px;
 }
 @media (max-width: 1200px) {
   .footer-container,

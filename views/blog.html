@@ -19,6 +19,7 @@
             .then(res => res.text())
             .then(async data => {
                 document.querySelector('#footer-container').innerHTML = data;
+                await import("/script/footer.js");
             });
             
         const id = window.location.pathname.split("/").pop();
