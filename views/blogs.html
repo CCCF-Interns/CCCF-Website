@@ -26,18 +26,16 @@
 </head>
 <body>
     <div id='header-container'></div>
-    <h1>Blogs</h1>
-    <form class="selections" action="">
+    <form class="selections">
         <input type="text" placeholder="Search Blog By Name" name="" id="" maxlength="64">
         <span>Category</span>
-        <select name="" id="">
-            <option value="">All</option>
-            <option value="">Special</option>
+        <select name="category" id="categories">
+            <option value="all">All</option>
         </select>
         <span>Sort by</span>
-        <select name="" id="">
-            <option value="">Date</option>
-            <option value="">Name</option>
+        <select name="sortBy" id="sort">
+            <option value="date">Date</option>
+            <option value="name">Name</option>
         </select>
         <button>Apply</button>
     </form>
