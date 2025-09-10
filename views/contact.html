@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+    <meta charset='UTF-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+    <title>About Us | CCCF</title>
+    <link rel='stylesheet' href='/css/style.css'>
+    <link rel='stylesheet' href='/css/contact.css'>
+    <link rel='stylesheet' href='/css/header.css'>
+    <link rel="stylesheet" href="/css/footer.css">
+    <script>
+        fetch('/header.html')
+            .then(res => res.text())
+            .then(async data => {
+                document.querySelector('#header-container').innerHTML = data;
+                await import('/script/header.js');
+            });
+        fetch('/footer.html')
+            .then(res => res.text())
+            .then(data => {
+                document.querySelector('#footer-container').innerHTML = data;
+            });
+    </script>
+    <script type="module" src="/script/contact.js" defer></script>
+</head>
+<body>
+    <div id='header-container'></div>
+    <main>
+        <div class ="contact-container">
+        <div class = "contacts bg-cream">
+            <div class ="contact-text heading bg-yellow">Get In Touch With Us Now!</div>
+            <div class ="contact-information">
+                <div class="single-contact one">
+                    <div class="info-container">
+                    <img src="/assets/svg/mail-icon.svg">
+                    </div>
+                    <div class = "info-heading">Email</div>
+                    <div class = "info-text">ChildhoodCancerCareFoundation@gmail.com</div>
+                </div>
+                <div class="single-contact two">
+                    <div class="info-container">
+                    <img src="/assets/svg/call-icon.svg">
+                    </div>
+                    <div class = "info-heading">Phone Number</div>
+                    <div class = "info-text">+92 332 7878334</div>
+                </div>
+                <div class="single-contact three">
+                    <div class="info-container">
+                    <img src="/assets/svg/schedule-icon.svg">
+                    </div>
+                    <div class = "info-heading">Working Hours</div>
+                    <div class = "info-text">
+                        Monday to Friday
+                        <p>8 AM to 8 PM</p>
+                    </div>
+                </div>
+                <div class="single-contact four" id="location-area">
+                    <div class="info-container">
+                        <img src="/assets/svg/location-icon.svg" id="location">
+                    </div>
+                        <div class = "info-heading" id="location-heading">Location</div>
+                    <div class = "info-text">Hashir k ghar k pass, Rawalpindi, Pakistan</div>
+                </div>
+            </div>
+        </div>
+        </div>
+    </main>
+    <div id='footer-container'></div>
+</body>
+</html>
