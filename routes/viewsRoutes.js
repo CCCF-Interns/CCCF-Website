@@ -33,6 +33,10 @@ router.get("/blogs", (req, res) => {
     res.sendFile(path.join(__dirname, "views", "blogs.html"));
 });
 
+router.get("/contact-us", (req, res) => {
+    res.sendFile(path.join(__dirname, "views", "contact.html"));
+});
+
 router.get("/blogs/:id", (req, res) => {
     res.sendFile(path.join(__dirname, "views", "blog.html"));
 });
