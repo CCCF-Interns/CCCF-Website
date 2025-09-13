@@ -6,6 +6,21 @@ const imageProgressContainer = document.querySelector("#image-progress");
 const imageProgressBar = document.querySelector("#image-progress-bar");
 const imageProgressText = document.querySelector("#image-progress-text");
 const notificationBar = document.querySelector("#notification-bar");
+const imageForm = document.querySelector("#add-image-form");
+
+// Add album thingies
+const addAlbumButton = document.querySelector("#add-album");
+const addAlbumForm = document.querySelector("#add-album-form");
+const addAlbumInput = document.querySelector("#add-album-input");
+const addAlbumSubmit = document.querySelector("#add-album-submit");
+const addAlbumClose = document.querySelector("#add-album-close");
+
+// Delete album thingies
+const deleteAlbumButton = document.querySelector("#delete-album");
+const deleteAlbumForm = document.querySelector("#delete-album-form");
+const deleteAlbumDropDown = document.querySelector("#delete-album-dropdown");
+const deleteAlbumSubmit = document.querySelector("#delete-album-submit");
+const deleteAlbumClose = document.querySelector("#delete-album-close");
 
 // Add member thingies
 const addMemberButton = document.querySelector("#add-member");
@@ -34,15 +49,19 @@ const deleteMemberClose = document.querySelector("#remove-member-exit");
 // team members
 let teamMembers = document.querySelector(".team-members-container");
 let loader = document.querySelector("#loader");
+let submitLoader = document.querySelector("#submit-loader");
 let membersData;
 let membersSocials;
+let albumsData;
 
 const checkCircle = "/assets/svg/check_circle_green.svg";
+const errorImage = "/assets/svg/error_red.svg";
 let isEditing = false;
 let isRemoving = false;
 let socials = 0;
 let totalNotifs = 0;
 let removingMembers = [];
+let currentAlbum = 0;
 
 function calculateProgressSpeed(n) {
     return 100/n;
@@ -158,7 +177,6 @@ function updateAddSocial() {
 
 function checkFields() {
     let checker = true;
-    let errorImage = "/assets/svg/error_red.svg";
 
     if (addMemberName.value.trim() == "") {
         createNotification(
@@ -228,12 +246,16 @@ function clearFields() {
 
 function closeAll() {
     addMemberForm.style.display = "none";
+    addAlbumForm.style.display = "none";
+    deleteAlbumForm.style.display = "none";
     bgBlur.style.display = "none";
     teamMembers.style.display = "none";
     document.querySelector("#edit-member-text").style.display = "none";
     document.querySelector("#remove-member-container").style.display = "none";
     isEditing = false;
     isRemoving = false;
+    socials = 0;
+    socialsContainer.textContent = "";
 }
 
 // Creating team members
@@ -247,6 +269,15 @@ async function loadData() {
     membersSocials = result.data;
 
     console.log(membersSocials);
+}
+
+async function loadAlbumData() {
+    let response = await fetch("/api/album");
+    let result = await response.json();
+    albumsData = result.data;
+    if (albumsData.length > 0)
+        currentAlbum = albumsData[0].id;
+    console.log(albumsData);
 }
 
 function addEmployee(id, name, title, level, description, imageSource) {
@@ -333,12 +364,38 @@ function addEmployee(id, name, title, level, description, imageSource) {
     teamMembers.appendChild(newMember);
 }
 
+function addAlbum(id, name) {
+    const option = document.createElement("option");
+    const album_id = id;
+
+    option.text = name;
+    option.value = album_id;
+
+    deleteAlbumDropDown.appendChild(option);
+}
+
+async function initializeAlbums() {
+    deleteAlbumDropDown.textContent = "";
+    await loadAlbumData();
+
+    for (let x of albumsData) {
+        addAlbum(x.id, x.name);
+    }
+}
+
 async function initializeMembers() {
+    teamMembers.textContent = "";
     await loadData();
+
     for (let x of membersData) {
         addEmployee(x.id, x.name, x.job_title, x.job_level, x.description, 
             x.image_url);
     }
+}
+
+async function initialize() {
+    await initializeMembers();
+    await initializeAlbums();
     document.body.style.overflow = "auto";
     loader.style.display = "none";
 }
@@ -346,6 +403,9 @@ async function initializeMembers() {
 async function removeMembers(imageDelete) {
     if (removingMembers.length <= 0)
         return;
+    closeAll();
+    bgBlur.style.display = "block";
+    submitLoader.style.display = "block";
 
     let response;
     let result;
@@ -385,12 +445,17 @@ async function removeMembers(imageDelete) {
     }
 
     removingMembers = [];
+
+    bgBlur.style.display = "none";
+    submitLoader.style.display = "none";
 }
 
 async function addMember() {
     if (checkFields() === false) {
         return;
     }
+    closeAll();
+    bgBlur.style.display = "block";
 
     const file = addMemberImageInput.files[0];
     let result = null;
@@ -411,11 +476,16 @@ async function addMember() {
         catch(error) {
             console.error(error);
             const errorText = `Could not upload file: ${file.name}`;
-            createNotification("/assets/svg/error_red.svg", errorText);
+            createNotification(errorImage, errorText);
         }
     }
     
-    const image_url = result.values.image_url || null;
+    let image_url;
+
+    if (result)
+        image_url = result.values.image_url;
+    else
+        image_url = "/assets/images/dummyProfile.png"
 
     let values = {
         id: crypto.randomUUID(),
@@ -457,8 +527,6 @@ async function addMember() {
     console.log(result2);
     console.log(result3);
 
-    addMemberForm.style.display = "none";
-    bgBlur.style.display = "none";
     clearFields();
 
     createNotification(
@@ -476,7 +544,7 @@ function loadAddImage() {
 
     if (!allowedExt.includes(fileExt)) {
         const errorText = `Could not read file extension: ${file.name}`;
-        createNotification("/assets/svg/error_red.svg", errorText);
+        createNotification(errorImage, errorText);
         return;
     }
 
@@ -496,7 +564,8 @@ async function setFileInputFromUrl(url, input) {
 
 // All the event listeners
 buttonMeow.addEventListener("click", () => {
-    imageInput.click();
+
+    // imageInput.click();
 });
 
 imageInput.addEventListener("change", async () => {
@@ -517,7 +586,7 @@ imageInput.addEventListener("change", async () => {
             totalSpeed += progressSpeed;
             imageProgressBar.style.width = `${totalSpeed}%`;
             const errorText = `Could not upload file: ${x.name}`;
-            createNotification("/assets/svg/error_red.svg", errorText);
+            createNotification(errorImage, errorText);
             continue;
         }
         
@@ -553,7 +622,7 @@ imageInput.addEventListener("change", async () => {
         catch(error) {
             console.error(error);
             const errorText = `Could not upload file: ${x.name}`;
-            createNotification("/assets/svg/error_red.svg", errorText);
+            createNotification(errorImage, errorText);
         }
 
         totalSpeed += progressSpeed;
@@ -578,7 +647,12 @@ addSocial.addEventListener("click", () => {
 });
 
 submitAddMember.addEventListener("click", async () => {
+    submitLoader.style.display = "block";
     await addMember();
+    await initializeMembers();
+    addMemberForm.style.display = "none";
+    bgBlur.style.display = "none";
+    submitLoader.style.display = "none";
 });
 
 closeAddMember.addEventListener("click", () => {
@@ -640,6 +714,8 @@ deleteMemberButton.addEventListener("click", () => {
 
 deleteMemberSubmit.addEventListener("click", async () => {
     await removeMembers(true);
+
+    window.location.reload();
 });
 
 deleteMemberClose.addEventListener("click", () => {
@@ -647,4 +723,95 @@ deleteMemberClose.addEventListener("click", () => {
     closeAll();
 });
 
-initializeMembers();
+// Album Event listeners
+addAlbumButton.addEventListener("click", () => {
+    closeAll();
+    bgBlur.style.display = "block";
+    addAlbumForm.style.display = "flex";
+});
+
+addAlbumSubmit.addEventListener("click", async () => {
+    if (addAlbumInput.value.trim() == "") {
+        createNotification(errorImage, "Enter album name!");
+        return;
+    }
+
+    closeAll();
+    bgBlur.style.display = "block";
+    submitLoader.style.display = "block";
+    
+    const values = {
+        id: crypto.randomUUID(),
+        name: addAlbumInput.value
+    };
+
+    const response = await fetch("/api/album/insert", {
+        method: "POST",
+        headers: { "Content-Type" : "application/json" },
+        body: JSON.stringify({ data: values })
+    });
+
+    await initializeAlbums();
+
+    createNotification(checkCircle, `Inserted album ${values.name}!`);
+
+    bgBlur.style.display = "none";
+    submitLoader.style.display = "none";
+
+    console.log(await response.json());
+});
+
+addAlbumClose.addEventListener("click", () => {
+    closeAll();
+});
+
+deleteAlbumButton.addEventListener("click", () => {
+    closeAll();
+    bgBlur.style.display = "block";
+    deleteAlbumForm.style.display = "flex";
+});
+
+deleteAlbumClose.addEventListener("click", () => {
+    closeAll();
+});
+
+deleteAlbumDropDown.addEventListener("change", () => {
+    currentAlbum = deleteAlbumDropDown.value;
+    console.log(currentAlbum);
+});
+
+deleteAlbumSubmit.addEventListener("click", async () => {
+    let found = false;
+    for (let x of albumsData) {
+        if (x.id == currentAlbum) {
+            found = true;
+            break;
+        }
+    }
+
+    if (!found)
+        return;
+    
+    closeAll();
+    bgBlur.style.display = "block";
+    submitLoader.style.display = "block";
+    let response = await fetch("/api/gallery/delete/album", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ id: currentAlbum })
+    });
+
+    response = await fetch("/api/album/delete", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ id: currentAlbum })
+    });
+
+    await initializeAlbums();
+    createNotification(checkCircle, `Deleted album successfully!`);
+
+    closeAll();
+    submitLoader.style.display = "none";
+});
+
+initialize();

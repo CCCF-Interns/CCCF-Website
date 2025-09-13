@@ -43,6 +43,26 @@ router.post("/api/gallery/insert", authAdmin, async (req, res) => {
     res.json("Inserted");
 });
 
+router.post("/api/gallery/delete", authAdmin, async (req, res) => {
+    const query = `
+        DELETE FROM gallery WHERE id = $1;
+    `;
+    const value = [req.body.id];
+
+    await deleteDataByValue(query, value);
+    res.json("Deleted");
+});
+
+router.post("/api/gallery/delete/album", authAdmin, async (req, res) => {
+    const query = `
+        DELETE FROM gallery WHERE id = $1;
+    `;
+    const value = [req.body.id];
+
+    await deleteDataByValue(query, value);
+    res.json("Deleted");
+});
+
 router.post("/api/member/insert", authAdmin, async (req, res) => {
     const query = `
         INSERT INTO team_member (id, name, job_title, job_level, description, 
@@ -124,6 +144,47 @@ router.post("/api/member/delete", async (req, res) => {
     catch (error) {
         res.json({ message: "Could not delete member" });
     }
+});
+
+router.post("/api/album/insert", authAdmin, async (req, res) => {
+    const query = `INSERT INTO album (ID, Name, created_at) VALUES ($1, $2,
+        CURRENT_TIMESTAMP)`;
+
+    try {
+        const itemData = req.body;
+
+        const values = [
+            itemData.data.id,
+            itemData.data.name
+        ];
+
+        await insertData(query, values);
+
+        res.json("Inserted");
+    }
+    catch(error) {
+        req.status(500).json({ message: "Couldn't insert" });
+    }
+});
+
+router.get("/api/album", async (req, res) => {
+    const query = "SELECT * FROM album";
+    getData(query, (err, data) => {
+        if (err) return res.status(500).json({ 
+            message: "Failed to get album" 
+        });
+        res.json({ data });
+    });
+});
+
+router.post("/api/album/delete", authAdmin, async (req, res) => {
+    const query = `
+        DELETE FROM album WHERE id = $1;
+    `;
+    const value = [req.body.id];
+    console.log(value);
+    await deleteDataByValue(query, value);
+    res.json("Deleted");
 });
 
 export default router;
