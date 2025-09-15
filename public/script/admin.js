@@ -7,6 +7,11 @@ const imageProgressBar = document.querySelector("#image-progress-bar");
 const imageProgressText = document.querySelector("#image-progress-text");
 const notificationBar = document.querySelector("#notification-bar");
 const imageForm = document.querySelector("#add-image-form");
+const imageSubmit = document.querySelector("#add-image-submit");
+const imageClose = document.querySelector("#add-image-close");
+const imageAdd = document.querySelector("#add-image");
+const imageDrop = document.querySelector("#add-image-dropdown");
+const imageText = document.querySelector("#add-image-text");
 
 // Add album thingies
 const addAlbumButton = document.querySelector("#add-album");
@@ -61,7 +66,8 @@ let isRemoving = false;
 let socials = 0;
 let totalNotifs = 0;
 let removingMembers = [];
-let currentAlbum = 0;
+let currentAlbum = null;
+let selectedImages = null;
 
 function calculateProgressSpeed(n) {
     return 100/n;
@@ -248,6 +254,7 @@ function closeAll() {
     addMemberForm.style.display = "none";
     addAlbumForm.style.display = "none";
     deleteAlbumForm.style.display = "none";
+    imageForm.style.display = "none";
     bgBlur.style.display = "none";
     teamMembers.style.display = "none";
     document.querySelector("#edit-member-text").style.display = "none";
@@ -256,6 +263,9 @@ function closeAll() {
     isRemoving = false;
     socials = 0;
     socialsContainer.textContent = "";
+    imageText.textContent = "0 images selected";
+    selectedImages = null;
+    currentAlbum = null;
 }
 
 // Creating team members
@@ -371,11 +381,15 @@ function addAlbum(id, name) {
     option.text = name;
     option.value = album_id;
 
+    const clone = option.cloneNode(true);
+
     deleteAlbumDropDown.appendChild(option);
+    imageDrop.appendChild(clone);
 }
 
 async function initializeAlbums() {
     deleteAlbumDropDown.textContent = "";
+    imageDrop.textContent = "";
     await loadAlbumData();
 
     for (let x of albumsData) {
@@ -562,21 +576,18 @@ async function setFileInputFromUrl(url, input) {
     input.files = dataTransfer.files;
 }
 
-// All the event listeners
-buttonMeow.addEventListener("click", () => {
-
-    // imageInput.click();
-});
-
-imageInput.addEventListener("change", async () => {
-    const files = imageInput.files;
-    if (!files) return;
+async function uploadImages(files) {
+    let album_id = currentAlbum;
+    closeAll();
 
     imageProgressContainer.style.display = "flex";
+
     imageProgressText.textContent = `Uploading ${files.length} images...`;
 
     const progressSpeed = calculateProgressSpeed(files.length);
     let totalSpeed = 0;
+    let count = 0;
+
     for (let x of files) {
         const fileSplit = x.name.split(".");
         const fileExt = fileSplit[fileSplit.length - 1];
@@ -600,6 +611,7 @@ imageInput.addEventListener("change", async () => {
 
         const formData = new FormData();
         formData.append("image", x);
+        formData.append("data", JSON.stringify({ id: album_id }));
 
         try {
             const response = await fetch("/api/upload", {
@@ -618,6 +630,7 @@ imageInput.addEventListener("change", async () => {
             const result2 = await resp.json();
 
             console.log(result2);
+            count++;
         }
         catch(error) {
             console.error(error);
@@ -628,12 +641,73 @@ imageInput.addEventListener("change", async () => {
         totalSpeed += progressSpeed;
         imageProgressBar.style.width = `${totalSpeed}%`;
     }
-
+    
+    imageProgressBar.style.width = 0;
     imageProgressContainer.style.display = "none";
-    const notif = `Successfully uploaded ${files.length} images!`;
+    let notif = `Successfully uploaded ${count} images!`;
     createNotification(checkCircle, notif);
+
+    const failedCount = files.length - count;
+    if (failedCount > 0) {
+        notif = `Couldn't upload ${failedCount} images...`;
+        createNotification(errorImage, notif);
+    }
+}
+
+function waitForFiles(input) {
+  return new Promise((resolve) => {
+    const handler = () => {
+      input.removeEventListener("change", handler);
+      resolve(input.files);
+    };
+    input.addEventListener("change", handler);
+    input.click(); // opens file picker
+  });
+}
+
+// All the event listeners
+buttonMeow.addEventListener("click", () => {
+    closeAll();
+    currentAlbum = imageDrop.value;
+    bgBlur.style.display = "block";
+    imageForm.style.display = "flex";
 });
 
+imageAdd.addEventListener("click", async () => {
+    selectedImages = await waitForFiles(imageInput);
+    console.log(selectedImages);
+});
+
+imageInput.addEventListener("change", async () => {
+    const files = await imageInput.files;
+    if (!files) return;
+    imageText.textContent = `${files.length} images selected.`;
+    return files;
+});
+
+imageClose.addEventListener("click", () => {
+    closeAll();
+});
+
+imageSubmit.addEventListener("click", async () => {
+    if (selectedImages == null) {
+        createNotification(errorImage, "Select some image(s)!");
+        return;
+    }
+    else if (imageDrop.options.length == 0) {
+        createNotification(errorImage, "You need to create and select an album");
+        return;
+    }
+
+    currentAlbum = imageDrop.value
+    buttonMeow.style.display = "none";
+    deleteAlbumButton.style.display = "none";
+    await uploadImages(selectedImages);
+    buttonMeow.style.display = "inline";
+    deleteAlbumButton.style.display = "inline";
+});
+
+// Add member event listeners
 addMemberPreview.addEventListener("click", () => {
     addMemberImageInput.click();
 });
@@ -767,6 +841,8 @@ addAlbumClose.addEventListener("click", () => {
 
 deleteAlbumButton.addEventListener("click", () => {
     closeAll();
+    if (deleteAlbumDropDown.options.length == 0) return;
+    currentAlbum = deleteAlbumDropDown.value;
     bgBlur.style.display = "block";
     deleteAlbumForm.style.display = "flex";
 });
@@ -792,19 +868,39 @@ deleteAlbumSubmit.addEventListener("click", async () => {
     if (!found)
         return;
     
+    let album_id = currentAlbum;
     closeAll();
     bgBlur.style.display = "block";
     submitLoader.style.display = "block";
-    let response = await fetch("/api/gallery/delete/album", {
+
+    let response = await fetch("/api/gallery/album", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ id: currentAlbum })
+        body: JSON.stringify({ id: album_id })
+    });
+
+    let result = await response.json();
+    
+    if (result.data.length > 0) {
+        let ids = result.data.map(obj => obj.image_url.split("/")[3].trim());
+
+        response = await fetch("/api/delete/bulk", {
+            method: "POST",
+            headers: { "Content-Type" : "application/json" },
+            body: JSON.stringify({ keys: ids })
+        });
+    }
+
+    response = await fetch("/api/gallery/delete/album", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ id: album_id })
     });
 
     response = await fetch("/api/album/delete", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ id: currentAlbum })
+        body: JSON.stringify({ id: album_id })
     });
 
     await initializeAlbums();

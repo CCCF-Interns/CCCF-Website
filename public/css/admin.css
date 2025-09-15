@@ -264,3 +264,7 @@ textarea:focus {
     flex-direction: column;
     align-items: center;
 }
+
+#add-image-form {
+    gap: 8px;
+}

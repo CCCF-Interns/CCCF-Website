@@ -1,5 +1,5 @@
 import express from "express";
-import { deleteDataByValue, getData, insertData } from "../utils/db.js";
+import { deleteDataByValue, getData, getDataByValueArray, insertData } from "../utils/db.js";
 import authAdmin from "../middleware/authentication.js";
 
 const router = express.Router();
@@ -10,6 +10,32 @@ router.post("/api/gallery", (req, res) => {
         SELECT * FROM gallery ORDER BY created_at DESC LIMIT 30 OFFSET ${offset}
     `;
     getData(query, (err, data) => {
+        if (err) return res.status(500).json({ 
+            message: "Failed to get images" 
+        });
+        res.json({ data });
+    });
+});
+
+router.post("/api/gallery/album", (req, res) => {
+    let query;
+    let values;
+    let limit = req.body.limit || 0;
+
+    if (limit == 0) {  
+        values = [req.body.id];
+        query = `
+            SELECT * FROM gallery WHERE album_id = $1
+        `;
+    }
+    else {
+        values = [req.body.id, limit];
+        query = `
+            SELECT * FROM gallery WHERE album_id = $1 LIMIT $2
+        `;
+    }
+
+    getDataByValueArray(query, values, (err, data) => {
         if (err) return res.status(500).json({ 
             message: "Failed to get images" 
         });
@@ -29,14 +55,16 @@ router.get("/api/gallery/total", async (req, res) => {
 
 router.post("/api/gallery/insert", authAdmin, async (req, res) => {
     const query = `
-        INSERT INTO gallery (id, title, image_url) VALUES ($1, $2, $3);
+        INSERT INTO gallery (id, title, image_url, album_id) VALUES ($1, $2, $3,
+            $4);
     `;
     const itemData = req.body;
 
     const valuesArray = [
         itemData.data.id,
         itemData.data.title,
-        itemData.data.image_url
+        itemData.data.image_url,
+        itemData.data.album_id
     ];
 
     await insertData(query, valuesArray);
@@ -55,7 +83,7 @@ router.post("/api/gallery/delete", authAdmin, async (req, res) => {
 
 router.post("/api/gallery/delete/album", authAdmin, async (req, res) => {
     const query = `
-        DELETE FROM gallery WHERE id = $1;
+        DELETE FROM gallery WHERE album_id = $1;
     `;
     const value = [req.body.id];
 
