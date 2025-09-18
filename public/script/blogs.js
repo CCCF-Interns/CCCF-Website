@@ -6,10 +6,12 @@ let globSearchString = "_all_";
 document.addEventListener("DOMContentLoaded", function () {
     renderCategories();
     renderBlogs(0, 5, globCategory, globSortBy, globSearchString);
-    document.querySelector(".selections").addEventListener("submit", (e) => {
+    document.querySelector(".search").addEventListener("submit", (e) => {
         e.preventDefault();
         handleFilter();
     });
+    document.querySelector("#categories").addEventListener("change", handleFilter);
+    document.querySelector("#sort").addEventListener("change", handleFilter);
     lastActive = null;
 });
 
@@ -114,7 +116,8 @@ async function changePage(e) {
 async function handleFilter() {
     globCategory = document.querySelector("#categories").value;
     globSortBy = document.querySelector("#sort").value;
-    let search = document.querySelector(".selections input").value;
+    let search = document.querySelector(".search>input").value;
+    console.log(search)
     globSearchString = search !== "" ? search : "_all_";
     document.querySelector(".container").innerHTML = "";
     document.querySelector(".paginator").innerHTML = "";
