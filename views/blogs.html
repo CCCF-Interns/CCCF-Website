@@ -27,19 +27,25 @@
 </head>
 <body>
     <div id='header-container'></div>
-    <form class="selections">
-        <input type="text" placeholder="Search Blog By Name" name="" id="" maxlength="64">
-        <span>Category</span>
-        <select name="category" id="categories">
-            <option value="all">All</option>
-        </select>
-        <span>Sort by</span>
-        <select name="sortBy" id="sort">
-            <option value="date">Date</option>
-            <option value="name">Name</option>
-        </select>
-        <button>Apply</button>
-    </form>
+    <div class="selections">
+        <form class="search">
+            <input type="text" placeholder="Search Blog By Name" name="" id="" maxlength="64" required>
+            <button><img src="./assets/svg/search.svg" alt="search"></button>
+        </form>
+        <div>
+            <span>Category</span>
+            <select name="category" id="categories">
+                <option value="all">All</option>
+            </select>
+        </div>
+        <div>
+            <span>Sort by</span>
+            <select name="sortBy" id="sort">
+                <option value="date">Date</option>
+                <option value="name">Name</option>
+            </select>
+        </div>
+    </div>
     <div class="container">
         
     </div>

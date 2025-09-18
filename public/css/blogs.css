@@ -2,6 +2,10 @@
     box-sizing: border-box;
 }
 
+body {
+    background-color: #FAEDCB;
+}
+
 .selections {
     margin-top: 1.5rem;
     display: flex;
@@ -17,27 +21,57 @@
     width: 20rem;
 }
 
-.selections input, .selections select, .selections button {
+.selections select {
+    margin-left: 1rem;
+}
+
+.selections select, .selections button {
     padding: 0.2rem 0.8rem;
     border-radius: 8px;
 }
 
-.selections input {
-    border: 3px solid #FFD34B;
+.search input {
+    border: 1px solid #FFD34B;
+    height: 2.3rem;
+    border-radius: 9999px;
+    padding-left: 1rem;
+    padding-right: 3.5rem;
 }
 
-.selections input:focus {
+.search input:focus {
     outline: none; 
-    border: 3px solid blue;
+    border: 1px solid blue;
+}
+
+.search {
+    position: relative;
 }
 
 .selections button {
-    background-color: black;
-    color: white;
+    position: absolute;
+    top: 1px;
+    right: 0.06rem;
+    background-color: #F7EAC9;
+    border-radius: 9999px;
+    border-left: 1px solid black;
+    border-right: 1px solid #FFD34B;
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+    width: 3rem;
+    height: 2.2rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.selections button>img {
+    width: 1.2rem;
+    height: auto;
+    fill: white;
 }
 
 .selections button:hover {
-    background-color: gray;
+    background-color: aliceblue;
 }
 
 .container {
@@ -49,14 +83,15 @@
 }
 
 .card {
-    width: 50rem;
+    background-color: white;
+    border: 1px solid black;
+    max-width: 50rem;
     display: flex;
+    flex-direction: column;
     align-items: center;
-    border: 3px solid black;
-    border-radius: 1rem;
-    padding: 2rem 1rem;
     cursor: pointer;
-    gap: 2rem;
+    border-radius: 10px;
+    transition: all 0.3s ease; /* Smooth transition for all changes over 0.3 seconds */
 }
 
 .card h2 {
@@ -65,26 +100,33 @@
 }
 
 .card:hover {
-    background-color: lightgray;
-    width: 52rem;
+    transform: translateY(-5px); /* Moves up by 5px */
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Enhanced shadow on hover */
 }
 
 .card-poster {
-    width: 15rem;
-    height: 15rem;
+    width: 30rem;
+    height: 20rem;
     align-content: center;
     flex-shrink: 0;
 }
 
 .card-poster img {
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
     width: 100%;
     height: 100%;
-    object-fit: contain;
+    object-fit: cover;
     overflow: hidden;
 }
 
+.card-info {
+    width: 100%;
+    padding: 1rem;
+}
+
 .categories {
-    margin-top: 2rem;
+    margin-top: 1rem;
     display: flex;
     gap: 0.5rem;
     flex-wrap: wrap;
@@ -123,4 +165,18 @@
     background-color: #FFD34B;
     color:white;
     pointer-events: none;
+}
+
+@media only screen and (max-width: 850px) {
+    .selections {
+        flex-direction: column;
+    }
+    .selections select {
+        width: 15rem;
+    }
+    .selections div {
+        width: 20rem;
+        display: flex;
+        justify-content: space-between;
+    }
 }
