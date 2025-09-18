@@ -2,6 +2,10 @@
     box-sizing: border-box;
 }
 
+body {
+    background-color: #FAEDCB;
+}
+
 .container {
     display: flex;
     flex-direction: column;
@@ -27,6 +31,8 @@
     object-fit: contain;
     overflow: hidden;
     margin-bottom: 1rem;
+    border-radius: 1rem;
+    box-shadow: 0px 0px 21px -1px #2B2A17;
 }
 
 .post-info {
@@ -35,11 +41,12 @@
 }
 
 .post-info h1 {
-    font-size: 2rem;
+    font-size: 3.5rem;
 }
 
 .post-info h2 {
-    font-size: 1.1rem;
+    font-size: 1.3rem;
+    color: gray;
 }
 
 .post-info p {
@@ -48,12 +55,10 @@
 }
 
 .categories {
-    margin-top: 2rem;
     display: flex;
     gap: 1rem;
     flex-wrap: wrap;
-    border-bottom: 1px solid gray;
-    padding-bottom: 1rem;
+    margin: 1rem 0px;
 }
 
 .categories div {
@@ -66,44 +71,53 @@
 .blog-body {
     display: flex;
     flex-direction: column;
-    gap: 0.3rem;
-    width: 100%;
+    gap: 1rem;
+    width: 80%;
     padding: 0rem 2rem;
+    text-align: justify;
 }
 
-h1 {
+.container * {
+    font-size: 1.3rem;
+}
+
+.blog-body h1 {
     font-size: 3.5rem;
 }
 
-h2 {
+.blog-body h2 {
     font-size: 2.5rem;
 }
 
-h3 {
+.blog-body h3 {
     font-size: 2rem;
 }
 
-h4 {
-    font-size: 1.5rem;
+.blog-body h4 {
+    font-size: 1.8rem;
 }
 
-ul {
-  padding: 0 1rem;
-}
-
-li {
-  border-bottom: 1px solid #eee; /* Adds a subtle separator */
-  font-family: Arial, sans-serif; /* Sets a clean, readable font */
-  color: #333; /* Darker text for readability */
+.blog-body ul {
+  padding: 0 1.4rem;
 }
 
 em {
     font-style: italic;
 }
 
-blockquote {
-  font: 1.2rem normal helvetica, sans-serif;
-  margin: 1rem 0rem 1rem 3rem;
+.blog-body a {
+    text-decoration: underline;
+    color: blue;
+}
+
+.blog-body a:hover {
+    text-decoration: underline;
+    color: rgb(146, 146, 252);
+}
+
+.blog-body blockquote {
+  font: 1.4rem normal helvetica, sans-serif;
+  margin: 1rem 0rem;
   padding-left: 15px;
   border-left: 3px solid #ccc;
 }
@@ -113,4 +127,53 @@ blockquote {
     width: 80%;
     object-fit: contain;
     overflow: hidden;
+    align-self: center;
+}
+
+.end-ruler {
+    width: 100%;
+    margin-bottom: 4rem;
+    display: flex;
+    justify-content: center;
+}
+
+.end-ruler div {
+    height: 0.2rem;
+    background-color: gray;
+    width: 60%;
+}
+
+@media only screen and (max-width: 850px) {
+    .container {
+        padding: 1rem;
+    }
+    .container * {
+        font-size: 1.2rem;
+    }
+    .blog-body {
+        padding: 0rem;
+        width: 100%;
+    }    
+    .post-info h1 {
+        font-size: 2.5rem;
+    }
+
+    .post-info h2 {
+        font-size: 1.2rem;
+        color: gray;
+    }
+    .blog-body h1 {
+        font-size: 2.5rem;
+    }
+
+    .blog-body h2 {
+        font-size: 2.2rem;
+    }
+
+    .blog-body h3 {
+        font-size: 1.8rem;
+    }
+    .blog-body h4 {
+        font-size: 1.5rem;
+    }
 }
