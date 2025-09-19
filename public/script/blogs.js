@@ -117,7 +117,7 @@ async function handleFilter() {
     globCategory = document.querySelector("#categories").value;
     globSortBy = document.querySelector("#sort").value;
     let search = document.querySelector(".search>input").value;
-    console.log(search)
+    console.log(search);
     globSearchString = search !== "" ? search : "_all_";
     document.querySelector(".container").innerHTML = "";
     document.querySelector(".paginator").innerHTML = "";
