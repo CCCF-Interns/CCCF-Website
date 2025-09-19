@@ -13,7 +13,6 @@ document.addEventListener("DOMContentLoaded", function () {
     });
     document.querySelector("#categories").addEventListener("change", handleFilter);
     document.querySelector("#sort").addEventListener("change", handleFilter);
-    lastActive = null;
 });
 
 async function renderBlogs(start, end, category, sortBy, searchString) {
@@ -119,25 +118,25 @@ async function renderBlogs(start, end, category, sortBy, searchString) {
 async function renderPaginator(total) {
     const numOfPages = Math.ceil(total / 6);
     const page = document.createElement("div");
-    page.className = "current-page"
-    page.innerText = currentPage
+    page.className = "current-page";
+    page.innerText = currentPage;
     if (currentPage !== 1) {
-        const leftArrow = document.createElement("button")
-        leftArrow.innerHTML = `<img src="/assets/svg/chevron_right_gray.svg" alt="Go to previous page">`
-        leftArrow.className = "page-arrow"
-        leftArrow.style.transform = 'rotate(180deg)';
-        leftArrow.addEventListener("click", () => {changePage(currentPage - 1)});
-        document.querySelector(".paginator").appendChild(leftArrow)
+        const leftArrow = document.createElement("button");
+        leftArrow.innerHTML = "<img src=\"/assets/svg/chevron_right_gray.svg\" alt=\"Go to previous page\">";
+        leftArrow.className = "page-arrow";
+        leftArrow.style.transform = "rotate(180deg)";
+        leftArrow.addEventListener("click", () => {changePage(currentPage - 1);});
+        document.querySelector(".paginator").appendChild(leftArrow);
     }
 
-    document.querySelector(".paginator").appendChild(page)
+    document.querySelector(".paginator").appendChild(page);
 
     if (currentPage !== numOfPages) {
-        const rightArrow = document.createElement("button")
-        rightArrow.innerHTML = `<img src="/assets/svg/chevron_right_gray.svg" alt="Go to next page">`
-        rightArrow.className = "page-arrow"
-        rightArrow.addEventListener("click", () => {changePage(currentPage + 1)});
-        document.querySelector(".paginator").appendChild(rightArrow)
+        const rightArrow = document.createElement("button");
+        rightArrow.innerHTML = "<img src=\"/assets/svg/chevron_right_gray.svg\" alt=\"Go to next page\">";
+        rightArrow.className = "page-arrow";
+        rightArrow.addEventListener("click", () => {changePage(currentPage + 1);});
+        document.querySelector(".paginator").appendChild(rightArrow);
     }
 }
 
