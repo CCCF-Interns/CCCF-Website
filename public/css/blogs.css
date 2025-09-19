@@ -138,7 +138,8 @@ body {
     border-radius: 1rem;
     padding: 5px 10px;
 }
-
+/*
+old paginator 
 .paginator {
     display: flex;
     justify-content: center;
@@ -165,6 +166,35 @@ body {
     background-color: #FFD34B;
     color:white;
     pointer-events: none;
+} */
+
+.paginator {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 1.5rem 0rem;
+    gap: 16px;
+}
+
+.current-page {
+    background-color: #FFD34B;
+    width: 48px;
+    height: 32px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 8px;
+}
+
+.page-arrow {
+    background-color: #FAEDCB;
+    display: flex;
+    align-items: center;
+}
+
+.page-arrow > img {
+    width: 32px;
+    height: 32px;
 }
 
 @media only screen and (max-width: 850px) {
