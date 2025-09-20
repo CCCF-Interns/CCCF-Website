@@ -478,6 +478,7 @@ async function addMember() {
 
         const formData = new FormData();
         formData.append("image", file);
+        formData.append("data", JSON.stringify({ is_gal: false }));
 
         try {
             const response = await fetch("/api/upload", {
@@ -611,7 +612,7 @@ async function uploadImages(files) {
 
         const formData = new FormData();
         formData.append("image", x);
-        formData.append("data", JSON.stringify({ id: album_id }));
+        formData.append("data", JSON.stringify({ id: album_id, is_gal: true }));
 
         try {
             const response = await fetch("/api/upload", {

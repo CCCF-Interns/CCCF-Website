@@ -15,17 +15,24 @@ router.post("/api/upload", authAdmin, upload.single("image"),
 
     try {
         await uploadFile(fileName, req.file);
-        const data = JSON.parse(req.body.data);
-
-        console.log(data);
-        console.log(data.id);
-
-        const values = {
-            id: crypto.randomUUID(),
-            title: req.file.originalname,
-            image_url: image_url,
-            album_id: data.id
-        };
+        let data = JSON.parse(req.body.data);
+        let isGalleryImage = data.is_gal || false;
+        let values;
+        if (isGalleryImage) {
+            values = {
+                id: crypto.randomUUID(),
+                title: req.file.originalname,
+                image_url: image_url,
+                album_id: data.id
+            };
+        }
+        else {
+            values = {
+                id: crypto.randomUUID(),
+                title: req.file.originalname,
+                image_url: image_url
+            };
+        }
 
         res.json({ values });
     }

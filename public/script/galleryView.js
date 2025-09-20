@@ -13,7 +13,7 @@ let images;
 let currentImageIndex;
 
 const params = new URLSearchParams(window.location.search);
-const pageNumber = params.get("page") || 1;
+const pageNumber = parseInt(params.get("page")) || 1;
 let albumID = window.location.href.split("/")[5] || "";
 
 if (albumID != "") {
