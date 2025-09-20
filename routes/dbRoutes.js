@@ -20,24 +20,43 @@ router.post("/api/gallery", (req, res) => {
 router.post("/api/gallery/album", (req, res) => {
     let query;
     let values;
-    let limit = req.body.limit || 0;
+    let isLimited = req.body.is_lim || false;
+    let offset = 30 * (req.body.page - 1);
 
-    if (limit == 0) {  
-        values = [req.body.id];
+    if (!isLimited) {
         query = `
             SELECT * FROM gallery WHERE album_id = $1
         `;
     }
     else {
-        values = [req.body.id, limit];
         query = `
-            SELECT * FROM gallery WHERE album_id = $1 LIMIT $2
+            SELECT * FROM gallery WHERE album_id = $1 LIMIT 30 OFFSET ${offset}
         `;
     }
+
+    values = [req.body.id];
 
     getDataByValueArray(query, values, (err, data) => {
         if (err) return res.status(500).json({ 
             message: "Failed to get images" 
+        });
+        res.json({ data });
+    });
+});
+
+router.post("/api/gallery/album/total", async (req, res) => {
+    const query = `
+        SELECT count(*) as total 
+        FROM gallery
+        WHERE album_id = $1
+        GROUP BY album_id 
+    `;
+
+    const values = [req.body.id];
+
+    getDataByValueArray(query, values, (err, data) => {
+        if (err) return res.status(500).json({ 
+            message: "Failed to get total" 
         });
         res.json({ data });
     });
@@ -196,8 +215,61 @@ router.post("/api/album/insert", authAdmin, async (req, res) => {
 });
 
 router.get("/api/album", async (req, res) => {
-    const query = "SELECT * FROM album";
+    const query = `SELECT * FROM album`;
     getData(query, (err, data) => {
+        if (err) return res.status(500).json({ 
+            message: "Failed to get albums" 
+        });
+        res.json({ data });
+    });
+});
+
+router.get("/api/album/existing", async (req, res) => {
+    const query = `
+        SELECT a.*, res.total, cover.image_url
+        FROM album a,
+        (
+            SELECT album_id, COUNT(*) AS total 
+            FROM gallery 
+            GROUP BY album_id
+        ) AS res,
+        (
+            SELECT DISTINCT ON (album_id) album_id, image_url
+            FROM gallery
+            ORDER BY album_id, created_at DESC
+        ) AS cover
+        WHERE a.id = res.album_id
+        AND a.id = cover.album_id
+        ORDER BY created_at DESC
+    `;
+    getData(query, (err, data) => {
+        if (err) return res.status(500).json({ 
+            message: "Failed to get albums" 
+        });
+        res.json({ data });
+    });
+});
+
+router.post("/api/album/id", async (req, res) => {
+    const query = `
+        SELECT a.*, res.total, cover.image_url
+        FROM album a,
+        (
+            SELECT album_id, COUNT(*) AS total 
+            FROM gallery 
+            GROUP BY album_id
+        ) AS res,
+        (
+            SELECT DISTINCT ON (album_id) album_id, image_url
+            FROM gallery
+            ORDER BY album_id, created_at DESC
+        ) AS cover
+        WHERE a.id = res.album_id
+        AND a.id = cover.album_id
+        AND a.id = $1    
+    `;
+    let values = [req.body.id];
+    getDataByValueArray(query, values, (err, data) => {
         if (err) return res.status(500).json({ 
             message: "Failed to get album" 
         });

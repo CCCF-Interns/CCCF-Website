@@ -25,8 +25,16 @@ router.get("/donate", (req, res) => {
     res.sendFile(path.join(__dirname, "views", "donate.html"));
 });
 
-router.get("/gallery", (req, res) => {
+router.get("/gallery", (req, res)=> {
     res.sendFile(path.join(__dirname, "views", "gallery.html"));
+});
+
+router.get("/gallery/images/", (req, res) => {
+    res.sendFile(path.join(__dirname, "views", "galleryView.html"));
+});
+
+router.get("/gallery/images/:albumID", (req, res) => {
+    res.sendFile(path.join(__dirname, "views", "galleryView.html"));
 });
 
 router.get("/blogs", (req, res) => {

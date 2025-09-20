@@ -1,162 +1,261 @@
-body {
-    overflow: hidden;
+#hero {
+    width: 100%;
+    height: 645px;
+    z-index: 1;
+    align-items: center;
 }
 
-h1 {
-    margin-top: 64px;
+#hero-cover {
+    position: absolute;
+    width: 100%;
+    height: 645px;
+    overflow: hidden;
+    background-color: white;
+    z-index: 1;
+}
+
+#hero-cover img {
+    transition: 1s ease opacity;
+}
+
+#hero-cover-2 {
+    transform: translate(0, -101%);
+    opacity: 0;
+}
+
+#hero-cover-3 {
+    transform: translate(0, -201.5%);
+    opacity: 0;
+}
+
+#hero-text-section {
+    position: relative;
+    justify-content: center;
+    z-index: 3;
+    width: 100%;
     text-align: center;
 }
 
-.grid {
-    margin: 64px;
+.hero-text {
+    flex-direction: column;
+    color: white;
+    width: 85%;
+    align-items: center;
+}
+
+.hero-buttons {
+    pointer-events: all;
+    gap: 24px;
+}
+
+.album-search {
+    margin-top: 32px;
+    width: 100%;
+    max-width: 640px; /* don’t let it stretch too much */
+}
+
+.album-input-container {
+    width: 100%;
+    height: 72px; /* smaller default for mobile */
+    padding-left: 12px;
+    padding-right: 12px; 
+    background-color: #f2f2f2;
     position: relative;
+}
+
+.album-input-container input {
+    width: 100%;
+    height: 100%;
+    border: none;
+    outline: none;
+    background: #f2f2f2;
+    color: rgba(0, 0, 0, 0.7);
+    font-size: 1.1rem;
+    transition: 0.3s ease;
+}
+
+.album-input-container label {
+    font-size: 1.1rem;
+    background: #f2f2f2;
+    border-radius: 5px;
+    padding: 0 8px;
+    pointer-events: none;
+    position: absolute;
+    top: 50%;
+    left: 16px;
+    transform: translateY(-50%);
+    transition: 0.3s ease;
+    color: #9d9d9d;
+}
+
+.album-input-container input:focus ~ label,
+.album-input-container input:not(:placeholder-shown) ~ label {
+    top: 0;
+    transform: translateY(-80%);
+    scale: 0.9;
+    color: #ffbf00;
+}
+
+.album-input-container .album-input-background {
+    position: absolute;
+    inset: -2px;
+    z-index: -1;
+    transform: scaleX(0);
+    transition: 0.3s ease;
+}
+
+.album-input-container input:focus ~ .album-input-background {
+    background: #FFCF3A;
+    transform: scaleX(1);
+}
+
+.album-search button {
+    height: 72px;
+    font-size: 1.1rem;
+    transition: transform 0.3s ease;
+}
+
+.album-search:has(.album-input-container input:focus) button {
+    transform: translate(4px, 0.3px) scale(1.045);
+}
+
+.album-title-container {
+    padding: 16px 32px;
+    box-shadow: 0px 4px 4px rgba(134, 134, 134, 0.3);
+}
+
+#album-title {
+    font-size: 2.5rem;
+    text-align: center;
+}
+
+#album-container {
+    min-height: 200px;
+    padding: 40px 20px;
+    background: #fafafa;
+}
+
+#album-grid {
     display: grid;
-    gap: 12px;
+    gap: 20px;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    max-width: 1400px;
+    margin: 0 auto; /* center grid */
 }
 
 .grid-item {
-    width: 256px;
-    height: 256px;
+    height: 240px;
+    position: relative;
+    border-radius: 16px;
+    overflow: hidden;
+    background: #fff;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    text-decoration: none;
+    display: block;
+}
+
+.grid-item:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 12px 24px rgba(0,0,0,0.15);
+}
+
+.grid-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.4s ease;
+}
+
+.grid-item:hover img {
+    transform: scale(1.05);
+}
+
+.image-overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 60%;
+    background: linear-gradient(to top, rgba(0,0,0,0.7), transparent);
+    display: flex;
+    align-items: flex-end;
+    padding: 20px;
+    border-radius: 0 0 16px 16px;
+}
+
+.image-title {
+    color: white;
+    font-size: 1.1rem;
+    font-weight: 600;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.6);
+}
+
+.image-count {
+    font-size: 0.9rem;
+    color: #ddd;
+    margin-top: 4px;
+}
+
+.album-container {
+    padding: 32px 64px 64px 64px;
+}
+
+.album-container h2 {
+    margin-bottom: 32px;
+}
+
+.album-images-container {
+    width: 100%;
+    justify-content: space-between;
+}
+
+.album-images {
+    gap: 16px;
+}
+
+.album-image {
+    width: 200px;
+    height: 200px;
     border: 1px solid gray;
     border-radius: 8px;
     cursor: pointer;
     transition: 0.25s ease transform;
 }
 
-.grid-item:hover {
+.album-image:hover {
     transform: translate(0, -3px);
 }
 
-#images-container {
-    margin-left: auto;
-    margin-right: auto;
-    width: 1328px;
-    grid-template-columns: repeat(5, 256px);
-    border-radius: 8px;
+.album-images-show-button {
+    background-color: whitesmoke;
+    width: 64px;
+    height: 64px;
+    border-radius: 100%;
 }
 
-.border-radius-8 {
-    border-radius: 8px;
-}
-
-#image-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: 201;
-    display: none;
-}
-
-.background-blur {
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.8);
+.album-images-show {
     flex-direction: column;
-    pointer-events: all;
 }
 
-.preview { 
-    width: 100%;
-    justify-content: space-evenly;
-    margin-bottom: auto;
-    margin-top: -112px;
-    z-index: 1;
-}
-
-.preview-arrow {
-    cursor: pointer;
-    width: 100px;
-}
-
-.preview-container {
-    width: 800px;
-}
-
-#preview-close {
-    color: white;
-    align-self: flex-end;
-    margin-bottom: auto;
-    margin-right: 64px;
-    margin-top: 64px;
-    cursor: pointer;
-    z-index: 2;
-}
-
-#image-preview {
-    max-width: 100%;
-    height: auto;
-    max-height: 720px;
-}
-
-.page-buttons {
-    margin-top: 32px;
-    margin-bottom: 32px;
-    gap: 16px;
-}
-
-.page-button {
-    width: 48px;
-    height: 32px;
-    border-radius: 8px;
-}
-
-.page-arrow {
-    width: 32px;
-    height: 32px;
-}
-
-.pad-top-6 {
-    padding-top: 6px;
-}
-
-@media(max-width: 1456px) {
-    #images-container {
-        width: 1060px;
-        grid-template-columns: repeat(4, 256px);
+@media (min-width: 768px) {
+    .album-input-container {
+        height: 88px;
+    }
+    .album-input-container input {
+        font-size: 1.4rem;
+    }
+    .album-input-container label {
+        font-size: 1.4rem;
+    }
+    .album-search button {
+        height: 88px;
+        font-size: 1.4rem;
     }
 }
 
-@media(max-width: 1188px) {
-    #images-container {
-        width: 792px;
-        grid-template-columns: repeat(3, 256px);
-    }
-}
-
-@media(max-width: 920px) {
-    .grid-item {
-        width: 200px;
-        height: 200px;
-    }
-    #images-container {
-        width: 624px;
-        grid-template-columns: repeat(3, 200px);
-    }
-}
-
-@media(max-width: 700px) {
-    .grid-item {
-        width: 150px;
-        height: 150px;
-    }
-
-    #images-container {
-        width: 474px;
-        grid-template-columns: repeat(3, 150px);
-    }
-}
-
-@media(max-width: 400px) {
-    .grid-item {
-        width: 110px;
-        height: 110px;
-    }
-
-    #images-container {
-        width: 346px;
-        grid-template-columns: repeat(3, 110px);
-        gap: 8px;
+@media (min-width: 1024px) {
+    .album-input-container {
+        max-width: 640px;
     }
 }
