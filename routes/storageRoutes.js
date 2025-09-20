@@ -1,6 +1,6 @@
 import express from "express";
 import mult from "multer";
-import { uploadFile, deleteFile } from "../utils/storage.js";
+import { uploadFile, deleteFile, deleteBulk } from "../utils/storage.js";
 import authAdmin from "../middleware/authentication.js";
 
 const router = express.Router();
@@ -15,11 +15,16 @@ router.post("/api/upload", authAdmin, upload.single("image"),
 
     try {
         await uploadFile(fileName, req.file);
+        const data = JSON.parse(req.body.data);
+
+        console.log(data);
+        console.log(data.id);
 
         const values = {
             id: crypto.randomUUID(),
             title: req.file.originalname,
             image_url: image_url,
+            album_id: data.id
         };
 
         res.json({ values });
@@ -38,6 +43,17 @@ router.post("/api/delete", authAdmin, async (req, res) => {
     catch (error) {
         console.error(error);
         res.status(500).send("Failed to delete file from R2");
+    }
+});
+
+router.post("/api/delete/bulk", authAdmin, async (req, res) => {
+    try {
+        await deleteBulk(req.body.keys);
+        res.json({ message: "Deleted" });
+    }
+    catch (error) {
+        console.error(error);
+        res.status(500).send("Failed to delete files from R2");
     }
 });
 

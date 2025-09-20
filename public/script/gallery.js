@@ -1,200 +1,128 @@
-const imagesContainer = document.querySelector("#images-container");
-const loader = document.querySelector("#loader");
-const imageOverlay = document.querySelector("#image-overlay");
-const imagePreview = document.querySelector("#image-preview");
-const previewLeft = document.querySelector("#preview-left");
-const previewRight = document.querySelector("#preview-right");
-const previewClose = document.querySelector("#preview-close");
-const pageButtonTop = document.querySelector("#page-buttons-top");
-const pageButtonBottom = document.querySelector("#page-buttons-bottom");
+const albumGrid = document.querySelector("#album-grid");
 
-let images;
-let currentImageIndex;
+let albumData = [];
+let imagesData = [];
+let alternate = false;
 
-const pageNumber = parseInt(window.location.href.split("page=")[1]);
+async function loadAlbums() {
+    let response = await fetch("/api/album/existing");
+    let result = await response.json();
+    albumData = result.data;
+}
 
-function createImage(title, link, index) {
-    const container = document.createElement("div");
-    const image = document.createElement("img");
+// async function loadImages(albumId) {
+//     let response = await fetch("/api/gallery/album", {
+//         method: "POST",
+//         headers: { "Content-Type": "application/json" },
+//         body: JSON.stringify({ id: albumId, limit: 5})
+//     });
 
-    container.classList.add("grid-item");
-    image.classList.add("image");
-    image.classList.add("border-radius-8");
+//     let result = await response.json();
     
-    image.src = link;
+//     let object = {
+//         id: albumId,
+//         images: result.data
+//     };
 
-    container.addEventListener("click", () => {
-        imagePreview.src = link;
-        imageOverlay.style.display = "block";
-        document.body.style.overflow = "hidden";
-        currentImageIndex = index;
-    });
+//     imagesData.push(object);
+// }
 
-    container.appendChild(image);
-    imagesContainer.appendChild(container);
-}
+// function createAlbum(name, images) {
+//     if (images.length == 0) return;
 
-async function createImages() {
-    const response = await fetch ("/api/gallery", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ page: pageNumber })
-    });
-    images = await response.json();
-    let counter = 0;
+//     let container = document.createElement("div");
+//     let title = document.createElement("h2");
+//     let imagesContainer = document.createElement("div");
+//     let imagesSlider = document.createElement("div");
+//     let showContainer = document.createElement("div");
+//     let showLink = document.createElement("a");
+//     let showImg = document.createElement("img");
+//     let showText = document.createElement("span");
 
-    for (let x of images.data) {
-        createImage(x.title, x.image_url, counter);
-        ++counter;
-    }
+//     container.classList.add("album-container");
+//     if (alternate) {
+//         container.classList.add("bg-cream");
+//         alternate = false;
+//     }
+//     else {
+//         container.classList.add("bg-yellow");
+//         alternate = true;
+//     }
 
-    await createPageButtons();
+//     title.classList.add("heading");
 
-    loader.style.display = "none";
-    document.body.style.overflow = "auto";
-}
+//     imagesContainer.classList.add("album-images-container");
+//     imagesContainer.classList.add("flex-container");
 
-async function getTotalPages() {
-    const response = await fetch("/api/gallery/total");
-    const data = await response.json();
-    console.log(data);
-    return Math.ceil(data.data[0].total/30);
-}
+//     imagesSlider.classList.add("album-images");
+//     imagesSlider.classList.add("flex-container");
 
-async function createPageButtons() {
-    const n = await getTotalPages();
+//     showContainer.classList.add("album-images-show");
+//     showContainer.classList.add("flex-container");
 
-    if (pageNumber > n || pageNumber < 1) {
-        return;
-    }
+//     showLink.classList.add("album-images-show-button");
+//     showLink.classList.add("clickable");
+//     showLink.classList.add("flex-container");
 
-    createPageArrowLeft();
-    createPageButton(1);
-
-    if (pageNumber != 1 && pageNumber != 2) {
-        createPageDots();
-        createPageButton(pageNumber - 1);
-    }
-    if (pageNumber != 1 && pageNumber != n) {
-        createPageButton(pageNumber);
-    }
-    if (pageNumber != n && pageNumber != n - 1) {
-        createPageButton(pageNumber + 1);
-        createPageDots();
-    }
-    if (n != 1) { 
-        createPageButton(n);
-    }
+//     title.textContent = name;
+//     showImg.src = "/assets/svg/chevron_right.svg";
+//     showText.textContent = "Show More";
     
-    createPageArrowRight(n);
-}
+//     for(let x of images) {
+//         let imageCont = document.createElement("div");
+//         let image = document.createElement("img");
 
-function createPageButton(page) {
-    const anchor = document.createElement("a");
-    const btn = document.createElement("button");
+//         imageCont.classList.add("album-image");
+//         image.classList.add("image");
 
-    btn.textContent = page;
-    anchor.href = `/gallery?page=${page}`;
+//         image.src = x.image_url;
 
-    btn.classList.add("page-button");
-    btn.classList.add("bg-yellow");
+//         imageCont.appendChild(image);
+//         imagesSlider.appendChild(imageCont);
+//     }
 
-    anchor.appendChild(btn);
+//     showLink.appendChild(showImg);
+//     showContainer.appendChild(showLink);
+//     showContainer.appendChild(showText);
+//     imagesContainer.appendChild(imagesSlider);
+//     imagesContainer.appendChild(showContainer);
+//     container.appendChild(title);
+//     container.appendChild(imagesContainer);
+//     albumContainer.appendChild(container);
+// }
 
-    pageButtonTop.appendChild(anchor);
-    pageButtonBottom.appendChild(anchor.cloneNode(true));
-}
-
-function createPageDots() {
-    const dots = document.createElement("div");
-    dots.textContent = ". . .";
-
-    pageButtonTop.appendChild(dots);
-    pageButtonBottom.appendChild(dots.cloneNode(true));
-}
-
-function createPageArrowLeft() {
+function createAlbum(id, title, imageCount, imageLink) {
+    const a = document.createElement("a");
     const img = document.createElement("img");
+    const overlay = document.createElement("div");
+    const textCont = document.createElement("div");
+    const imgTitle = document.createElement("div");
+    const imgCount = document.createElement("div");
 
-    img.classList.add("page-arrow");
+    a.classList.add("grid-item");
+    overlay.classList.add("image-overlay");
+    imgTitle.classList.add("image-title");
+    imgCount.classList.add("image-count");
 
-    if (pageNumber != 1) {
-        const anchor = document.createElement("a");
-        img.classList.add("pad-top-6");
+    a.href = `/gallery/images/${id}?page=1`;
+    img.src = imageLink;
+    img.alt = "Album Cover";
+    imgTitle.textContent = title;
+    imgCount.textContent = `${imageCount} photos`;
 
-        img.src = "/assets/svg/chevron_left.svg";
-        anchor.href = `/gallery?page=${pageNumber - 1}`;
+    textCont.appendChild(imgTitle);
+    textCont.appendChild(imgCount);
+    overlay.appendChild(textCont);
+    a.appendChild(img);
+    a.appendChild(overlay);
+    albumGrid.appendChild(a);
+}
 
-        anchor.appendChild(img);
-        pageButtonTop.appendChild(anchor);
-        pageButtonBottom.appendChild(anchor.cloneNode(true));
-    }
-    else {
-        img.src = "/assets/svg/chevron_left_gray.svg";
-
-        pageButtonTop.appendChild(img);
-        pageButtonBottom.appendChild(img.cloneNode(true));
+async function createAlbums() {
+    await loadAlbums();
+    for (let x of albumData) {
+        createAlbum(x.id, x.name, x.total, x.image_url);
     }
 }
 
-function createPageArrowRight(n) {
-    const img = document.createElement("img");
-
-    img.classList.add("page-arrow");
-
-    if (pageNumber != n) {
-        const anchor = document.createElement("a");
-        img.classList.add("pad-top-6");
-
-        img.src = "/assets/svg/chevron_right.svg";
-        anchor.href = `/gallery?page=${pageNumber + 1}`;
-
-        anchor.appendChild(img);
-        pageButtonTop.appendChild(anchor);
-        pageButtonBottom.appendChild(anchor.cloneNode(true));
-    }
-    else {
-        img.src = "/assets/svg/chevron_right_gray.svg";
-        pageButtonTop.appendChild(img);
-        pageButtonBottom.appendChild(img.cloneNode(true));
-    }
-}
-
-previewLeft.addEventListener("click", () => {
-    if (!images)
-        return;
-
-    if (currentImageIndex == 0) {
-        currentImageIndex = images.data.length - 1;
-    }
-    else {
-        currentImageIndex--;
-    }
-
-    imagePreview.src = images.data[currentImageIndex].image_url;
-    imageOverlay.style.display = "block";
-    document.body.style.overflow = "hidden";
-});
-
-previewRight.addEventListener("click", () => {
-    if (!images)
-        return;
-
-    if (currentImageIndex == images.data.length - 1) {
-        currentImageIndex = 0;
-    }
-    else {
-        currentImageIndex++;
-    }
-
-    imagePreview.src = images.data[currentImageIndex].image_url;
-    imageOverlay.style.display = "block";
-    document.body.style.overflow = "hidden";
-});
-
-previewClose.addEventListener("click", () => {
-    imageOverlay.style.display = "none";
-    document.body.style.overflow = "auto";
-});
-
-createImages();
+createAlbums();

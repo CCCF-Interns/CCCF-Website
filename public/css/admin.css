@@ -86,7 +86,7 @@ input {
     justify-content: flex-start;
 }
 
-#add-member-form {
+.form {
     z-index: 3;
     display: none;
     width: 600px;
@@ -229,4 +229,42 @@ textarea:focus {
 
 #add-member-submit {
     display: none;
+}
+
+#submit-loader {
+    display: none;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 106;
+    width: 48px;
+    height: 48px;
+    border: 4px solid whitesmoke;
+    border-top: 4px solid #FFCF3A;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0%   { transform: translate(-50%, -50%) rotate(0deg); }
+    100% { transform: translate(-50%, -50%) rotate(360deg); }
+}
+
+/* album and image */
+#add-album-form {
+    width: 400px;
+    flex-direction: column;
+    align-items: center;
+}
+
+#delete-album-form, #add-image-form {
+    width: auto;
+    padding: 36px;
+    flex-direction: column;
+    align-items: center;
+}
+
+#add-image-form {
+    gap: 8px;
 }

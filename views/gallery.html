@@ -25,26 +25,36 @@
     <script src="/script/gallery.js" defer></script>
 </head>
 <body>
-    <div id="loader" class="bg-white"></div>
-    <div id="header-container"></div>
-    <h1 class="heading">Gallery</h1>
-    <div class="page-buttons flex-container" id="page-buttons-top"></div>
-    <div class="grid" id="images-container"></div>
-    <div id="image-overlay">
-        <div class="background-blur flex-container">
-            <img id="preview-close" src="/assets/svg/close_white.svg" />
-            <div class="preview flex-container">
-                <img src="/assets/svg/chevron_left_white.svg" 
-                    class="preview-arrow" id="preview-left">
-                <div class="preview-container flex-container">
-                    <img id="image-preview" src="/assets/images/cover2.jpg">
+    <!-- <div id="loader" class="bg-white"></div> -->
+    <div id="header-container"></div><div id='hero' class='flex-container'>
+        <div id='hero-cover'>
+            <img class='image' id='hero-cover-1' src='
+                ./assets/images/cover.webp'/>
+            <div class='shadow'></div>
+        </div>
+        <div class='flex-container' id='hero-text-section'>
+            <div class='hero-text flex-container' id='hero-text-1'>
+                <div class='title'>
+                    Our Memories
                 </div>
-                <img src="/assets/svg/chevron_right_white.svg" 
-                class="preview-arrow" id="preview-right">
+                <div class="album-search flex-container">
+                    <div class="album-input-container">
+                        <input id="album-input" placeholder="">
+                        <label for="album-input">Album Name</label>
+                        <div class="album-input-background"></div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
-    <div class="page-buttons flex-container" id="page-buttons-bottom"></div>
+
+    <div class="album-title-container bg-cream">
+        <h1 class="heading" id="album-title">All Albums</h1>
+    </div>
+
+    <div id="album-container">
+        <div id="album-grid"></div>
+    </div>
+    
     <div id="footer-container"></div>
 </body>
-</html>

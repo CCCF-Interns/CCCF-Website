@@ -11,9 +11,42 @@
 </head>
 <body>
     <div id="loader" class="bg-white"></div>
+    <div id="submit-loader"></div>
     <h1 class="heading">Images</h1>
+        
+    <div id="add-image-form" class="bg-yellow form flex-container">
+        <button id="add-image" class="clickable button">Attach</button>
+        <div id="add-image-text">0 images selected</div>
+        <select id="add-image-dropdown"></select>
+        <div class="add-member-buttons flex-container">
+            <button class="button" id="add-image-submit">Submit</button>
+            <button class="button-invert" id="add-image-close">Close</button>
+        </div>
+    </div>
+
+    <div id="add-album-form" class="bg-yellow form flex-container">
+        <input id="add-album-input" placeholder="Album Name">
+        <div class="add-member-buttons flex-container">
+            <button class="button" id="add-album-submit">Submit</button>
+            <button class="button-invert" id="add-album-close">Close</button>
+        </div>
+    </div>
+
+    <div id="delete-album-form" class="bg-yellow form flex-container">
+        <select id="delete-album-dropdown"></select>
+        <div class="add-member-buttons flex-container">
+            <button class="button" id="delete-album-submit">Submit</button>
+            <button class="button-invert" id="delete-album-close">Close</button>
+        </div>
+    </div>
+
+    <div class="flex-container members-container">
+        <button class="button" id="upload-button">Upload Images</button>
+        <button class="button" id="add-album">Add Album</button>
+        <button class="button" id="delete-album">Delete Album</button>
+    </div>
+
     <input type="file" id="imageInput" accept="image/*" multiple hidden />
-    <button class="button" id="upload-button">Upload Images</button>
     <div id="preview"></div>
 
     <h1 class="heading">Team Members</h1>
@@ -25,7 +58,7 @@
     <div id="edit-member-text">Click the member that you want to edit</div>
     <div class="team-members-container"></div>
 
-    <div id="add-member-form" class="bg-yellow">
+    <div id="add-member-form" class="bg-yellow form">
         <div class="add-member-section-1 flex-container">
             <input type="file" id="add-member-image-input" accept="image/*" 
                 hidden />

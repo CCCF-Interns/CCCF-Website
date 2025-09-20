@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gallery | CCCF</title>
+    <link rel='stylesheet' href='/css/style.css' />
+    <link rel='stylesheet' href='/css/galleryView.css' />
+    <link rel='stylesheet' href='/css/header.css' />
+    <link rel='stylesheet' href='/css/footer.css' />
+    <script>
+        fetch('/header.html')
+            .then(res => res.text())
+            .then(async data => {
+                document.querySelector('#header-container').innerHTML = data;
+                await import('/script/header.js');
+            });
+        fetch('/footer.html')
+            .then(res => res.text())
+            .then(async data => {
+                document.querySelector('#footer-container').innerHTML = data;
+                await import("/script/footer.js");
+            });
+    </script>
+    <script src="/script/galleryView.js" defer></script>
+</head>
+<body>
+    <div id="loader" class="bg-white"></div>
+    <div id="header-container"></div>
+    <div class="album-title-container bg-cream">
+        <h1 class="heading" id="album-title">All Albums</h1>
+    </div>
+    <div class="page-buttons flex-container" id="page-buttons-top"></div>
+    <div class="grid" id="images-container"></div>
+    <div id="image-overlay">
+        <div class="background-blur flex-container">
+            <img id="preview-close" src="/assets/svg/close_white.svg" />
+            <div class="preview flex-container">
+                <img src="/assets/svg/chevron_left_white.svg" 
+                    class="preview-arrow" id="preview-left">
+                <div class="preview-container flex-container">
+                    <img id="image-preview" src="/assets/images/cover2.jpg">
+                </div>
+                <img src="/assets/svg/chevron_right_white.svg" 
+                class="preview-arrow" id="preview-right">
+            </div>
+        </div>
+    </div>
+    <div class="page-buttons flex-container" id="page-buttons-bottom"></div>
+    <div id="footer-container"></div>
+</body>
+</html>
