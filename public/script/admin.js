@@ -499,7 +499,7 @@ async function addMember() {
     if (result)
         image_url = result.values.image_url;
     else
-        image_url = "/assets/images/dummyProfile.png"
+        image_url = "/assets/images/dummyProfile.png";
 
     let values = {
         id: crypto.randomUUID(),
@@ -699,7 +699,7 @@ imageSubmit.addEventListener("click", async () => {
         return;
     }
 
-    currentAlbum = imageDrop.value
+    currentAlbum = imageDrop.value;
     buttonMeow.style.display = "none";
     deleteAlbumButton.style.display = "none";
     await uploadImages(selectedImages);
@@ -904,7 +904,7 @@ deleteAlbumSubmit.addEventListener("click", async () => {
     });
 
     await initializeAlbums();
-    createNotification(checkCircle, `Deleted album successfully!`);
+    createNotification(checkCircle, "Deleted album successfully!");
 
     closeAll();
     submitLoader.style.display = "none";

@@ -215,7 +215,7 @@ router.post("/api/album/insert", authAdmin, async (req, res) => {
 });
 
 router.get("/api/album", async (req, res) => {
-    const query = `SELECT * FROM album`;
+    const query = "SELECT * FROM album";
     getData(query, (err, data) => {
         if (err) return res.status(500).json({ 
             message: "Failed to get albums" 
