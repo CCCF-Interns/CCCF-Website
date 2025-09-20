@@ -1,4 +1,5 @@
-let lastActive;
+// let lastActive;
+let currentPage = 1;
 let globCategory = "all";
 let globSortBy = "date";
 let globSearchString = "_all_";
@@ -12,7 +13,6 @@ document.addEventListener("DOMContentLoaded", function () {
     });
     document.querySelector("#categories").addEventListener("change", handleFilter);
     document.querySelector("#sort").addEventListener("change", handleFilter);
-    lastActive = null;
 });
 
 async function renderBlogs(start, end, category, sortBy, searchString) {
@@ -76,35 +76,76 @@ async function renderBlogs(start, end, category, sortBy, searchString) {
     });
 }
 
-async function renderPaginator(total) {
-    const paginator = document.createElement("div");
-    paginator.className = "pages";
+// old paginator
+// async function renderPaginator(total) {
+//     const paginator = document.createElement("div");
+//     paginator.className = "pages";
 
+//     const numOfPages = Math.ceil(total / 6);
+//     for (let i = 1; i <= numOfPages; i++) {
+//         const pageIcon = document.createElement("div");
+//         if (i == 1) {
+//             pageIcon.id = "activePage";
+//             lastActive = pageIcon;
+//         }
+//         pageIcon.innerText = i;
+//         pageIcon.className = "page";
+//         paginator.appendChild(pageIcon);
+//     }
+//     const container = document.querySelector(".paginator");
+//     container.appendChild(paginator);
+//     document.querySelectorAll(".page").forEach((page) => page.addEventListener("click", changePage));
+// }
+//
+// async function changePage(e) {
+//     lastActive.id = "";
+//     e.target.id = "activePage";
+//     lastActive = e.target;
+//     const pageNumber = e.target.innerText;
+//     document.querySelector(".container").innerHTML = "";
+    
+//     const start = 6*(pageNumber-1);
+//     const end = start + 5;
+//     await renderBlogs(start, end, globCategory, globSortBy, globSearchString);
+//     window.scrollTo({
+//         top: 0,
+//         left: 0,
+//         behavior: "smooth"
+//     });
+// }
+
+
+async function renderPaginator(total) {
     const numOfPages = Math.ceil(total / 6);
-    for (let i = 1; i <= numOfPages; i++) {
-        const pageIcon = document.createElement("div");
-        if (i == 1) {
-            pageIcon.id = "activePage";
-            lastActive = pageIcon;
-        }
-        pageIcon.innerText = i;
-        pageIcon.className = "page";
-        paginator.appendChild(pageIcon);
+    const page = document.createElement("div");
+    page.className = "current-page";
+    page.innerText = currentPage;
+    if (currentPage !== 1) {
+        const leftArrow = document.createElement("button");
+        leftArrow.innerHTML = "<img src=\"/assets/svg/chevron_right_gray.svg\" alt=\"Go to previous page\">";
+        leftArrow.className = "page-arrow";
+        leftArrow.style.transform = "rotate(180deg)";
+        leftArrow.addEventListener("click", () => {changePage(currentPage - 1);});
+        document.querySelector(".paginator").appendChild(leftArrow);
     }
-    const container = document.querySelector(".paginator");
-    container.appendChild(paginator);
-    document.querySelectorAll(".page").forEach((page) => page.addEventListener("click", changePage));
+
+    document.querySelector(".paginator").appendChild(page);
+
+    if (currentPage !== numOfPages) {
+        const rightArrow = document.createElement("button");
+        rightArrow.innerHTML = "<img src=\"/assets/svg/chevron_right_gray.svg\" alt=\"Go to next page\">";
+        rightArrow.className = "page-arrow";
+        rightArrow.addEventListener("click", () => {changePage(currentPage + 1);});
+        document.querySelector(".paginator").appendChild(rightArrow);
+    }
 }
 
-async function changePage(e) {
-    lastActive.id = "";
-    e.target.id = "activePage";
-    lastActive = e.target;
-    const pageNumber = e.target.innerText;
-    document.querySelector(".container").innerHTML = "";
-    
-    const start = 6*(pageNumber-1);
+async function changePage(changeTo) { 
+    currentPage = changeTo;
+    const start = 6*(currentPage-1);
     const end = start + 5;
+    document.querySelector(".container").innerHTML = "";
+    document.querySelector(".paginator").innerHTML = "";
     await renderBlogs(start, end, globCategory, globSortBy, globSearchString);
     window.scrollTo({
         top: 0,
@@ -117,7 +158,7 @@ async function handleFilter() {
     globCategory = document.querySelector("#categories").value;
     globSortBy = document.querySelector("#sort").value;
     let search = document.querySelector(".search>input").value;
-    console.log(search)
+    console.log(search);
     globSearchString = search !== "" ? search : "_all_";
     document.querySelector(".container").innerHTML = "";
     document.querySelector(".paginator").innerHTML = "";
