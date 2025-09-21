@@ -49,28 +49,19 @@ async function createImages() {
     if (albumID == "") {
         albumTitle.textContent = "All Photos";
 
-        response = await fetch ("/api/gallery/", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ page: pageNumber })
-        });
+        response = await fetch (`/api/gallery?page=${pageNumber}`);
     }
     else {
-        response = await fetch ("/api/album/id", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ id: albumID })
-        });
-
+        response = await fetch (`/api/album/${albumID}`);
         console.log("What");
 
         let title = await response.json();
         albumTitle.textContent = title.data[0].name;
 
-        response = await fetch ("/api/gallery/album", {
+        response = await fetch (`/api/gallery/album`, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ page: pageNumber, id: albumID, is_lim: true })
+            body: JSON.stringify({ id: albumID, page: pageNumber, is_lim: true })
         });
     }
 
@@ -95,11 +86,7 @@ async function getTotalPages() {
         response = await fetch("/api/gallery/total");
     }
     else {
-        response = await fetch ("/api/gallery/album/total", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ id: albumID })
-        });
+        response = await fetch (`/api/gallery/album/total/${albumID}`);
     } 
 
     const data = await response.json();
