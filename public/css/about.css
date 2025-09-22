@@ -364,7 +364,7 @@ body {
 }
 
 /* 1080p (and other middle resolutions) fix */
-@media (min-width: 901px) and (max-width: 1399px) {
+@media (min-width: 901px) and (max-width: 1540px) {
     .team-container {
         max-width: 1000px;
         padding: 32px 32px;

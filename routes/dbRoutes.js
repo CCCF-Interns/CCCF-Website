@@ -63,6 +63,17 @@ router.get("/api/gallery/album/total/:id", async (req, res) => {
     });
 });
 
+router.get("/api/gallery/latest", async (req, res) => {
+    const query = "SELECT * from gallery ORDER BY created_at LIMIT 1";
+
+    getData(query, (err, data) => {
+        if (err) return res.status(500).json({ 
+            message: "Failed to get latest image" 
+        });
+        res.json({ data });
+    });    
+});
+
 router.get("/api/gallery/total", async (req, res) => {
     const query = "SELECT count(*) as total from gallery";
     getData(query, (err, data) => {

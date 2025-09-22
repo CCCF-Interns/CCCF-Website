@@ -4,14 +4,21 @@ const searchInput = document.querySelector("#album-input");
 const searchLoader = document.querySelector("#album-loader");
 
 let albumData = [];
-let imagesData = [];
+let allPhotosData = null;
 let searchResCount = 0;
-let alternate = false;
 
 async function loadAlbums() {
     let response = await fetch("/api/album/existing");
     let result = await response.json();
     albumData = result.data;
+
+    response = await fetch("/api/gallery/latest");
+    result = await response.json();
+    allPhotosData = result.data[0];
+
+    response = await fetch("/api/gallery/total");
+    result = await response.json();
+    allPhotosData["total"] = result.data[0].total;
 }
 
 async function searchAlbum(term) {
@@ -56,7 +63,11 @@ function createAlbum(id, title, imageCount, imageLink) {
     imgTitle.classList.add("image-title");
     imgCount.classList.add("image-count");
 
-    a.href = `/gallery/images/${id}?page=1`;
+    if (id == "")
+        a.href = "/gallery/images?page=1";
+    else
+        a.href = `/gallery/images/${id}?page=1`;
+
     img.src = imageLink;
     img.alt = "Album Cover";
     imgTitle.textContent = title;
@@ -72,6 +83,7 @@ function createAlbum(id, title, imageCount, imageLink) {
 
 async function createAlbums() {
     await loadAlbums();
+    createAlbum("", "All Photos", allPhotosData.total, allPhotosData.image_url);
     for (let x of albumData) {
         createAlbum(x.id, x.name, x.total, x.image_url);
     }
