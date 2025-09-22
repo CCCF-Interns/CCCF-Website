@@ -25,7 +25,7 @@ async function searchAlbum(term) {
     searchLoader.classList.remove("hidden");
     albumDropdown.classList.add("hidden");
 
-    let response = await fetch(`/api/album/search`, {
+    let response = await fetch("/api/album/search", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ term: term })

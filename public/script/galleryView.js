@@ -58,7 +58,7 @@ async function createImages() {
         let title = await response.json();
         albumTitle.textContent = title.data[0].name;
 
-        response = await fetch (`/api/gallery/album`, {
+        response = await fetch ("/api/gallery/album", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ id: albumID, page: pageNumber, is_lim: true })
