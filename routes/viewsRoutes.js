@@ -50,8 +50,11 @@ router.get("/blogs/:id", (req, res) => {
 });
 
 router.get("/admin", adminAuth, (req, res) => {
-    console.log("Working");
     res.sendFile(path.join(__dirname, "views", "admin.html"));
+});
+
+router.get("/admin/images/", adminAuth, (req, res) => {
+    res.sendFile(path.join(__dirname, "views", "adminImages.html"));
 });
 
 router.get("/login", (req, res) => {
