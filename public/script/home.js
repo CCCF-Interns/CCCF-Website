@@ -65,9 +65,10 @@ document.addEventListener("DOMContentLoaded", () => {
   const nextBtn = document.getElementById("blogs-next-btn");
   const prevBtn = document.getElementById("blogs-prev-btn");
 
-  const VISIBLE_FULL = 3;
+  // Responsive: 1 card on mobile, 3 on larger screens
   const PARTIAL_FRACTION = 0.35;
   const SLIDE_DURATION = 650;
+  let visibleFull = 3;
 
   let totalCards = 0;
   let index = 0;
@@ -76,6 +77,24 @@ document.addEventListener("DOMContentLoaded", () => {
   let stepWidth = cardWidth + gapPx;
   let animating = false;
   let baseOffset = 0;
+
+  // Drag/swipe state
+  let isDragging = false;
+  let dragStartX = 0;
+  let dragStartIndex = 0;
+  let dragProgress = 0;
+
+  function clamp(v, min, max) { return Math.max(min, Math.min(max, v)); }
+
+  function calculateVisibleFull() {
+    visibleFull = window.matchMedia("(max-width: 768px)").matches ? 1 : 3;
+  }
+
+  function ensurePrefade(partialIdx) {
+    if (partialIdx >= 0 && partialIdx < totalCards) {
+      container.children[partialIdx]?.classList.add("partial-fade");
+    }
+  }
 
   function buildCard(blog) {
     const card = document.createElement("div");
@@ -127,6 +146,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   function measure() {
     if (!container.firstElementChild) return;
+    calculateVisibleFull();
     container.style.transform = "translateX(0px)";
 
     const styles = getComputedStyle(container);
@@ -139,13 +159,19 @@ document.addEventListener("DOMContentLoaded", () => {
     const vpLeft = viewport.getBoundingClientRect().left;
     const firstLeft = firstRect.left;
     baseOffset = -(firstLeft - vpLeft);
-    const vpWidth = cardWidth * (VISIBLE_FULL + PARTIAL_FRACTION) + gapPx * (VISIBLE_FULL - 1);
-    viewport.style.width = Math.round(vpWidth) + "px";
+  const vpWidth = cardWidth * (visibleFull + PARTIAL_FRACTION) + gapPx * (visibleFull - 1);
+  const parentWidth = parentWrapper?.getBoundingClientRect().width || viewport.parentElement?.getBoundingClientRect().width || vpWidth;
+  const capped = Math.min(Math.round(vpWidth), Math.round(parentWidth));
+  viewport.style.width = capped + "px";
+
+    // Clamp index if responsive change reduces max index
+    const maxIndex = Math.max(0, totalCards - visibleFull);
+    if (index > maxIndex) index = maxIndex;
   }
 
   function applyFades() {
     [...container.children].forEach(c => c.classList.remove("partial-fade"));
-    const partialIdx = index + VISIBLE_FULL;
+    const partialIdx = index + visibleFull;
     if (partialIdx < totalCards) {
       container.children[partialIdx].classList.add("partial-fade");
     }
@@ -153,7 +179,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   function updateButtons() {
     prevBtn.style.display = index > 0 ? "inline-flex" : "none";
-    const canGoNext = index < (totalCards - VISIBLE_FULL);
+    const canGoNext = index < (totalCards - visibleFull);
     nextBtn.style.display = canGoNext ? "inline-flex" : "none";
   }
 
@@ -166,10 +192,18 @@ document.addEventListener("DOMContentLoaded", () => {
     applyTransform(index);
   }
 
-  function animateTo(newIndex) {
-    if (animating || newIndex === index) return;
+  // Animate from a (possibly fractional) start to integer newIndex
+  function animateTo(newIndex, startProgress = index) {
+    if (animating || newIndex === index) {
+      if (startProgress !== index) applyTransform(startProgress);
+      return;
+    }
     animating = true;
-    const startIndex = index;
+
+    // Prefade the incoming partial so it doesn't flash unfaded
+    ensurePrefade(newIndex + visibleFull);
+
+    const startIndex = startProgress;
     const delta = newIndex - startIndex;
     const startTime = performance.now();
     const ease = t => t < 0.5 ? 2*t*t : -1 + (4 - 2*t)*t;
@@ -193,12 +227,12 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   nextBtn.addEventListener("click", () => {
-    if (index >= totalCards - VISIBLE_FULL) return;
+    if (index >= totalCards - visibleFull || animating) return;
     animateTo(index + 1);
   });
 
   prevBtn.addEventListener("click", () => {
-    if (index <= 0) return;
+    if (index <= 0 || animating) return;
     animateTo(index - 1);
   });
 
@@ -206,6 +240,49 @@ document.addEventListener("DOMContentLoaded", () => {
     if (e.key === "ArrowRight") nextBtn.click();
     else if (e.key === "ArrowLeft") prevBtn.click();
   });
+
+  // Swipe/drag support with Pointer Events
+  viewport.style.touchAction = "pan-y"; // allow vertical scrolling
+  viewport.addEventListener("pointerdown", e => {
+    if (animating || totalCards <= visibleFull) return;
+    isDragging = true;
+    dragStartX = e.clientX;
+    dragStartIndex = index;
+    dragProgress = index;
+    try { viewport.setPointerCapture(e.pointerId); } catch {}
+    // Prefade potential incoming partials in both directions to avoid flicker while dragging
+    ensurePrefade(dragStartIndex + visibleFull + 1);
+    ensurePrefade(dragStartIndex + visibleFull - 1);
+  });
+
+  viewport.addEventListener("pointermove", e => {
+    if (!isDragging) return;
+    const dx = e.clientX - dragStartX;
+    const maxIndex = Math.max(0, totalCards - visibleFull);
+    dragProgress = clamp(dragStartIndex - dx / stepWidth, 0, maxIndex);
+    applyTransform(dragProgress);
+  });
+
+  function endDrag(e) {
+    if (!isDragging) return;
+    isDragging = false;
+    try { viewport.releasePointerCapture(e.pointerId); } catch {}
+    const dx = e.clientX - dragStartX;
+    const threshold = stepWidth * 0.25; // 25% swipe to advance
+    const maxIndex = Math.max(0, totalCards - visibleFull);
+
+    if (Math.abs(dx) > threshold) {
+      const dir = dx < 0 ? 1 : -1; // left swipe -> next; right swipe -> prev
+      const target = clamp(dragStartIndex + dir, 0, maxIndex);
+      animateTo(target, dragProgress);
+    } else {
+      animateTo(dragStartIndex, dragProgress);
+    }
+  }
+
+  viewport.addEventListener("pointerup", endDrag);
+  viewport.addEventListener("pointercancel", endDrag);
+  viewport.addEventListener("pointerleave", endDrag);
 
   function reflow() {
     measure();

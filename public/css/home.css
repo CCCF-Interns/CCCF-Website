@@ -194,10 +194,13 @@
   overflow: hidden;
   margin: 0;
   padding: 0;
+  max-width: 100%;
 }
 
 .cards-track {
   display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
   gap: 24px;
   will-change: transform;
   transition: none;
@@ -215,6 +218,9 @@
   filter: grayscale(40%);
   transition: opacity .3s ease, filter .3s ease;
 }
+
+/* Prevent inadvertent horizontal scrolling due to absolutely positioned arrows etc. */
+html, body { overflow-x: hidden; }
 
 /* FAQ section */
 .faq-container {
@@ -349,6 +355,13 @@
   }
 }
 
+/* Keep blog carousel arrows within viewport on small screens to avoid overflow */
+@media (max-width: 768px) {
+  #blogs-prev-btn { left: 8px !important; right: auto !important; }
+  #blogs-next-btn { right: 8px !important; left: auto !important; }
+  .blogs-nav-btn { width: 40px; height: 40px; }
+}
+
 @media (max-width: 1100px) {
   .cards-container {
     flex-direction: column;
@@ -476,6 +489,7 @@
 
 #latest-blogs .card .card-section-2 > div:not(.card-header):not(.card-category):not(.button-container) {
   display: -webkit-box;
+  line-clamp: 3;
   -webkit-line-clamp: 3;  
   -webkit-box-orient: vertical;
   overflow: hidden;
@@ -487,3 +501,40 @@
 }
 
 #latest-blogs .card .card-section-2 { border-top-left-radius: 0; border-top-right-radius: 0; }
+
+/* On small screens, allow the card to size to viewport to prevent overflow */
+@media (max-width: 768px) {
+  #latest-blogs .card {
+    width: 88vw;
+    min-width: 88vw;
+    max-width: 88vw;
+    height: auto !important;
+  }
+  #latest-blogs .card .card-image.secondary-image {
+    height: 45vw !important;
+    min-height: 45vw !important;
+    max-height: 45vw !important;
+  }
+}
+
+/* Force the latest blogs track to remain a horizontal row even on mobile */
+#latest-blogs.cards-track {
+  display: flex;
+  flex-direction: row !important;
+  flex-wrap: nowrap !important;
+  align-items: stretch;
+}
+
+@media (max-width: 1100px) {
+  #latest-blogs.cards-track {
+    flex-direction: row !important;
+    flex-wrap: nowrap !important;
+  }
+}
+
+@media (max-width: 700px) {
+  #latest-blogs.cards-track {
+    flex-direction: row !important;
+    flex-wrap: nowrap !important;
+  }
+}
