@@ -12,6 +12,7 @@ const imageClose = document.querySelector("#add-image-close");
 const imageAdd = document.querySelector("#add-image");
 const imageDrop = document.querySelector("#add-image-dropdown");
 const imageText = document.querySelector("#add-image-text");
+const deleteImages = document.querySelector("#delete-images");
 
 // Add album thingies
 const addAlbumButton = document.querySelector("#add-album");
@@ -656,14 +657,14 @@ async function uploadImages(files) {
 }
 
 function waitForFiles(input) {
-  return new Promise((resolve) => {
-    const handler = () => {
-      input.removeEventListener("change", handler);
-      resolve(input.files);
-    };
-    input.addEventListener("change", handler);
-    input.click(); // opens file picker
-  });
+    return new Promise((resolve) => {
+        const handler = () => {
+        input.removeEventListener("change", handler);
+        resolve(input.files);
+        };
+        input.addEventListener("change", handler);
+        input.click(); // opens file picker
+    });
 }
 
 // All the event listeners
@@ -703,9 +704,15 @@ imageSubmit.addEventListener("click", async () => {
     currentAlbum = imageDrop.value;
     buttonMeow.style.display = "none";
     deleteAlbumButton.style.display = "none";
+    deleteImages.style.display = "none";
     await uploadImages(selectedImages);
     buttonMeow.style.display = "inline";
     deleteAlbumButton.style.display = "inline";
+    deleteImages.style.display = "inline";
+});
+
+deleteImages.addEventListener("click", () => {
+    window.location.href = "/admin/images";
 });
 
 // Add member event listeners

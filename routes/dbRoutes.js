@@ -104,7 +104,7 @@ router.post("/api/gallery/insert", authAdmin, async (req, res) => {
 
 router.post("/api/gallery/delete", authAdmin, async (req, res) => {
     const query = `
-        DELETE FROM gallery WHERE id = $1;
+        DELETE FROM gallery WHERE id = ANY($1::text[]);
     `;
     const value = [req.body.id];
 

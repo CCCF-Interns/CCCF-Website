@@ -46,6 +46,9 @@ function createImage(link, index) {
 async function createImages() {
     let response = null;
 
+    pageButtonBottom.textContent = "";
+    pageButtonTop.textContent = "";
+
     if (albumID == "") {
         albumTitle.textContent = "All Photos";
 
@@ -53,7 +56,6 @@ async function createImages() {
     }
     else {
         response = await fetch (`/api/album/${albumID}`);
-        console.log("What");
 
         let title = await response.json();
         albumTitle.textContent = title.data[0].name;
@@ -96,6 +98,8 @@ async function getTotalPages() {
 
 async function createPageButtons() {
     const n = await getTotalPages();
+
+    console.log(pageNumber);
 
     if (pageNumber > n || pageNumber < 1) {
         return;
@@ -195,6 +199,7 @@ function createPageArrowRight(n) {
     }
     else {
         img.src = "/assets/svg/chevron_right_gray.svg";
+        img.classList.add("page-arrow-disabled");
         pageButtonTop.appendChild(img);
         pageButtonBottom.appendChild(img.cloneNode(true));
     }
