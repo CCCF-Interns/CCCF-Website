@@ -64,9 +64,15 @@ document.addEventListener("DOMContentLoaded", () => {
 
   const nextBtn = document.getElementById("blogs-next-btn");
   const prevBtn = document.getElementById("blogs-prev-btn");
+  // Nav row wrapper (for mobile bottom placement)
+  const navRow = document.createElement("div");
+  navRow.className = "blogs-nav-row";
+  // Insert navRow after viewport so we can move buttons into it conditionally
+  viewport.after(navRow);
 
   // Responsive: 1 card on mobile, 3 on larger screens
-  const PARTIAL_FRACTION = 0.35;
+  const DESKTOP_PARTIAL_FRACTION = 0.35; // desktop only
+  let PARTIAL_FRACTION = DESKTOP_PARTIAL_FRACTION;
   const SLIDE_DURATION = 650;
   let visibleFull = 3;
 
@@ -88,9 +94,21 @@ document.addEventListener("DOMContentLoaded", () => {
 
   function calculateVisibleFull() {
     visibleFull = window.matchMedia("(max-width: 768px)").matches ? 1 : 3;
+    // Move buttons based on breakpoint
+    const isMobile = visibleFull === 1;
+    if (isMobile) {
+      if (!navRow.contains(prevBtn)) navRow.appendChild(prevBtn);
+      if (!navRow.contains(nextBtn)) navRow.appendChild(nextBtn);
+    } else {
+      // Ensure buttons are positioned absolutely outside viewport edges (original DOM order)
+      if (navRow.contains(prevBtn)) viewport.before(prevBtn);
+      if (navRow.contains(nextBtn)) viewport.after(nextBtn);
+    }
   }
 
   function ensurePrefade(partialIdx) {
+    // No prefade on mobile (single card view)
+    if (visibleFull === 1) return;
     if (partialIdx >= 0 && partialIdx < totalCards) {
       container.children[partialIdx]?.classList.add("partial-fade");
     }
@@ -146,7 +164,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
   function measure() {
     if (!container.firstElementChild) return;
-    calculateVisibleFull();
+  calculateVisibleFull();
+  // On mobile disable partial peek
+  PARTIAL_FRACTION = visibleFull === 1 ? 0 : DESKTOP_PARTIAL_FRACTION;
     container.style.transform = "translateX(0px)";
 
     const styles = getComputedStyle(container);
@@ -169,8 +189,13 @@ document.addEventListener("DOMContentLoaded", () => {
     if (index > maxIndex) index = maxIndex;
   }
 
-  function applyFades() {
+  function clearFades() {
     [...container.children].forEach(c => c.classList.remove("partial-fade"));
+  }
+
+  function applyFades() {
+    clearFades();
+    if (visibleFull === 1) return; // no fades on mobile
     const partialIdx = index + visibleFull;
     if (partialIdx < totalCards) {
       container.children[partialIdx].classList.add("partial-fade");
@@ -194,8 +219,12 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Animate from a (possibly fractional) start to integer newIndex
   function animateTo(newIndex, startProgress = index) {
-    if (animating || newIndex === index) {
-      if (startProgress !== index) applyTransform(startProgress);
+    if (animating) return;
+    // If same index, still snap & cleanup fades (covers tap/no-move case)
+    if (newIndex === index) {
+      index = Math.round(index);
+      snap();
+      applyFades();
       return;
     }
     animating = true;
@@ -250,9 +279,7 @@ document.addEventListener("DOMContentLoaded", () => {
     dragStartIndex = index;
     dragProgress = index;
     try { viewport.setPointerCapture(e.pointerId); } catch {}
-    // Prefade potential incoming partials in both directions to avoid flicker while dragging
-    ensurePrefade(dragStartIndex + visibleFull + 1);
-    ensurePrefade(dragStartIndex + visibleFull - 1);
+    // No pre-fade on pointerdown; handled dynamically only after commit
   });
 
   viewport.addEventListener("pointermove", e => {
@@ -276,7 +303,10 @@ document.addEventListener("DOMContentLoaded", () => {
       const target = clamp(dragStartIndex + dir, 0, maxIndex);
       animateTo(target, dragProgress);
     } else {
-      animateTo(dragStartIndex, dragProgress);
+      // Snap back to starting index cleanly
+      index = dragStartIndex;
+      snap();
+      applyFades();
     }
   }
 
@@ -287,7 +317,7 @@ document.addEventListener("DOMContentLoaded", () => {
   function reflow() {
     measure();
     snap();
-    applyFades();
+    applyFades(); // will no-op (except clearing) on mobile
     updateButtons();
   }
 

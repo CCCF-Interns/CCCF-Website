@@ -1,3 +1,32 @@
+/* Mobile blog carousel adjustments (single card, centered, nav below) */
+@media (max-width: 768px) {
+  /* Single blog card width with side padding (override any earlier fixed widths) */
+  #latest-blogs.cards-track .card {
+    width: 84vw !important;
+    min-width: 84vw !important;
+    max-width: 84vw !important;
+    height: auto !important;
+    margin: 0 auto; /* center horizontally */
+  }
+  #latest-blogs .card .card-image.secondary-image {
+    height: 45vw !important;
+    min-height: 45vw !important;
+    max-height: 45vw !important;
+  }
+  /* Place nav buttons below carousel */
+  .blogs-viewport { margin-bottom: 12px; }
+  #blogs-prev-btn, #blogs-next-btn {
+    position: static !important;
+    transform: none !important;
+    margin: 0 12px;
+  }
+  .blogs-nav-btn { width: 44px; height: 44px; }
+  .blogs-nav-row { display: flex; justify-content: center; align-items: center; gap: 8px; width: 100%; }
+}
+@media (min-width: 769px) {
+  .blogs-nav-row { display: contents; }
+}
+
 #hero {
     width: 100%;
     height: 645px;
@@ -349,6 +378,7 @@ html, body { overflow-x: hidden; }
   }
   .card {
     max-width: 98vw;
+    padding: 16px;
   }
   .card-image {
     height: 120px;
@@ -367,10 +397,12 @@ html, body { overflow-x: hidden; }
     flex-direction: column;
     align-items: center;
     gap: 24px;
+    padding-left: 20px;
+    padding-right: 20px;
   }
   .card {
     width: 96vw;
-    max-width: 600px;
+    max-width: 500px;
     margin: 0 auto;
   }
 }
@@ -502,20 +534,7 @@ html, body { overflow-x: hidden; }
 
 #latest-blogs .card .card-section-2 { border-top-left-radius: 0; border-top-right-radius: 0; }
 
-/* On small screens, allow the card to size to viewport to prevent overflow */
-@media (max-width: 768px) {
-  #latest-blogs .card {
-    width: 88vw;
-    min-width: 88vw;
-    max-width: 88vw;
-    height: auto !important;
-  }
-  #latest-blogs .card .card-image.secondary-image {
-    height: 45vw !important;
-    min-height: 45vw !important;
-    max-height: 45vw !important;
-  }
-}
+/* (Removed duplicate 88vw mobile block; 84vw definition at top now authoritative) */
 
 /* Force the latest blogs track to remain a horizontal row even on mobile */
 #latest-blogs.cards-track {
