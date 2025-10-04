@@ -45,13 +45,50 @@
                 <option value="name">Name</option>
             </select>
         </div>
+        
     </div>
+
+    <div class="filters filters-active">
+        <div class="filters-container no-display">
+            <button class="close-filters"><img src="assets/svg/expanded-menu-icon.svg" alt="close-filters"></button>
+            <span>Categories</span>
+            <div class="categories-filter">
+                <div>
+                    <input type="checkbox" id="math" name="subject" value="math">
+                    <label for="math"> Math</label><br>
+                </div>
+
+                <div>
+                    <input type="checkbox" id="math" name="subject" value="math">
+                    <label for="math"> Math</label><br>
+                </div>
+
+                <div>
+                    <input type="checkbox" id="math" name="subject" value="math">
+                    <label for="math"> Math</label><br>
+                </div>
+            </div>
+
+            <span>Sort By</span>
+            <div class="sort-by">
+                <input type="radio" id="date" name="sort-by" value="date">
+                <label for="date">Date</label>
+                <input type="radio" id="name" name="sort-by" value="name">
+                <label for="date">Name</label>
+            </div>
+            <div class="filters-apply">
+                <button>Apply</button>
+            </div>
+        </div>
+        <button class="filters-btn">Filter</button>
+    </div>
+
     <div class="container">
         
     </div>
 
     <div class="paginator"></div>
 
-    <div id='footer-container'></div>
+    <div id='footer-container' class=""></div>
 </body>
 </html>
