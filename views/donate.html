@@ -24,7 +24,6 @@
             });
     </script>
     <script src="/script/home.js" defer></script>
-    <script src="/script/donate.js" defer></script>
 </head>
 <body>
     <div id="header-container"></div>
@@ -32,53 +31,40 @@
         <div class="donate-inner hero-center">
             <h1 class="heading">Give Hope. Fuel Strength.</h1>
             <p class="lead">Your gift provides emotional care, education continuity, and critical support to children fighting cancer and their families. Every contribution becomes a lifeline.</p>
-            <a href="#give" id="hero-donate-btn" class="button pill-button hero-cta">Donate Now</a>
+            <a href="#give" id="hero-donate-btn" class="button pill-button hero-cta center-cta">Donate Now</a>
         </div>
     </section>
     <section id="give" class="donation-options-section bg-cream">
         <div class="donate-inner">
-            <h2 class="heading">Choose Your Impact</h2>
-            <form class="donation-form" action="#" method="post">
-                <fieldset class="frequency-group">
-                    <legend class="sub-heading">Frequency</legend>
-                    <label class="freq-option">
-                        <input type="radio" name="frequency" value="once" checked>
-                        <span>One-Time</span>
-                    </label>
-                    <label class="freq-option">
-                        <input type="radio" name="frequency" value="monthly">
-                        <span>Monthly</span>
-                    </label>
-                </fieldset>
-                <fieldset class="amount-group">
-                    <legend class="sub-heading">Amount</legend>
-                    <div class="amount-buttons">
-                        <label><input type="radio" name="amount" value="10"><span>$10</span></label>
-                        <label><input type="radio" name="amount" value="25" checked><span>$25</span></label>
-                        <label><input type="radio" name="amount" value="50"><span>$50</span></label>
-                        <label><input type="radio" name="amount" value="100"><span>$100</span></label>
-                        <label class="custom">
-                            <input type="radio" name="amount" value="custom">
-                            <span>Custom</span>
-                        </label>
-                    </div>
-                    <div class="custom-amount-row">
-                        <label for="custom-amount" class="visually-hidden">Custom amount</label>
-                        <input id="custom-amount" name="customAmount" type="number" min="1" placeholder="Enter amount" disabled>
-                    </div>
-                </fieldset>
-                <fieldset class="details-group">
-                    <legend class="sub-heading">Your Info</legend>
-                    <div class="input-row">
-                        <input type="text" name="name" placeholder="Full Name" required>
-                        <input type="email" name="email" placeholder="Email" required>
-                    </div>
-                </fieldset>
-                <div class="donate-submit-row">
-                    <button type="submit" class="button large-button pill-button">Continue to Payment</button>
-                    <div class="security-note">Secure & Encrypted</div>
+            <h2 class="heading">How to Donate</h2>
+            <div class="donation-form donation-form-disabled">
+                <div class="donation-form-disabled-message center-message">
+                    <strong>Online donations are temporarily unavailable.</strong><br>
+                    We are not accepting direct payments at this time.<br>
+                    Please use the options below to support us!
                 </div>
-            </form>
+            </div>
+            <div class="donate-alt-methods">
+                <h3 class="donate-alt-heading">Other Ways to Give</h3>
+                <ul>
+                    <li style="margin-bottom:1.2em;">
+                        <strong>Contact us:</strong><br>
+                        <a href="mailto:info@cccf.org"><img src="/assets/svg/mail-icon.svg" style="height:1.2em;vertical-align:middle;margin-right:6px;">info@cccf.org</a><br>
+                        <a href="tel:+923214567890"><img src="/assets/svg/call-icon.svg" style="height:1.2em;vertical-align:middle;margin-right:6px;">+92 321 4567890</a>
+                    </li>
+                    <li style="margin-bottom:1.2em;">
+                        <strong>Social Media:</strong><br>
+                        <a href="https://www.facebook.com/CCCTrust" target="_blank"><img src="/assets/svg/Facebook.svg" style="height:1.2em;vertical-align:middle;margin-right:6px;">Facebook</a>
+                        <a href="https://www.instagram.com/cccf.pk" target="_blank" style="margin-left:12px;"><img src="/assets/svg/Instagram.svg" style="height:1.2em;vertical-align:middle;margin-right:6px;">Instagram</a>
+                        <a href="/redirect/whatsapp" target="_blank" style="margin-left:12px;"><img src="/assets/svg/whatsapp_icon.svg" style="height:1.2em;vertical-align:middle;margin-right:6px;">WhatsApp</a>
+                        <a href="https://www.linkedin.com/company/childhood-cancer-care-foundation/" target="_blank" style="margin-left:12px;"><img src="/assets/svg/Linkedin.svg" style="height:1.2em;vertical-align:middle;margin-right:6px;">LinkedIn</a>
+                    </li>
+                    <li>
+                        <strong>Donate in-kind:</strong><br>
+                        Clothes, toys, books, and supplies are welcome! Please reach out to arrange a drop-off or pickup.
+                    </li>
+                </ul>
+            </div>
         </div>
     </section>
     <section class="impact-section bg-yellow">

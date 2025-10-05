@@ -25,8 +25,9 @@ html { scroll-behavior: smooth; }
 .donate-hero .donate-inner { position: relative; z-index: 2; }
 
 .donate-hero .heading, .donate-hero .lead { color: #fff; }
-.hero-cta { background: #ffd23c; color:#000; }
+.hero-cta { background: #ffd23c; color:#000; display: inline-block; min-width: 180px; max-width: 320px; text-align: center; margin: 0 auto; font-size: 1.25rem; font-weight: 700; box-shadow: 0 2px 8px rgba(0,0,0,0.07); transition: filter .2s; }
 .hero-cta:hover { filter: brightness(0.9); }
+.center-cta { display: block !important; margin: 0 auto !important; }
 
 .donate-hero .heading { max-width: 620px; }
 .lead { max-width: 760px; line-height: 1.55; }
@@ -45,6 +46,76 @@ html { scroll-behavior: smooth; }
   flex-direction: column;
   gap: 32px;
   max-width: 760px;
+}
+.donation-form-disabled {
+    opacity: 0.5;
+    pointer-events: none;
+    filter: grayscale(0.7);
+    background: #eee;
+    border-radius: 16px;
+    padding: 32px 24px;
+    margin-bottom: 24px;
+    min-height: 120px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    max-width: 520px;
+    margin-left: auto;
+    margin-right: auto;
+}
+.donation-form-disabled-message {
+  color: #444;
+  font-size: 1.1rem;
+  text-align: center;
+}
+.center-message {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+}
+.donate-alt-heading {
+  padding-top: 18px;
+  padding-bottom: 18px;
+}
+.donate-alt-methods ul {
+  margin: 0;
+  padding-left: 1.2em;
+  font-size: 1.08rem;
+  list-style: disc inside;
+}
+.donate-alt-methods a {
+  display: inline-block;
+  margin-bottom: 4px;
+  color: #222;
+  text-decoration: underline;
+  font-weight: 500;
+  transition: color .2s;
+}
+.donate-alt-methods a:hover {
+  color: #0077b6;
+}
+.donate-alt-methods {
+  background: #fffbe9;
+  border-radius: 14px;
+  padding: 24px 18px;
+  margin-top: 12px;
+  box-shadow: 0 1px 6px 0 rgba(0,0,0,0.04);
+}
+.donate-alt-methods h3 {
+  margin-top: 0;
+  font-size: 1.3rem;
+  font-weight: 700;
+}
+.donate-alt-methods ul {
+  margin: 0;
+  padding-left: 1.2em;
+  font-size: 1.08rem;
+}
+.donate-alt-methods li {
+  margin-bottom: 0.7em;
 }
 .donation-form fieldset {
   border: none;
@@ -199,4 +270,9 @@ html { scroll-behavior: smooth; }
   .input-row { flex-direction: column; }
   .donate-submit-row { flex-direction: column; align-items: flex-start; }
   .pill-button.large-button { width: 100%; text-align: center; }
+}
+@media (max-width: 780px) {
+  .faq-container {
+    padding-left: 5px;
+  }
 }
