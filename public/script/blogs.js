@@ -5,7 +5,7 @@ let globSortBy = "date";
 let globSearchString = "_all_";
 
 document.addEventListener("DOMContentLoaded", function () {
-    document.querySelector(".filters-container").classList.toggle("no-display")
+    document.querySelector(".filters-container").classList.toggle("no-display");
     renderCategories();
     document.querySelector(".filters-btn").addEventListener("click", showFilters);
     document.querySelector(".close-filters").addEventListener("click", closeFilters);
@@ -16,6 +16,10 @@ document.addEventListener("DOMContentLoaded", function () {
     });
     document.querySelector("#categories").addEventListener("change", handleFilter);
     document.querySelector("#sort").addEventListener("change", handleFilter);
+    document.querySelector(".filters-container > form").addEventListener("submit", (e) => {
+        e.preventDefault();
+        handleMobileFilter(e.target);
+    });
 });
 
 async function renderBlogs(start, end, category, sortBy, searchString) {
@@ -120,10 +124,15 @@ async function renderBlogs(start, end, category, sortBy, searchString) {
 
 
 async function renderPaginator(total) {
-    const numOfPages = Math.ceil(total / 6);
+    let numOfPages;
+    if (total == 0)
+        numOfPages = 1;
+    else
+        numOfPages = Math.ceil(total / 6);
     const page = document.createElement("div");
     page.className = "current-page";
     page.innerText = currentPage;
+
     if (currentPage !== 1) {
         const leftArrow = document.createElement("button");
         leftArrow.innerHTML = "<img src=\"/assets/svg/chevron_right_gray.svg\" alt=\"Go to previous page\">";
@@ -186,17 +195,17 @@ async function renderCategories() {
 
 
 // For mobile filters
-async function showFilters() {
-    document.querySelector(".container").classList.toggle("no-display")
-    document.querySelector(".paginator").classList.toggle("no-display")
-    document.querySelector("#footer-container").classList.toggle("no-display")
-    document.querySelector(".filters-btn").classList.toggle("no-display")
-    document.querySelector(".filters-container").classList.toggle("no-display")
+function showFilters() {
+    document.querySelector(".container").classList.toggle("no-display");
+    document.querySelector(".paginator").classList.toggle("no-display");
+    document.querySelector("#footer-container").classList.toggle("no-display");
+    document.querySelector(".filters-btn").classList.toggle("no-display");
+    document.querySelector(".filters-container").classList.toggle("no-display");
 
     const selectedRadioButton = document.querySelector(`.sort-by > input[name="sort-by"][value="${globSortBy}"]`);
     selectedRadioButton.checked = true;
 
-    await fetch("/api/blogs/categories")
+    fetch("/api/blogs/categories")
     .then(res => res.json())
     .then(data => {
         const categories = document.querySelector("#categories");
@@ -223,36 +232,35 @@ async function showFilters() {
             document.querySelector(".categories-filter").appendChild(div);
         }
     });
-
-    document.querySelector(".filters-container > form").addEventListener("submit", (e) => {
-        e.preventDefault();
-        const formData = new FormData(e.target);
-        let catValues = formData.getAll('category');
-        if (catValues)
-            catValues = catValues.join("-")
-        const sortBy = formData.get('sort-by');
-        let search = document.querySelector(".search > input").value;
-        globSearchString = search !== "" ? search : "_all_";
-        globCategory = catValues ? catValues : "-all";
-        globSortBy = sortBy;
-        document.querySelector(".container").innerHTML = "";
-        document.querySelector(".paginator").innerHTML = "";
-        renderBlogs(0, 5, globCategory, globSortBy, globSearchString);
-
-        closeFilters();
-    })
 }
 
 function isDisplayNone(element) {
   const computedStyle = window.getComputedStyle(element);
-  return computedStyle.display === 'none';
+  return computedStyle.display === "none";
+}
+
+function handleMobileFilter(target) {
+    const formData = new FormData(target);
+    let catValues = formData.getAll("category");
+    if (catValues)
+        catValues = catValues.join("-");
+    const sortBy = formData.get("sort-by");
+    let search = document.querySelector(".search > input").value;
+    globSearchString = search !== "" ? search : "_all_";
+    globCategory = catValues ? catValues : "-all";
+    globSortBy = sortBy;
+    document.querySelector(".container").innerHTML = "";
+    document.querySelector(".paginator").innerHTML = "";
+    renderBlogs(0, 5, globCategory, globSortBy, globSearchString);
+
+    closeFilters();
 }
 
 function closeFilters() {
-    document.querySelector(".container").classList.toggle("no-display")
-    document.querySelector(".paginator").classList.toggle("no-display")
-    document.querySelector("#footer-container").classList.toggle("no-display")
-    document.querySelector(".filters-btn").classList.toggle("no-display")
-    document.querySelector(".filters-container").classList.toggle("no-display")
+    document.querySelector(".container").classList.toggle("no-display");
+    document.querySelector(".paginator").classList.toggle("no-display");
+    document.querySelector("#footer-container").classList.toggle("no-display");
+    document.querySelector(".filters-btn").classList.toggle("no-display");
+    document.querySelector(".filters-container").classList.toggle("no-display");
     document.querySelector(".categories-filter").innerHTML = "";
 }

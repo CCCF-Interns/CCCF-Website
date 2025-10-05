@@ -60,7 +60,7 @@ router.get("/api/blogs/:categories/:sortBy/:searchString/:start/:end", async (re
     if (categories.length) {
       QUERY += categories
         .map(cat => `&& ${JSON.stringify(cat)} in categories[]->title`)
-        .join(' ');
+        .join(" ");
     }
 
     QUERY += `] | order(${sortBy}) ${range} {

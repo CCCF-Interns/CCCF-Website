@@ -205,7 +205,7 @@ old paginator
 
 .filters-container {
     width: 100%;
-    height: 35rem;
+    height: 30rem;
     overflow-y: auto;
     background-color: #FFD34B;
     position: relative;
@@ -319,6 +319,10 @@ old paginator
     display: inline-block;
 }
 
+.filters-btn {
+    display: none;
+}
+
 @media only screen and (max-width: 850px) {
     /* .selections {
         background-color: #F7EAC9;
@@ -339,17 +343,21 @@ old paginator
         display: flex;
         align-items: end;
         justify-content: center;
+        z-index: -1;
     }
 
     .filters-btn {
         position: fixed;
-        display: block;
+        display: inline-block;
         background-color: #FFD34B;
         width: 6rem;
         height: 3rem;
-        z-index: 10;
-        margin-bottom: 2rem;
+        bottom: 2rem;
+        margin: auto;
+        left: 0;
+        right: 0;
         border: 1px solid black;
+        z-index: 1;
     }
 
     .no-display {
