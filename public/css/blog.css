@@ -78,7 +78,9 @@ body {
 }
 
 .container * {
-    font-size: 1.3rem;
+    font-size: 1.04rem;
+    text-align: left;
+    font-weight: 400;
 }
 
 .blog-body h1 {
@@ -151,8 +153,10 @@ em {
         box-shadow: none;
     }
     .container * {
-        font-size: 1.25rem;
-        line-height: 1.7;
+        font-size: 0.98rem;
+        line-height: 1.45;
+        text-align: left;
+        font-weight: 400;
     }
     .blog-body {
         padding: 0rem;
@@ -161,40 +165,48 @@ em {
         border-radius: 0;
         box-shadow: none;
         margin-bottom: 0;
+        gap: 0.5rem;
     }
     .blog-body p, .blog-body ul, .blog-body ol, .blog-body blockquote {
-        margin-bottom: 1.1em;
+        margin-bottom: 0.7em;
     }
     .post-info h1 {
-        font-size: 2.1rem;
+        font-size: 1.18rem;
         font-weight: 700;
-        line-height: 1.2;
-        margin-bottom: 0.5em;
+        line-height: 1.1;
+        margin-bottom: 0.25em;
+        text-align: left;
     }
     .post-info h2 {
-        font-size: 1.1rem;
+        font-size: 0.92rem;
         color: #888;
-        margin-bottom: 0.7em;
+        margin-bottom: 0.3em;
+        text-align: left;
+        font-weight: 600;
     }
     .blog-body h1 {
-        font-size: 2.1rem;
+        font-size: 1.18rem;
         font-weight: 700;
-        margin-bottom: 0.7em;
+        margin-bottom: 0.3em;
+        text-align: left;
     }
     .blog-body h2 {
-        font-size: 1.5rem;
+        font-size: 1.04rem;
         font-weight: 600;
-        margin-bottom: 0.6em;
+        margin-bottom: 0.2em;
+        text-align: left;
     }
     .blog-body h3 {
-        font-size: 1.2rem;
+        font-size: 0.98rem;
         font-weight: 600;
-        margin-bottom: 0.5em;
+        margin-bottom: 0.12em;
+        text-align: left;
     }
     .blog-body h4 {
-        font-size: 1.1rem;
+        font-size: 0.95rem;
         font-weight: 600;
-        margin-bottom: 0.4em;
+        margin-bottom: 0.08em;
+        text-align: left;
     }
     .blog-body img {
         width: 98%;
