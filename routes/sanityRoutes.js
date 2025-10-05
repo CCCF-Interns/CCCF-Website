@@ -35,10 +35,10 @@ router.get("/api/blogs/:start/:end", async (req, res) => {
     }
 });
 
-router.get("/api/blogs/:category/:sortBy/:searchString/:start/:end", async (req, res) => {
+router.get("/api/blogs/:categories/:sortBy/:searchString/:start/:end", async (req, res) => {
     const start = req.params.start;
     const end = req.params.end;
-    let category = req.params.category;
+    let categories = req.params.categories;
     let sortBy = req.params.sortBy;
     let searchString = req.params.searchString;
     if (searchString !== "_all_")
@@ -46,13 +46,23 @@ router.get("/api/blogs/:category/:sortBy/:searchString/:start/:end", async (req,
 
     const range = `[${start}..${end}]`;
 
-    category = category !== "all" ? category : "*";
+
+    categories = categories !== "-all" ? categories.split("-").filter(str => str && str.trim() !== "") : [];
+
     searchString = searchString === "_all_" ? "*" : `*${searchString}*`;
     sortBy = sortBy !== "name" ? "publishedAt desc" : "title asc";
 
     let QUERY = `*[_type == "post" &&
     title match "${searchString}"`;
-    QUERY += category != "*" ? `&& "${category}" in categories[]->title` : "";
+
+    // QUERY += categories != "*" ? `&& array::all(${JSON.stringify(categories)}, ^.categories[]->title)  > 0` : "";
+    
+    if (categories.length) {
+      QUERY += categories
+        .map(cat => `&& ${JSON.stringify(cat)} in categories[]->title`)
+        .join(' ');
+    }
+
     QUERY += `] | order(${sortBy}) ${range} {
       _id,
       title,
@@ -68,7 +78,7 @@ router.get("/api/blogs/:category/:sortBy/:searchString/:start/:end", async (req,
       },
       publishedAt
     }`;
-  
+
     let countQUERY = QUERY.split("{")[0];
     countQUERY = "count(" + countQUERY + ")";
     countQUERY = countQUERY.replace(range, "");
