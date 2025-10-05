@@ -1,11 +1,14 @@
 // let lastActive;
 let currentPage = 1;
-let globCategory = "all";
+let globCategory = "-all";
 let globSortBy = "date";
 let globSearchString = "_all_";
 
 document.addEventListener("DOMContentLoaded", function () {
+    document.querySelector(".filters-container").classList.toggle("no-display");
     renderCategories();
+    document.querySelector(".filters-btn").addEventListener("click", showFilters);
+    document.querySelector(".close-filters").addEventListener("click", closeFilters);
     renderBlogs(0, 5, globCategory, globSortBy, globSearchString);
     document.querySelector(".search").addEventListener("submit", (e) => {
         e.preventDefault();
@@ -13,6 +16,10 @@ document.addEventListener("DOMContentLoaded", function () {
     });
     document.querySelector("#categories").addEventListener("change", handleFilter);
     document.querySelector("#sort").addEventListener("change", handleFilter);
+    document.querySelector(".filters-container > form").addEventListener("submit", (e) => {
+        e.preventDefault();
+        handleMobileFilter(e.target);
+    });
 });
 
 async function renderBlogs(start, end, category, sortBy, searchString) {
@@ -25,6 +32,7 @@ async function renderBlogs(start, end, category, sortBy, searchString) {
         const total = res.total;
         if (document.querySelector(".paginator").innerHTML === "")
             renderPaginator(total);
+
 
         for (const item of data) {
             const card = document.createElement("div");
@@ -116,10 +124,15 @@ async function renderBlogs(start, end, category, sortBy, searchString) {
 
 
 async function renderPaginator(total) {
-    const numOfPages = Math.ceil(total / 6);
+    let numOfPages;
+    if (total == 0)
+        numOfPages = 1;
+    else
+        numOfPages = Math.ceil(total / 6);
     const page = document.createElement("div");
     page.className = "current-page";
     page.innerText = currentPage;
+
     if (currentPage !== 1) {
         const leftArrow = document.createElement("button");
         leftArrow.innerHTML = "<img src=\"/assets/svg/chevron_right_gray.svg\" alt=\"Go to previous page\">";
@@ -155,10 +168,11 @@ async function changePage(changeTo) {
 }
 
 async function handleFilter() {
-    globCategory = document.querySelector("#categories").value;
-    globSortBy = document.querySelector("#sort").value;
+    if (!isDisplayNone(document.querySelector(".selections > div"))) {
+        globCategory = "-" + document.querySelector("#categories").value;
+        globSortBy = document.querySelector("#sort").value;
+    }
     let search = document.querySelector(".search>input").value;
-    console.log(search);
     globSearchString = search !== "" ? search : "_all_";
     document.querySelector(".container").innerHTML = "";
     document.querySelector(".paginator").innerHTML = "";
@@ -177,4 +191,76 @@ async function renderCategories() {
             categories.appendChild(option);
         }
     });
+}
+
+
+// For mobile filters
+function showFilters() {
+    document.querySelector(".container").classList.toggle("no-display");
+    document.querySelector(".paginator").classList.toggle("no-display");
+    document.querySelector("#footer-container").classList.toggle("no-display");
+    document.querySelector(".filters-btn").classList.toggle("no-display");
+    document.querySelector(".filters-container").classList.toggle("no-display");
+
+    const selectedRadioButton = document.querySelector(`.sort-by > input[name="sort-by"][value="${globSortBy}"]`);
+    selectedRadioButton.checked = true;
+
+    fetch("/api/blogs/categories")
+    .then(res => res.json())
+    .then(data => {
+        const categories = document.querySelector("#categories");
+        for (const cat of data) {
+            const div = document.createElement("div");
+            
+            // Create the checkbox input
+            const checkbox = document.createElement("input");
+            checkbox.type = "checkbox";
+            checkbox.id = cat.title;
+            checkbox.name = "category";
+            checkbox.value = cat.title;
+
+            // Create the label
+            const label = document.createElement("label");
+            label.setAttribute("for", cat.title);
+            label.textContent = cat.title;
+
+            // Append elements into the div
+            div.appendChild(checkbox);
+            div.appendChild(label);
+
+            // Finally append the div to the body (or any other parent element)
+            document.querySelector(".categories-filter").appendChild(div);
+        }
+    });
+}
+
+function isDisplayNone(element) {
+  const computedStyle = window.getComputedStyle(element);
+  return computedStyle.display === "none";
+}
+
+function handleMobileFilter(target) {
+    const formData = new FormData(target);
+    let catValues = formData.getAll("category");
+    if (catValues)
+        catValues = catValues.join("-");
+    const sortBy = formData.get("sort-by");
+    let search = document.querySelector(".search > input").value;
+    globSearchString = search !== "" ? search : "_all_";
+    globCategory = catValues ? catValues : "-all";
+    globSortBy = sortBy;
+    document.querySelector(".container").innerHTML = "";
+    document.querySelector(".paginator").innerHTML = "";
+    renderBlogs(0, 5, globCategory, globSortBy, globSearchString);
+
+    closeFilters();
+}
+
+function closeFilters() {
+    document.querySelector(".container").classList.toggle("no-display");
+    document.querySelector(".paginator").classList.toggle("no-display");
+    document.querySelector("#footer-container").classList.toggle("no-display");
+    document.querySelector(".filters-btn").classList.toggle("no-display");
+    document.querySelector(".filters-container").classList.toggle("no-display");
+    document.querySelector(".categories-filter").innerHTML = "";
 }
