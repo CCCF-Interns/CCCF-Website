@@ -6,6 +6,8 @@ let globSearchString = "_all_";
 
 document.addEventListener("DOMContentLoaded", function () {
     renderCategories();
+    document.querySelector(".filters-btn").addEventListener("click", () => {toggleFilters("on")});
+    document.querySelector(".close-filters").addEventListener("click", () => {toggleFilters("off")});
     renderBlogs(0, 5, globCategory, globSortBy, globSearchString);
     document.querySelector(".search").addEventListener("submit", (e) => {
         e.preventDefault();
@@ -177,4 +179,48 @@ async function renderCategories() {
             categories.appendChild(option);
         }
     });
+}
+
+
+// For mobile filters
+async function toggleFilters(chnageStateTo) {
+    document.querySelector(".container").classList.toggle("no-display")
+    document.querySelector(".paginator").classList.toggle("no-display")
+    document.querySelector("#footer-container").classList.toggle("no-display")
+    document.querySelector(".filters-container").classList.toggle("no-display")
+    document.querySelector(".filters-btn").classList.toggle("no-display")
+
+    if (chnageStateTo === "on") {
+        fetch("/api/blogs/categories")
+        .then(res => res.json())
+        .then(data => {
+            const categories = document.querySelector("#categories");
+            for (const cat of data) {
+                const div = document.createElement("div");
+                
+                // Create the checkbox input
+                const checkbox = document.createElement("input");
+                checkbox.type = "checkbox";
+                checkbox.id = cat.title;
+                checkbox.name = "category";
+                checkbox.value = cat.title;
+
+                // Create the label
+                const label = document.createElement("label");
+                label.setAttribute("for", cat.title);
+                label.textContent = cat.title;
+
+                // Append elements into the div
+                div.appendChild(checkbox);
+                div.appendChild(label);
+
+                // Finally append the div to the body (or any other parent element)
+                document.querySelector(".categories-filter").appendChild(div);
+            }
+        });
+
+        document.querySelector(".filters-apply > button").addEventListener("click", () => {
+            
+        })
+    }
 }

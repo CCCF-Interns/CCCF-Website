@@ -205,7 +205,8 @@ old paginator
 
 .filters-container {
     width: 100%;
-    height: 30rem;
+    height: 35rem;
+    overflow-y: auto;
     background-color: #FFD34B;
     position: relative;
     padding: 4rem 2rem;
@@ -305,7 +306,7 @@ old paginator
 }
 
 .filters-apply {
-    margin-top: 3rem;
+    margin-top: 1rem;
     text-align: center;
 }
 
@@ -329,7 +330,7 @@ old paginator
         display: none;
     }
 
-    .filters-active {
+    .filters {
         position: absolute;
         top: 0;
         right: 0;
