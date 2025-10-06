@@ -9,6 +9,27 @@
     padding: 64px 0px;
 }
 
+.social-media-container {
+    margin: auto;
+    flex-direction: column;
+    padding: 64px 0px 16px 0px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.social-media {
+    width: 1104px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+}
+
+.social-heading {
+    color: black;
+    padding: 16px 0px;
+}
+
 .contact-text{
     text-align: center;
     padding: 8px 0px;
@@ -67,4 +88,123 @@
     text-align: center;
     display: flex;
     flex-direction: column;
+}
+
+.social-links {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column; /* vertical layout */
+  gap: 12px; /* space between list items */
+  max-width: 300px; /* optional: limits width for a clean look */
+}
+
+.social-links li {
+  display: flex;
+  align-items: center;
+  padding: 8px 0px;
+}
+
+.social-links a {
+  text-decoration: none;
+  color: inherit;
+  display: flex;
+  align-items: center;
+  font-size: 1.3rem; /* larger text */
+  transition: transform 0.2s ease, opacity 0.2s ease;
+}
+
+.social-links a:hover {
+  opacity: 0.8;
+  transform: translateX(4px); /* subtle slide on hover */
+}
+
+.social-links img {
+  height: 1.8em; /* slightly larger icon */
+  margin-right: 10px;
+  vertical-align: middle;
+}
+
+/* Responsive adjustments */
+@media (max-width: 600px) {
+  .social-links {
+    max-width: 100%;
+    gap: 10px;
+  }
+
+  .social-links a {
+    font-size: 1rem;
+  }
+
+  .social-links img {
+    height: 1.4em;
+    margin-right: 8px;
+  }
+}
+
+@media (max-width: 900px) {
+  .social-media {
+    width: 100%;
+    align-items: center;
+  }
+
+  .social-links {
+    max-width: 400px;
+  }
+
+  .social-links a {
+    font-size: 1.2rem;
+  }
+
+  .social-links img {
+    height: 1.6em;
+  }
+}
+
+@media (max-width: 600px) {
+  .social-media-container {
+    padding: 40px 0px 12px 0px;
+  }
+
+  .social-links {
+    width: 100%;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .social-links li {
+    justify-content: center;
+  }
+
+  .social-links a {
+    font-size: 1.1rem;
+  }
+
+  .social-links img {
+    height: 1.4em;
+    margin-right: 8px;
+  }
+
+  .social-heading {
+    font-size: 1.5rem;
+  }
+}
+
+@media (max-width: 400px) {
+  .social-links {
+    gap: 8px;
+  }
+
+  .social-links a {
+    font-size: 1rem;
+  }
+
+  .social-links img {
+    height: 1.3em;
+  }
+
+  .social-heading {
+    font-size: 1.3rem;
+  }
 }
