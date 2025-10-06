@@ -224,8 +224,11 @@ body {
 }
 
 .team-member {
-    height: 450px;
+    height: 500px;
     width: 300px;
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
 }
 
 .member-image {
@@ -246,6 +249,19 @@ body {
 
 .member-description {
     padding-top: 8px;
+}
+
+.member-socials {
+    padding-top: 24px;
+    height: auto;
+    display: flex;
+    gap: 24px;
+    justify-content: space-around;
+}
+
+.member-socials img {
+    height: 24px;
+    width: auto;
 }
 
 @media (max-width: 900px) {
