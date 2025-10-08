@@ -1,12 +1,19 @@
 let teamMembers = document.querySelector(".team-members-container");
 let loader = document.querySelector("#loader");
 let membersData;
+let socialsData;
 
 async function loadData() {
-    const response = await fetch ("/api/member");
-    const result = await response.json();
+    let response = await fetch ("/api/member");
+    let result = await response.json();
 
     membersData = result.data;
+
+    response = await fetch ("/api/member/socials");
+    result = await response.json();
+
+    socialsData = result.data;
+    console.log(socialsData);
 }
 
 function addEmployee(name, title, description, mediaType, mediaURL, imageSource) {
@@ -47,27 +54,30 @@ function addEmployee(name, title, description, mediaType, mediaURL, imageSource)
         let mediaImg = document.createElement("img");
         console.log(mediaType);
 
+        let url = mediaURL[i];
+
+        if (!/^https?:\/\//i.test(url)) {
+            url = "https://" + url;
+        }
+
+        mediaAnchor.href = url;
         switch(mediaType[i]) {
             case 'I':
                 mediaImg.src = "/assets/svg/Instagram.svg";
                 mediaImg.alt = "Instagram";
-                mediaAnchor.href = mediaURL[i];
                 console.log(mediaURL[i])
                 break;
             case 'X':
                 mediaImg.src = "/assets/svg/X.svg";
                 mediaImg.alt = "X";
-                mediaAnchor.href = mediaURL[i];
                 break;
             case 'L':
                 mediaImg.src = "/assets/svg/Linkedin.svg";
                 mediaImg.alt = "Linkedin";
-                mediaAnchor.href = mediaURL[i];
                 break;
             case 'F':
                 mediaImg.src = "/assets/svg/Facebook.svg";
                 mediaImg.alt = "Facebook";
-                mediaAnchor.href = mediaURL[i];
                 break;
         }
         mediaAnchor.appendChild(mediaImg);
@@ -82,7 +92,14 @@ function addEmployee(name, title, description, mediaType, mediaURL, imageSource)
 async function initializeMembers() {
     await loadData();
     for (let x of membersData) {
-        addEmployee(x.name, x.job_title, x.description, [], [], x.imageURL);
+        console.log(x);
+        let mediaTypes = [];
+        let mediaURLs = [];
+        for (let y of socialsData.filter(item => item.id === x.id)) {
+            mediaTypes.push(y.social_type);
+            mediaURLs.push(y.social_url);
+        }
+        addEmployee(x.name, x.job_title, x.description, mediaTypes, mediaURLs, x.image_url);
     }
     document.body.style.overflow = "auto";
     loader.style.display = "none";

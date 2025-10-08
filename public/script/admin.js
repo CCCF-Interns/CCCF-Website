@@ -469,8 +469,7 @@ async function addMember() {
     if (checkFields() === false) {
         return;
     }
-    closeAll();
-    bgBlur.style.display = "block";
+    let currentSocials = socials;
 
     const file = addMemberImageInput.files[0];
     let result = null;
@@ -514,8 +513,9 @@ async function addMember() {
         social_types: []
     };
 
-    if (socials > 0) {
+    if (currentSocials > 0) {
         const socialConts = document.querySelectorAll(".add-member-social");
+
         socialConts.forEach((e) => {
             const social = e.querySelector("input");
             const type = e.querySelector(".add-member-social-dropdown");
@@ -525,23 +525,29 @@ async function addMember() {
         });
     }
 
+    closeAll();
+    bgBlur.style.display = "block";
+
     const resp = await fetch("/api/member/insert", {
         method: "POST",
         headers: { "Content-Type" : "application/json" },
         body: JSON.stringify({ data: values })
     });
 
-    const resp2 = await fetch("/api/member/socials/insert", {
-        method: "POST",
-        headers: { "Content-Type" : "application/json" },
-        body: JSON.stringify({ data: values })
-    });
-
     const result2 = await resp.json();
-    const result3 = await resp2.json();
 
     console.log(result2);
-    console.log(result3);
+
+    console.log()
+    if (currentSocials > 0) {
+        const resp2 = await fetch("/api/member/socials/insert", {
+            method: "POST",
+            headers: { "Content-Type" : "application/json" },
+            body: JSON.stringify({ data: values })
+        });
+        const result3 = await resp2.json();
+        console.log(result3);
+    }
 
     clearFields();
 
@@ -730,9 +736,9 @@ addSocial.addEventListener("click", () => {
 
 submitAddMember.addEventListener("click", async () => {
     submitLoader.style.display = "block";
+    addMemberForm.style.display = "none";
     await addMember();
     await initializeMembers();
-    addMemberForm.style.display = "none";
     bgBlur.style.display = "none";
     submitLoader.style.display = "none";
 });
