@@ -104,6 +104,11 @@ a, button, img, div {
     cursor: pointer;
 }
 
+.ribbons1 {
+    background-image: url("/assets/images/Ribbons.webp");
+    background-repeat: repeat-y;
+}
+
 /* Buttons */
 .button, .button-invert, .transparent-button {
     background-color: #FFCF3A;
