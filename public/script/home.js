@@ -273,6 +273,10 @@ document.addEventListener("DOMContentLoaded", () => {
   // Swipe/drag support with Pointer Events
   viewport.style.touchAction = "pan-y"; // allow vertical scrolling
   viewport.addEventListener("pointerdown", e => {
+    // If the user is clicking a blog link, don't start dragging
+    if (e.target.closest("#latest-blogs .card-section-2 a")) {
+      return;
+    }
     if (animating || totalCards <= visibleFull) return;
     isDragging = true;
     dragStartX = e.clientX;
@@ -340,4 +344,14 @@ document.addEventListener("DOMContentLoaded", () => {
     clearTimeout(resizeTO);
     resizeTO = setTimeout(reflow, 120);
   });
+});
+
+// Defensive: ensure blog links are always clickable
+document.addEventListener("click", function(e) {
+  // Only target blog card links
+  if (e.target.closest("#latest-blogs .card-section-2 a")) {
+    // Let the link work normally
+    return;
+  }
+  // ...existing code...
 });
