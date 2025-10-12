@@ -241,7 +241,7 @@ textarea:focus {
     width: 48px;
     height: 48px;
     border: 4px solid whitesmoke;
-    border-top: 4px solid #FFCF3A;
+    border-top: 4px solid #FFD34B;
     border-radius: 50%;
     animation: spin 1s linear infinite;
 }

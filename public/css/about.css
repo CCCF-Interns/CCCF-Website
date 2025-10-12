@@ -189,9 +189,16 @@ body {
 .work-modal {
     height: 350px;
     width: 650px;
-    background-color: whitesmoke;
+    background-color: white;
     border-radius: 12px;
     padding: 24px;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.05);
+    transition: transform .25s ease, box-shadow .25s ease;
+}
+
+.work-modal:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 22px rgba(0,0,0,0.08);
 }
 
 .work-modal-bold {
