@@ -19,7 +19,7 @@ let removingImages = [];
 let currentImageIndex = null;
 const checkCircle = "/assets/svg/check_circle_green.svg";
 
-function createImage(id, link, index) {
+function createImage(id, link, thumbnail, index) {
     const container = document.createElement("div");
     const image = document.createElement("img");
     const memberClicked = document.createElement("img");
@@ -29,12 +29,16 @@ function createImage(id, link, index) {
     image.classList.add("border-radius-8");
     memberClicked.classList.add("clicked");
     
-    image.src = link;
+    image.src = thumbnail;
     memberClicked.src = checkCircle;
+
+    let fileKey = link.split("/")[3].trim();
+    let thumbKey = fileKey.split('.').slice(0, -1).join('');
 
     let values = {
         id: id,
-        key: link.split("/")[3].trim()
+        key: fileKey,
+        key_thumb: `thumbnails/${thumbKey}.webp`
     };
 
     if (removingImages.some(data => data.id === values.id)) {
@@ -81,7 +85,7 @@ async function createImages() {
     pageButtonTop.textContent = "";
 
     for (let x of images.data) {
-        createImage(x.id, x.image_url, counter);
+        createImage(x.id, x.image_url, x.thumbnail_url, counter);
         ++counter;
     }
 
@@ -308,6 +312,7 @@ removeImagesSubmit.addEventListener("click", async () => {
 
     for (let x of removingImages) {
         keys.push(x.key);
+        keys.push(x.key_thumb);
         ids.push(x.id);
     }
 

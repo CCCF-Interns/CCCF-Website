@@ -21,12 +21,22 @@ const readR2 = new AWS.S3({
 });
 
 export async function uploadFile(key, file) {
-  await writeR2.putObject({
-    Bucket: process.env.R2_BUCKET,
-    Key: key,
-    Body: file.buffer,
-    ContentType: file.mimetype,
-  }).promise();
+  const body =
+    file instanceof Buffer
+      ? file
+      : file.buffer || Buffer.from(file); // fallback just in case
+
+  const contentType =
+    file.mimetype || "application/octet-stream"; // default if not multer file
+
+  await writeR2
+    .putObject({
+      Bucket: process.env.R2_BUCKET,
+      Key: key,
+      Body: body,
+      ContentType: contentType,
+    })
+    .promise();
 }
 
 export async function deleteFile(key) {
