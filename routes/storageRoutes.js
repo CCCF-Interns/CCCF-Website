@@ -1,6 +1,7 @@
 import express from "express";
 import mult from "multer";
 import { uploadFile, deleteFile, deleteBulk } from "../utils/storage.js";
+import { resizeImage } from "../utils/imageProcessing.js";
 import authAdmin from "../middleware/authentication.js";
 
 const router = express.Router();
@@ -13,16 +14,30 @@ router.post("/api/upload", authAdmin, upload.single("image"),
         https://pub-8a92cfffcd4044fb854badc0208fe02f.r2.dev/${fileName}
     `;
 
+    let thumbName = fileName.split(".").slice(0, -1).join("");
+    thumbName = `thumbnails/${thumbName}.webp`;
+    const thumbnail_url = `
+        https://pub-8a92cfffcd4044fb854badc0208fe02f.r2.dev/${thumbName}
+    `;
+
+    console.log(thumbnail_url);
+
     try {
         await uploadFile(fileName, req.file);
+
         let data = JSON.parse(req.body.data);
         let isGalleryImage = data.is_gal || false;
         let values;
         if (isGalleryImage) {
+            let resizedImage = await resizeImage(req.file.buffer);
+
+            await uploadFile(thumbName, resizedImage);
+
             values = {
                 id: crypto.randomUUID(),
                 title: req.file.originalname,
                 image_url: image_url,
+                thumbnail_url: thumbnail_url,
                 album_id: data.id
             };
         }

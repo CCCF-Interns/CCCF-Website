@@ -22,7 +22,7 @@ if (albumID != "") {
 
 console.log(albumID);
 
-function createImage(link, index) {
+function createImage(link, thumbnail, index) {
     const container = document.createElement("div");
     const image = document.createElement("img");
 
@@ -30,7 +30,7 @@ function createImage(link, index) {
     image.classList.add("image");
     image.classList.add("border-radius-8");
     
-    image.src = link;
+    image.src = thumbnail;
 
     container.addEventListener("click", () => {
         imagePreview.src = link;
@@ -71,7 +71,7 @@ async function createImages() {
     let counter = 0;
 
     for (let x of images.data) {
-        createImage(x.image_url, counter);
+        createImage(x.image_url, x.thumbnail_url, counter);
         ++counter;
     }
 

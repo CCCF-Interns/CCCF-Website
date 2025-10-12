@@ -599,8 +599,10 @@ async function uploadImages(files) {
     for (let x of files) {
         const fileSplit = x.name.split(".");
         const fileExt = fileSplit[fileSplit.length - 1];
-        const allowedExt = ["png", "jpg", "webp", "svg", "gif"];
+        const allowedExt = ["png", "jpg", "webp", "svg", "gif", "jpeg"];
 
+        console.log(fileExt);
+        
         if (!allowedExt.includes(fileExt)) {
             totalSpeed += progressSpeed;
             imageProgressBar.style.width = `${totalSpeed}%`;

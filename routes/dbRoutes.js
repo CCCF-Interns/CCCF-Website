@@ -64,7 +64,7 @@ router.get("/api/gallery/album/total/:id", async (req, res) => {
 });
 
 router.get("/api/gallery/latest", async (req, res) => {
-    const query = "SELECT * from gallery ORDER BY created_at LIMIT 1";
+    const query = "SELECT * from gallery ORDER BY created_at DESC LIMIT 1";
 
     getData(query, (err, data) => {
         if (err) return res.status(500).json({ 
@@ -86,8 +86,8 @@ router.get("/api/gallery/total", async (req, res) => {
 
 router.post("/api/gallery/insert", authAdmin, async (req, res) => {
     const query = `
-        INSERT INTO gallery (id, title, image_url, album_id) VALUES ($1, $2, $3,
-            $4);
+        INSERT INTO gallery (id, title, image_url, thumbnail_url, album_id) 
+        VALUES ($1, $2, $3, $4, $5);
     `;
     const itemData = req.body;
 
@@ -95,6 +95,7 @@ router.post("/api/gallery/insert", authAdmin, async (req, res) => {
         itemData.data.id,
         itemData.data.title,
         itemData.data.image_url,
+        itemData.data.thumbnail_url,
         itemData.data.album_id
     ];
 
@@ -238,7 +239,7 @@ router.get("/api/album", async (req, res) => {
 
 router.get("/api/album/existing", async (req, res) => {
     const query = `
-        SELECT a.*, res.total, cover.image_url
+        SELECT a.*, res.total, cover.thumbnail_url
         FROM album a,
         (
             SELECT album_id, COUNT(*) AS total 
@@ -246,7 +247,7 @@ router.get("/api/album/existing", async (req, res) => {
             GROUP BY album_id
         ) AS res,
         (
-            SELECT DISTINCT ON (album_id) album_id, image_url
+            SELECT DISTINCT ON (album_id) album_id, thumbnail_url
             FROM gallery
             ORDER BY album_id, created_at DESC
         ) AS cover
@@ -264,7 +265,7 @@ router.get("/api/album/existing", async (req, res) => {
 
 router.get("/api/album/:id", async (req, res) => {
     const query = `
-        SELECT a.*, res.total, cover.image_url
+        SELECT a.*, res.total, cover.thumbnail_url
         FROM album a,
         (
             SELECT album_id, COUNT(*) AS total 
@@ -272,7 +273,7 @@ router.get("/api/album/:id", async (req, res) => {
             GROUP BY album_id
         ) AS res,
         (
-            SELECT DISTINCT ON (album_id) album_id, image_url
+            SELECT DISTINCT ON (album_id) album_id, thumbnail_url
             FROM gallery
             ORDER BY album_id, created_at DESC
         ) AS cover

@@ -50,7 +50,7 @@ async function searchAlbum(term) {
     searchLoader.classList.add("hidden");
 }
 
-function createAlbum(id, title, imageCount, imageLink) {
+function createAlbum(id, title, imageCount, thumbLink) {
     const a = document.createElement("a");
     const img = document.createElement("img");
     const overlay = document.createElement("div");
@@ -68,7 +68,7 @@ function createAlbum(id, title, imageCount, imageLink) {
     else
         a.href = `/gallery/images/${id}?page=1`;
 
-    img.src = imageLink;
+    img.src = thumbLink;
     img.alt = "Album Cover";
     imgTitle.textContent = title;
     imgCount.textContent = `${imageCount} photos`;
@@ -83,9 +83,10 @@ function createAlbum(id, title, imageCount, imageLink) {
 
 async function createAlbums() {
     await loadAlbums();
-    createAlbum("", "All Photos", allPhotosData.total, allPhotosData.image_url);
+    createAlbum("", "All Photos", allPhotosData.total, 
+        allPhotosData.thumbnail_url);
     for (let x of albumData) {
-        createAlbum(x.id, x.name, x.total, x.image_url);
+        createAlbum(x.id, x.name, x.total, x.thumbnail_url);
     }
 }
 
