@@ -1,236 +1,249 @@
-/* Mobile blog carousel adjustments (single card, centered, nav below) */
 @media (max-width: 768px) {
-  /* Single blog card width with side padding (override any earlier fixed widths) */
   #latest-blogs.cards-track .card {
     width: 84vw !important;
     min-width: 84vw !important;
     max-width: 84vw !important;
     height: auto !important;
-    margin: 0 auto; /* center horizontally */
+    margin: 0 auto;
   }
   #latest-blogs .card .card-image.secondary-image {
     height: 45vw !important;
     min-height: 45vw !important;
     max-height: 45vw !important;
   }
-  /* Place nav buttons below carousel */
-  .blogs-viewport { margin-bottom: 12px; }
-  #blogs-prev-btn, #blogs-next-btn {
+  .blogs-viewport {
+    margin-bottom: 12px;
+  }
+  #blogs-prev-btn,
+  #blogs-next-btn {
     position: static !important;
     transform: none !important;
     margin: 0 12px;
   }
-  .blogs-nav-btn { width: 44px; height: 44px; }
-  .blogs-nav-row { display: flex; justify-content: center; align-items: center; gap: 8px; width: 100%; }
+  .blogs-nav-btn {
+    width: 44px;
+    height: 44px;
+  }
+  .blogs-nav-row {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    width: 100%;
+  }
 }
 @media (min-width: 769px) {
-  .blogs-nav-row { display: contents; }
+  .blogs-nav-row {
+    display: contents;
+  }
 }
-
 #hero {
   width: 100%;
   height: 729px;
   z-index: 1;
   align-items: center;
-  position: relative; /* allow absolute children (pagination) to anchor to hero */
+  position: relative;
 }
-
 #hero-cover {
-    position: absolute;
-    width: 100%;
-    height: 729px;
-    overflow: hidden;
-    background-color: white;
-    z-index: 1;
+  position: absolute;
+  width: 100%;
+  height: 729px;
+  overflow: hidden;
+  background-color: white;
+  z-index: 1;
 }
-
 #hero-cover img {
-    transition: 1s ease opacity;
+  transition: 1s ease opacity;
 }
-
 #hero-cover-2 {
-    transform: translate(0, -101%);
-    opacity: 0;
+  transform: translate(0, -101%);
+  opacity: 0;
 }
-
 #hero-cover-3 {
-    transform: translate(0, -201.5%);
-    opacity: 0;
+  transform: translate(0, -201.5%);
+  opacity: 0;
 }
-
 #hero-text-section {
-  /* position removed so .hero-pagination-wrapper (absolute) anchors to #hero, not this section */
-  /* position: relative; */
   padding: 64px;
   justify-content: space-between;
-  z-index: 3; /* z-index retained; if stacking issues arise, consider adding position:relative back and moving pagination wrapper outside this element instead */
+  z-index: 3;
   width: 100%;
   pointer-events: none;
 }
-
-/* Hero pagination (desktop default): vertical on right, anchored to hero */
-#hero { position: relative; }
-.hero-pagination-wrapper { position: absolute; top: 50%; right: 24px; transform: translateY(-50%); width: auto; z-index: 5; bottom: auto; left: auto; }
-.hero-pagination-wrapper .radio-form { display: flex; flex-direction: column; gap: 14px; }
-
+#hero {
+  position: relative;
+}
+.hero-pagination-wrapper {
+  position: absolute;
+  top: 50%;
+  right: 24px;
+  transform: translateY(-50%);
+  width: auto;
+  z-index: 5;
+  bottom: auto;
+  left: auto;
+}
+.hero-pagination-wrapper .radio-form {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
 @media (max-width: 768px) {
-  #hero-text-section { flex-direction: column; padding: 32px 20px 32px; gap: 32px; }
-  #hero-text-section .hero-text { width: 100%; }
-  /* Force pagination to anchor to hero bottom center */
-  #hero > .hero-pagination-wrapper { position: absolute; bottom: 12px; left: 50%; right: auto; top: auto; transform: translateX(-50%); width: 100%; display: flex; justify-content: center; }
-  /* Fallback (in case DOM differs) */
-  .hero-pagination-wrapper { bottom: 12px; left: 50%; right: auto; top: auto; transform: translateX(-50%); }
-  .hero-pagination-wrapper .radio-form { flex-direction: row; gap: 18px; }
+  #hero-text-section {
+    flex-direction: column;
+    padding: 32px 20px 32px;
+    gap: 32px;
+  }
+  #hero-text-section .hero-text {
+    width: 100%;
+  }
+  #hero > .hero-pagination-wrapper {
+    position: absolute;
+    bottom: 12px;
+    left: 50%;
+    right: auto;
+    top: auto;
+    transform: translateX(-50%);
+    width: 100%;
+    display: flex;
+    justify-content: center;
+  }
+  .hero-pagination-wrapper {
+    bottom: 12px;
+    left: 50%;
+    right: auto;
+    top: auto;
+    transform: translateX(-50%);
+  }
+  .hero-pagination-wrapper .radio-form {
+    flex-direction: row;
+    gap: 18px;
+  }
 }
-
 #hero-text-section .radio-button {
-    pointer-events: all;
+  pointer-events: all;
 }
-
 .hero-text {
-    flex-direction: column;
-    color: white;
-    width: 50%;
-    align-items: start;
-    gap: 24px;
+  flex-direction: column;
+  color: white;
+  width: 50%;
+  align-items: start;
+  gap: 24px;
 }
-
 .hero-buttons {
-    pointer-events: all;
-    gap: 24px;
+  pointer-events: all;
+  gap: 24px;
 }
-
 #hero-text-2 {
-    display: none;
+  display: none;
 }
-
 #hero-text-3 {
-    display: none;
+  display: none;
 }
-
-/* Primary */
 .primary-container {
-    flex-direction: column;
-    gap: 48px;
-    padding: 64px;
+  flex-direction: column;
+  gap: 48px;
+  padding: 64px;
 }
-
 .primary-container .heading {
-    text-align: center;
-    width: 600px;
+  text-align: center;
+  width: 600px;
 }
-
 .cards-container {
-    align-items: start;
-    gap: 24px;
+  align-items: start;
+  gap: 24px;
 }
-
 .card {
-    width: 360px !important;
-    min-width: 360px !important;
-    max-width: 360px !important;
-    height: 480px !important;
-    flex-direction: column;
-    align-items: center;
-    gap: 24px;
-    text-align: center;
-    box-sizing: border-box;
-    display: flex;
-    justify-content: flex-start;
+  width: 360px !important;
+  min-width: 360px !important;
+  max-width: 360px !important;
+  height: 480px !important;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px;
+  text-align: center;
+  box-sizing: border-box;
+  display: flex;
+  justify-content: flex-start;
 }
-
 .card-image {
-    border: 0;
-    border-top-left-radius: 12px;
-    border-top-right-radius: 12px;
-    width: 100%;
-    height: 202.5px !important;
-    min-height: 202.5px !important;
-    max-height: 202.5px !important;
-    box-sizing: border-box;
+  border: 0;
+  border-top-left-radius: 12px;
+  border-top-right-radius: 12px;
+  width: 100%;
+  height: 202.5px !important;
+  min-height: 202.5px !important;
+  max-height: 202.5px !important;
+  box-sizing: border-box;
 }
-
 .card-image img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    border-top-left-radius: 12px;
-    border-top-right-radius: 12px;
-    outline: none;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-top-left-radius: 12px;
+  border-top-right-radius: 12px;
+  outline: none;
 }
-
 .card-heading {
-    font-family: 'Raleway';
-    font-size: 1.5rem;
+  font-family: 'Raleway';
+  font-size: 1.5rem;
 }
-
 .button-container {
-    display: flex;
-    align-items: center;
-    gap: 8px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
 }
 .card button:hover {
-    text-decoration: underline;
+  text-decoration: underline;
 }
-
-
-/* Secondary Sections */
 .secondary-container {
-    flex-direction: column;
-    padding: 64px;
-    gap: 32px;
+  flex-direction: column;
+  padding: 64px;
+  gap: 32px;
 }
-
 .secondary-section-1 {
-    flex-direction: column;
-    align-items: start;
-    margin-right: auto;
-    gap: 24px;
-    margin-bottom: 32px;
+  flex-direction: column;
+  align-items: start;
+  margin-right: auto;
+  gap: 24px;
+  margin-bottom: 32px;
 }
-
 .secondary-image {
-    box-sizing: border-box;
-    border: 1px solid gray;
+  box-sizing: border-box;
+  border: 1px solid gray;
 }
-
 .card-section-2 {
-    flex-direction: column;
-    margin-top: -24px;
-    border: 1px solid gray;
-    border-top: none;
-    gap: 24px;
-    padding: 24px;
-    align-items: start;
-    text-align: left;
-    border-bottom-left-radius: 12px;
-    border-bottom-right-radius: 12px;
+  flex-direction: column;
+  margin-top: -24px;
+  border: 1px solid gray;
+  border-top: none;
+  gap: 24px;
+  padding: 24px;
+  align-items: start;
+  text-align: left;
+  border-bottom-left-radius: 12px;
+  border-bottom-right-radius: 12px;
 }
-
 .card-category {
-    border: 1px solid gray;
-    padding: 2px 8px;
-    color: black;
-    background-color: white;
-    transition: color ease 0.3s;
-    transition: background-color ease 0.3s;
-    cursor: pointer;
+  border: 1px solid gray;
+  padding: 2px 8px;
+  color: black;
+  background-color: white;
+  transition: color ease 0.3s;
+  transition: background-color ease 0.3s;
+  cursor: pointer;
 }
-
 .card-category:hover {
-    color: white;
-    background-color: black;
+  color: white;
+  background-color: black;
 }
-
 .card-section-2 button {
-    align-self: center;
+  align-self: center;
 }
-
 .card-header {
-    justify-content: space-between;
-    width: 100%;
+  justify-content: space-between;
+  width: 100%;
 }
-
 .blogs-viewport {
   position: relative;
   overflow: hidden;
@@ -238,7 +251,6 @@
   padding: 0;
   max-width: 100%;
 }
-
 .cards-track {
   display: flex;
   flex-direction: row;
@@ -249,94 +261,82 @@
   margin: 0;
   padding: 0;
 }
-
 .cards-track .card {
   flex: 0 0 auto;
   margin: 0;
 }
-
 .partial-fade {
   opacity: 0.35;
   filter: grayscale(40%);
   transition: opacity .3s ease, filter .3s ease;
 }
-
-/* Prevent inadvertent horizontal scrolling due to absolutely positioned arrows etc. */
-html, body { overflow-x: hidden; }
-
-/* FAQ section */
+html,
+body {
+  overflow-x: hidden;
+}
 .faq-container {
-    padding: 64px;
-    justify-content: space-between;
-    align-items: start;
+  padding: 64px;
+  justify-content: space-between;
+  align-items: start;
 }
-
 .faq-section-left {
-    flex-direction: column;
-    align-items: start;
-    width: 40vw;
-    gap: 24px;
+  flex-direction: column;
+  align-items: start;
+  width: 40vw;
+  gap: 24px;
 }
-
 .faq-section-right {
-    flex-direction: column;
-    width: 40vw;
-    align-items: start;
+  flex-direction: column;
+  width: 40vw;
+  align-items: start;
 }
-
 .faq-question-title {
-    cursor: pointer;
-    justify-content: space-between;
-    width: 100%;
-    padding-top: 24px;
-    padding-bottom: 24px;
-    z-index: 2;
+  cursor: pointer;
+  justify-content: space-between;
+  width: 100%;
+  padding-top: 24px;
+  padding-bottom: 24px;
+  z-index: 2;
 }
-
 .faq-question {
-    z-index: 1;
+  z-index: 1;
 }
-
 .faq-item {
-    flex-direction: column;
-    justify-content: start;
-    align-items: start;
-    margin-bottom: 24px;
-    overflow: hidden;
-    height: 48px;
-    transition: 0.3s ease height;
+  flex-direction: column;
+  justify-content: start;
+  align-items: start;
+  margin-bottom: 24px;
+  overflow: hidden;
+  height: 48px;
+  transition: 0.3s ease height;
 }
-
-/* Section separator line */
 .separator-line {
-    height: 1px;
-    width: 100%;
-    background-color: rgba(0, 0, 0, 0.15);
+  height: 1px;
+  width: 100%;
+  background-color: rgba(0, 0, 0, 0.15);
 }
-
 .blogs-nav-btn {
-    width: 48px;
-    height: 48px;
-    border-radius: 50%;
-    font-size: 2rem;
-    cursor: pointer;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: #fff;
-    border: 1px solid #ccc;
-    transition: background 0.2s;
-    z-index: 2;
-    text-align: center;
-    line-height: 1;
-    padding: 0;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  font-size: 2rem;
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #fff;
+  border: 1px solid #ccc;
+  transition: background 0.2s;
+  z-index: 2;
+  text-align: center;
+  line-height: 1;
+  padding: 0;
 }
 .blogs-nav-btn:disabled {
-    opacity: 0;
-    pointer-events: none;
+  opacity: 0;
+  pointer-events: none;
 }
-
 @media (max-width: 1600px) and (min-width: 850px) {
   .hero-text .title {
     font-size: clamp(1.3rem, 1.5rem + 2vw, 2.5rem);
@@ -345,7 +345,6 @@ html, body { overflow-x: hidden; }
     font-size: clamp(1rem, 1rem + 1vw, 1.2rem);
   }
 }
-
 @media (max-width: 850px) {
   .hero-text .title {
     font-size: clamp(1rem, 1rem + 3vw, 1.7rem);
@@ -354,7 +353,6 @@ html, body { overflow-x: hidden; }
     font-size: clamp(0.8rem, 0.8rem + 2vw, 1rem);
   }
 }
-
 @media (max-width: 1100px) {
   .primary-container {
     padding: 24px;
@@ -379,7 +377,6 @@ html, body { overflow-x: hidden; }
     height: 180px;
   }
 }
-
 @media (max-width: 700px) {
   .primary-container {
     padding: 8px;
@@ -397,14 +394,20 @@ html, body { overflow-x: hidden; }
     height: 120px;
   }
 }
-
-/* Keep blog carousel arrows within viewport on small screens to avoid overflow */
 @media (max-width: 768px) {
-  #blogs-prev-btn { left: 8px !important; right: auto !important; }
-  #blogs-next-btn { right: 8px !important; left: auto !important; }
-  .blogs-nav-btn { width: 40px; height: 40px; }
+  #blogs-prev-btn {
+    left: 8px !important;
+    right: auto !important;
+  }
+  #blogs-next-btn {
+    right: 8px !important;
+    left: auto !important;
+  }
+  .blogs-nav-btn {
+    width: 40px;
+    height: 40px;
+  }
 }
-
 @media (max-width: 1100px) {
   .cards-container {
     flex-direction: column;
@@ -419,14 +422,12 @@ html, body { overflow-x: hidden; }
     margin: 0 auto;
   }
 }
-
 @media (max-width: 700px) {
   .card {
     width: 98vw;
     max-width: 98vw;
   }
 }
-
 @media (max-width: 700px) {
   .secondary-container {
     padding-left: 12px;
@@ -438,7 +439,6 @@ html, body { overflow-x: hidden; }
     margin: 0 auto;
   }
 }
-
 @media (max-width: 900px) {
   .secondary-container.bg-yellow > div {
     max-width: 100%;
@@ -448,7 +448,6 @@ html, body { overflow-x: hidden; }
     box-sizing: border-box;
   }
 }
-
 @media (max-width: 900px) {
   .faq-container {
     flex-direction: column;
@@ -470,8 +469,6 @@ html, body { overflow-x: hidden; }
     margin: 0 auto 24px auto;
   }
 }
-
-/* blog card size fix*/
 #latest-blogs .card {
   display: flex !important;
   flex-direction: column;
@@ -485,7 +482,6 @@ html, body { overflow-x: hidden; }
   overflow: hidden;
   background: #fff;
 }
-
 #latest-blogs .card .card-image.secondary-image {
   border: 0;
   width: 100%;
@@ -495,14 +491,12 @@ html, body { overflow-x: hidden; }
   flex: 0 0 202.5px;
   margin: 0;
 }
-
 #latest-blogs .card .card-image img {
   height: 100%;
   width: 100%;
   object-fit: cover;
   border-radius: 0;
 }
-
 #latest-blogs .card .card-section-2 {
   flex: 1 1 auto;
   display: flex;
@@ -515,55 +509,47 @@ html, body { overflow-x: hidden; }
   background: #fff;
   box-sizing: border-box;
 }
-
 #latest-blogs .card .card-header {
   width: 100%;
   justify-content: space-between;
   margin-bottom: 4px;
 }
-
 #latest-blogs .card .button-container {
+  pointer-events: auto;
   margin-top: auto;
 }
-
 #latest-blogs .card .card-heading {
   line-height: 1.2;
   max-height: calc(1.2em * 3);
   overflow: hidden;
 }
-
 #latest-blogs .card .card-section-2 > div:not(.card-header):not(.card-category):not(.button-container) {
   display: -webkit-box;
   line-clamp: 3;
-  -webkit-line-clamp: 3;  
+  -webkit-line-clamp: 3;
   -webkit-box-orient: vertical;
   overflow: hidden;
 }
-
 #latest-blogs .card.partial-fade {
   opacity: 0.4;
   filter: grayscale(35%);
 }
-
-#latest-blogs .card .card-section-2 { border-top-left-radius: 0; border-top-right-radius: 0; }
-
-/* (Removed duplicate 88vw mobile block; 84vw definition at top now authoritative) */
-
-/* Force the latest blogs track to remain a horizontal row even on mobile */
+#latest-blogs .card .card-section-2 {
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+}
 #latest-blogs.cards-track {
   display: flex;
   flex-direction: row !important;
   flex-wrap: nowrap !important;
   align-items: stretch;
 }
-
 @media (max-width: 1100px) {
   #latest-blogs.cards-track {
     flex-direction: row !important;
     flex-wrap: nowrap !important;
   }
 }
-
 @media (max-width: 700px) {
   #latest-blogs.cards-track {
     flex-direction: row !important;
