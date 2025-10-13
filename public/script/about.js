@@ -62,20 +62,19 @@ function addEmployee(name, title, description, mediaType, mediaURL, imageSource)
 
         mediaAnchor.href = url;
         switch(mediaType[i]) {
-            case 'I':
+            case "I":
                 mediaImg.src = "/assets/svg/Instagram.svg";
                 mediaImg.alt = "Instagram";
-                console.log(mediaURL[i])
                 break;
-            case 'X':
+            case "X":
                 mediaImg.src = "/assets/svg/X.svg";
                 mediaImg.alt = "X";
                 break;
-            case 'L':
+            case "L":
                 mediaImg.src = "/assets/svg/Linkedin.svg";
                 mediaImg.alt = "Linkedin";
                 break;
-            case 'F':
+            case "F":
                 mediaImg.src = "/assets/svg/Facebook.svg";
                 mediaImg.alt = "Facebook";
                 break;

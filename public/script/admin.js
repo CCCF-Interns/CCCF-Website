@@ -206,7 +206,7 @@ function checkFields() {
 
     if (socials > 0) {
         const socialConts = document.querySelectorAll(".add-member-social");
-        socialConts.forEach((e, index) => {
+        socialConts.forEach((e) => {
             const social = e.querySelector("input");
             const type = e.querySelector(".add-member-social-dropdown");
             
@@ -535,10 +535,8 @@ async function addMember() {
     });
 
     const result2 = await resp.json();
-
     console.log(result2);
 
-    console.log()
     if (currentSocials > 0) {
         const resp2 = await fetch("/api/member/socials/insert", {
             method: "POST",

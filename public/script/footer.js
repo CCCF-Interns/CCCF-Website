@@ -1,5 +1,4 @@
 const whatsappContainer = document.querySelector("#whatsapp-container");
-const whatsappButton = document.querySelector("#whatsapp-button");
 const bubble = document.querySelector("#bubble");
 
 function sleep(ms) {
