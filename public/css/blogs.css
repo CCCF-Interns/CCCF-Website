@@ -372,3 +372,38 @@ old paginator
         height: 15rem;
     }
 }
+/* === Our Blogs Heading Section === */
+.blogs-heading {
+    text-align: center;
+    background-color: #FAEDCB; /* same as page background for harmony */
+    padding: 3rem 1rem 1rem 1rem;
+    color: black;
+}
+
+.blogs-heading h1 {
+    font-size: 2.5rem;           /* similar to gallery size */
+    font-weight: 700;            /* bold but not too heavy */
+    margin-bottom: 0.8rem;
+    color: #000;
+    letter-spacing: 0.5px;
+}
+
+.blogs-heading p {
+    font-size: 1.1rem;
+    font-weight: 400;
+    max-width: 700px;
+    margin: 0 auto;
+    color: #333;
+    line-height: 1.6;
+}
+
+/* Optional accent bar similar to Gallery (can remove if not needed) */
+.blogs-heading h1::after {
+    content: "";
+    display: block;
+    width: 4rem;
+    height: 4px;
+    background-color: #FFD34B;
+    margin: 0.8rem auto 0 auto;
+    border-radius: 2px;
+}
