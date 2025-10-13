@@ -208,7 +208,6 @@ function showFilters() {
     fetch("/api/blogs/categories")
     .then(res => res.json())
     .then(data => {
-        const categories = document.querySelector("#categories");
         for (const cat of data) {
             const div = document.createElement("div");
             

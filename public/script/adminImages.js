@@ -33,7 +33,7 @@ function createImage(id, link, thumbnail, index) {
     memberClicked.src = checkCircle;
 
     let fileKey = link.split("/")[3].trim();
-    let thumbKey = fileKey.split('.').slice(0, -1).join('');
+    let thumbKey = fileKey.split(".").slice(0, -1).join("");
 
     let values = {
         id: id,
@@ -324,6 +324,7 @@ removeImagesSubmit.addEventListener("click", async () => {
 
     result = await response.json();
 
+    console.log(result);
     response = await fetch("/api/gallery/delete", {
         method: "POST",
         headers: { "Content-Type" : "application/json" },
@@ -331,6 +332,7 @@ removeImagesSubmit.addEventListener("click", async () => {
     });
 
     result = await response.json();
+    console.log(result);
 
     window.location.reload();
 });

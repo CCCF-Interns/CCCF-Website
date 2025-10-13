@@ -282,7 +282,7 @@ document.addEventListener("DOMContentLoaded", () => {
     dragStartX = e.clientX;
     dragStartIndex = index;
     dragProgress = index;
-    try { viewport.setPointerCapture(e.pointerId); } catch {}
+    try { viewport.setPointerCapture(e.pointerId); } catch(error) {console.error(error);}
     // No pre-fade on pointerdown; handled dynamically only after commit
   });
 
@@ -297,7 +297,7 @@ document.addEventListener("DOMContentLoaded", () => {
   function endDrag(e) {
     if (!isDragging) return;
     isDragging = false;
-    try { viewport.releasePointerCapture(e.pointerId); } catch {}
+    try { viewport.releasePointerCapture(e.pointerId); } catch(error) {console.error(error);}
     const dx = e.clientX - dragStartX;
     const threshold = stepWidth * 0.25; // 25% swipe to advance
     const maxIndex = Math.max(0, totalCards - visibleFull);

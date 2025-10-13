@@ -191,7 +191,7 @@ router.post("/api/member/socials/delete", async (req, res) => {
         res.json({ message: "socials deleted" });
     }
     catch (error) {
-        res.json({ message: "Could not delete socials" });
+        res.json({ message: `Could not delete socials: ${error}` });
     }
 });
 
@@ -202,7 +202,7 @@ router.post("/api/member/delete", async (req, res) => {
         res.json({ message: "member deleted" });
     }
     catch (error) {
-        res.json({ message: "Could not delete member" });
+        res.json({ message: `Could not delete member: ${error}` });
     }
 });
 
@@ -223,7 +223,7 @@ router.post("/api/album/insert", authAdmin, async (req, res) => {
         res.json("Inserted");
     }
     catch(error) {
-        req.status(500).json({ message: "Couldn't insert" });
+        req.status(500).json({ message: `Couldn't insert: ${error}` });
     }
 });
 
