@@ -560,7 +560,10 @@ function loadAddImage() {
 
     const fileSplit = file.name.split(".");
     const fileExt = fileSplit[fileSplit.length - 1];
-    const allowedExt = ["png", "jpg", "webp", "svg", "gif"];
+    const allowedExt = [
+        "png", "jpg", "webp", "svg", "gif", "heic",
+        "PNG", "JPG", "WEBP", "SVG", "GIF", "HEIC"
+    ];
 
     if (!allowedExt.includes(fileExt)) {
         const errorText = `Could not read file extension: ${file.name}`;
@@ -597,7 +600,10 @@ async function uploadImages(files) {
     for (let x of files) {
         const fileSplit = x.name.split(".");
         const fileExt = fileSplit[fileSplit.length - 1];
-        const allowedExt = ["png", "jpg", "webp", "svg", "gif", "jpeg"];
+        const allowedExt = [
+            "png", "jpg", "webp", "svg", "gif", "heic",
+            "PNG", "JPG", "WEBP", "SVG", "GIF", "HEIC"
+        ];
 
         console.log(fileExt);
         
