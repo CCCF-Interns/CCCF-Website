@@ -1,6 +1,9 @@
 * {
     box-sizing: border-box;
 }
+.social-links img[alt="LinkedIn"] {
+    margin-left: -18px;
+}
 .contact-container {
     margin: auto;
     width: 100%;
@@ -172,17 +175,16 @@
     opacity: 0.8;
     transform: translateX(4px);
 }
-.social-links img {
-    height: 1.8em;
-    margin-right: 10px;
-    vertical-align: middle;
-}
-.location-section {
-    margin-top: 32px;
-    padding: 32px 0 0 0;
-    border-radius: 16px;
-    box-shadow: 0 8px 32px rgba(0,0,0,0.07);
-    background: linear-gradient(145deg, #fffbe6 80%, #fff7e6 100%);
+.social-links a {
+    text-decoration: none;
+    color: inherit;
+    display: flex;
+    align-items: center;
+    font-size: 2.1rem;
+    font-weight: 600;
+    transition: transform 0.2s ease, opacity 0.2s ease;
+    gap: 18px;
+    /* background: linear-gradient(145deg, #fffbe6 80%, #fff7e6 100%); */
 }
 .location-content {
     max-width: 900px;
@@ -260,16 +262,15 @@
         max-width: 400px;
     }
     .social-links a {
-        font-size: 1.2rem;
+        text-decoration: none;
+        color: inherit;
+        display: flex;
+        align-items: center;
+        font-size: 1.35rem;
+        font-weight: 600;
+        transition: transform 0.2s ease, opacity 0.2s ease;
+        gap: 14px;
     }
-    .social-links img {
-        height: 1.6em;
-    }
-}
-@media (max-width: 600px) {
-    .contact-container {
-        padding: 40px 8px;
-        gap: 12px;
     }
     .contact-subtext {
         padding: 0 8px 8px;
@@ -308,20 +309,32 @@
         align-items: center;
         gap: 10px;
     }
-    .social-links li {
-        justify-content: center;
-    }
-    .social-links a {
-        font-size: 1.1rem;
-    }
     .social-links img {
-        height: 1.4em;
-        margin-right: 8px;
+            height: 2em;
+            width: 2em;
+            min-width: 2em;
+            min-height: 2em;
+            margin: 0 8px 0 0;
+            vertical-align: middle;
+            display: inline-block;
+            object-fit: contain;
+    }
+    @media (max-width: 600px) {
+        .social-links a {
+            font-size: 1.7rem;
+            gap: 18px;
+        }
+        .social-links img {
+            height: 2.7em;
+            width: 2.7em;
+            min-width: 2.7em;
+            min-height: 2.7em;
+            margin: 0 12px 0 0;
+        }
     }
     .social-heading {
         font-size: 1.5rem;
     }
-}
 @media (max-width: 400px) {
     .contact-information {
         padding: 4px;

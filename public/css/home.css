@@ -37,6 +37,9 @@
     display: contents;
   }
 }
+.button, .button-invert {
+  border-radius: 5px ;
+}
 #hero {
   width: 100%;
   height: 729px;
@@ -134,6 +137,9 @@
   pointer-events: all;
   gap: 24px;
 }
+.hero-buttons .button,.button-invert {
+  font-weight: bolder;
+}
 #hero-text-2 {
   display: none;
 }
@@ -144,6 +150,13 @@
   flex-direction: column;
   gap: 48px;
   padding: 64px;
+}
+.transparent-button {
+  border: 2px solid black;
+  color: black;
+  font-weight: bold;
+  transition: background-color ease 0.3s, color ease 0.3s;
+  border-radius: 24px;
 }
 .primary-container .heading {
   text-align: center;
@@ -165,6 +178,9 @@
   box-sizing: border-box;
   display: flex;
   justify-content: flex-start;
+}
+.card p {
+  font-weight: 600;
 }
 .card-image {
   border: 0;
@@ -365,8 +381,8 @@ body {
   }
   .cards-container {
     flex-direction: column;
-    align-items: stretch;
-    gap: 24px;
+    align-items: center;
+    gap: 40px;
   }
   .card {
     width: 100%;
@@ -387,8 +403,13 @@ body {
     padding: 0 2px;
   }
   .card {
-    max-width: 98vw;
-    padding: 16px;
+    width: 98vw !important;
+    max-width: 98vw !important;
+    min-width: unset !important;
+    height: auto !important;
+    padding: 16px 8px 16px 8px;
+    margin: 0 auto;
+    box-sizing: border-box;
   }
   .card-image {
     height: 120px;
@@ -422,21 +443,11 @@ body {
     margin: 0 auto;
   }
 }
-@media (max-width: 700px) {
-  .card {
-    width: 98vw;
-    max-width: 98vw;
-  }
-}
+/* removed duplicate .card rule for max-width: 700px */
 @media (max-width: 700px) {
   .secondary-container {
     padding-left: 12px;
     padding-right: 12px;
-  }
-  .card {
-    width: 90%;
-    max-width: 90%;
-    margin: 0 auto;
   }
 }
 @media (max-width: 900px) {

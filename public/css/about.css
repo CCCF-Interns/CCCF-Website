@@ -1,4 +1,4 @@
-/*  */body {
+body {
     overflow: hidden;
 }
 
@@ -460,29 +460,4 @@
         font-size: 1rem;
         border-radius: 16px;
     }
-}
-
-/* ===== Justify text on About Page ===== */
-.mission-text-container p,
-.story-text-container p,
-.member-description {
-    text-align: justify;
-    text-justify: inter-word;
-}
-
-/* Keep headings centered */
-.mission-heading,
-.story-heading,
-.work-heading,
-.team-heading {
-    text-align: center;
-}
-
-/* Keep overall containers centered for layout */
-.mission-text-container,
-.story-text-container,
-.work-modal,
-.team-container {
-    margin-left: auto;
-    margin-right: auto;
 }
