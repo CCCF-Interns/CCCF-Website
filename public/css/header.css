@@ -147,9 +147,15 @@
 
 .mobile-nav-panel .button,
 .mobile-nav-panel .button-invert {
-  display: block;
-  width: 100%;
-  margin-bottom: 10px;
+  display: inline-block;
+  width: auto;
+  min-width: 120px;
+  max-width: 200px;
+  margin: 0 auto 10px auto;
+  padding: 8px 20px;
+  font-size: 1rem;
+  font-weight: bold;
+  border-radius: 5px;
 }
 
 @media (max-width: 1040px) {
