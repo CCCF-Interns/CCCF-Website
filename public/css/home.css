@@ -37,6 +37,9 @@
     display: contents;
   }
 }
+.button, .button-invert {
+  border-radius: 5px ;
+}
 #hero {
   width: 100%;
   height: 729px;
