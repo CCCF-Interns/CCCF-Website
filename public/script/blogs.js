@@ -201,6 +201,8 @@ function showFilters() {
     document.querySelector("#footer-container").classList.toggle("no-display");
     document.querySelector(".filters-btn").classList.toggle("no-display");
     document.querySelector(".filters-container").classList.toggle("no-display");
+    document.querySelector(".blogs-heading").classList.toggle("no-display");
+    
 
     const selectedRadioButton = document.querySelector(`.sort-by > input[name="sort-by"][value="${globSortBy}"]`);
     selectedRadioButton.checked = true;
@@ -208,7 +210,6 @@ function showFilters() {
     fetch("/api/blogs/categories")
     .then(res => res.json())
     .then(data => {
-        const categories = document.querySelector("#categories");
         for (const cat of data) {
             const div = document.createElement("div");
             
@@ -262,5 +263,6 @@ function closeFilters() {
     document.querySelector("#footer-container").classList.toggle("no-display");
     document.querySelector(".filters-btn").classList.toggle("no-display");
     document.querySelector(".filters-container").classList.toggle("no-display");
+    document.querySelector(".blogs-heading").classList.toggle("no-display");
     document.querySelector(".categories-filter").innerHTML = "";
 }

@@ -206,7 +206,7 @@ function checkFields() {
 
     if (socials > 0) {
         const socialConts = document.querySelectorAll(".add-member-social");
-        socialConts.forEach((e, index) => {
+        socialConts.forEach((e) => {
             const social = e.querySelector("input");
             const type = e.querySelector(".add-member-social-dropdown");
             
@@ -535,10 +535,8 @@ async function addMember() {
     });
 
     const result2 = await resp.json();
-
     console.log(result2);
 
-    console.log()
     if (currentSocials > 0) {
         const resp2 = await fetch("/api/member/socials/insert", {
             method: "POST",
@@ -562,7 +560,10 @@ function loadAddImage() {
 
     const fileSplit = file.name.split(".");
     const fileExt = fileSplit[fileSplit.length - 1];
-    const allowedExt = ["png", "jpg", "webp", "svg", "gif"];
+    const allowedExt = [
+        "png", "jpg", "webp", "svg", "gif", "heic",
+        "PNG", "JPG", "WEBP", "SVG", "GIF", "HEIC"
+    ];
 
     if (!allowedExt.includes(fileExt)) {
         const errorText = `Could not read file extension: ${file.name}`;
@@ -599,7 +600,10 @@ async function uploadImages(files) {
     for (let x of files) {
         const fileSplit = x.name.split(".");
         const fileExt = fileSplit[fileSplit.length - 1];
-        const allowedExt = ["png", "jpg", "webp", "svg", "gif", "jpeg"];
+        const allowedExt = [
+            "png", "jpg", "webp", "svg", "gif", "heic",
+            "PNG", "JPG", "WEBP", "SVG", "GIF", "HEIC"
+        ];
 
         console.log(fileExt);
         
