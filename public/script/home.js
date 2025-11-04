@@ -119,7 +119,7 @@ document.addEventListener("DOMContentLoaded", () => {
     card.className = "card flex-container";
     card.innerHTML = `
       <div class='card-image secondary-image'>
-        <img class='image' src='${blog.poster || "#"}' alt='${blog.title}'>
+        <img class='image' src='${blog.poster || "#"}' alt='${blog.title ? blog.title + " image" : "Blog image"}'>
       </div>
       <div class='card-section-2 bg-white flex-container'>
         <div class='card-header flex-container'>
