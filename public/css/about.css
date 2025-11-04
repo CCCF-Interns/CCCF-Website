@@ -1,5 +1,8 @@
-body {
-    overflow: hidden;
+html, body {
+    width: 100vw;
+    min-width: 0;
+    max-width: 100vw;
+    overflow-x: hidden;
 }
 
 /* Team Section in about us*/
@@ -73,7 +76,7 @@ body {
 
 
 .mission-container {
-    margin-top: 64px;
+    margin-top: 16px;
 }
 
 .mission-container, .story-container {
@@ -152,7 +155,7 @@ body {
 }
 
 .story-text-container .spacer-div{
-    height: 200px;
+    height: 20px;
 }
 .story-heading {
     margin-bottom: 36px;
@@ -296,9 +299,14 @@ body {
     .mission-text-container,
     .story-text-container {
         width: 100%;
-        padding: 0 8px;
-        text-align: center;
+        padding: 0 0px;
+        text-align: justify;
         order: 1;
+        line-height: 1.5;
+        gap: 12px;
+    }
+    .mission-text-container p, .story-text-container p {
+        padding-bottom: 20px;
     }
     .mission-container {
         margin-bottom: 0px;
@@ -306,6 +314,11 @@ body {
     .mission-container,
     .story-container {
         gap: 20px;
+    }
+        .mission-text-container .mission-heading,
+        .story-text-container .story-heading {
+            text-align: center !important;
+            padding-bottom: 0 !important;
     }
 }
 
@@ -430,7 +443,7 @@ body {
 @media (min-width: 901px) and (max-width: 1399px) {
     .mission-container,
     .story-container {
-        padding: 24px 64px;
+        padding: 24px 32px;
         gap: 48px;
     }
     .mission-image-container img,
@@ -444,7 +457,7 @@ body {
     .mission-text-container,
     .story-text-container {
         font-size: 1rem;
-        line-height: 1.6;
+        line-height: 1.5;
     }
 }
 
@@ -460,4 +473,19 @@ body {
         font-size: 1rem;
         border-radius: 16px;
     }
+}
+
+/* fuckass our story heading mobile fix */
+@media (max-width: 900px) {
+  .story-text-container .story-heading {
+    text-align: center !important;
+    display: block !important;
+  }
+}
+@media (max-width: 900px) {
+  .story-text-container .story-heading {
+    margin-left: auto !important;
+    margin-right: auto !important;
+    width: 100%;
+  }
 }
