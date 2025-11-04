@@ -45,6 +45,7 @@ async function renderBlogs(start, end, category, sortBy, searchString) {
             posterContainer.className = "card-poster";
             const img = document.createElement("img");
             img.src = item.poster;
+            img.alt = item.title ? item.title + " image" : "Blog image";
             posterContainer.appendChild(img);
             card.appendChild(posterContainer);
 
