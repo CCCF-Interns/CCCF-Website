@@ -300,6 +300,8 @@ body {
   align-items: start;
   width: 40vw;
   gap: 24px;
+}.faq-section-left p {
+  font-weight: 600;
 }
 .faq-section-right {
   flex-direction: column;
@@ -313,9 +315,11 @@ body {
   padding-top: 24px;
   padding-bottom: 24px;
   z-index: 2;
+  font-weight: 700;
 }
 .faq-question {
   z-index: 1;
+  font-weight: 600;
 }
 .faq-item {
   flex-direction: column;
