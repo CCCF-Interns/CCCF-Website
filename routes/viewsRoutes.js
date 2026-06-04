@@ -61,6 +61,10 @@ router.get("/login", (req, res) => {
     res.sendFile(path.join(__dirname, "views", "login.html"));
 });
 
+router.get("/eesas-story", (req, res) => {
+    res.sendFile(path.join(__dirname, "views", "eesas-story.html"));
+});
+
 router.get("/redirect/:name", (req, res) => {
     res.sendFile(path.join(__dirname, "views", "redirect.html"));
 });
