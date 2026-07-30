@@ -89,19 +89,27 @@ function addEmployee(name, title, description, mediaType, mediaURL, imageSource)
 }
 
 async function initializeMembers() {
-    await loadData();
-    for (let x of membersData) {
-        console.log(x);
-        let mediaTypes = [];
-        let mediaURLs = [];
-        for (let y of socialsData.filter(item => item.id === x.id)) {
-            mediaTypes.push(y.social_type);
-            mediaURLs.push(y.social_url);
+    try {
+        await loadData();
+        if (membersData) {
+            for (let x of membersData) {
+                console.log(x);
+                let mediaTypes = [];
+                let mediaURLs = [];
+                let filteredSocials = socialsData ? socialsData.filter(item => item.id === x.id) : [];
+                for (let y of filteredSocials) {
+                    mediaTypes.push(y.social_type);
+                    mediaURLs.push(y.social_url);
+                }
+                addEmployee(x.name, x.job_title, x.description, mediaTypes, mediaURLs, x.image_url);
+            }
         }
-        addEmployee(x.name, x.job_title, x.description, mediaTypes, mediaURLs, x.image_url);
+    } catch (error) {
+        console.error("Error loading team members:", error);
+    } finally {
+        document.body.style.overflow = "auto";
+        loader.style.display = "none";
     }
-    document.body.style.overflow = "auto";
-    loader.style.display = "none";
 }
 
 initializeMembers();
