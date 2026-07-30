@@ -1,5 +1,8 @@
-/*  */body {
-    overflow: hidden;
+html, body {
+    width: 100%;
+    min-width: 0;
+    max-width: 100%;
+    overflow-x: hidden;
 }
 
 /* Team Section in about us*/
@@ -73,7 +76,7 @@
 
 
 .mission-container {
-    margin-top: 64px;
+    margin-top: 16px;
 }
 
 .mission-container, .story-container {
@@ -152,7 +155,7 @@
 }
 
 .story-text-container .spacer-div{
-    height: 200px;
+    height: 20px;
 }
 .story-heading {
     margin-bottom: 36px;
@@ -228,6 +231,7 @@
 .team-subheading {
     font-size: larger;
     margin-top: 16px;
+    text-align: center;
 }
 
 .team-member {
@@ -296,9 +300,14 @@
     .mission-text-container,
     .story-text-container {
         width: 100%;
-        padding: 0 8px;
-        text-align: center;
+        padding: 0 0px;
+        text-align: justify;
         order: 1;
+        line-height: 1.5;
+        gap: 12px;
+    }
+    .mission-text-container p, .story-text-container p {
+        padding-bottom: 20px;
     }
     .mission-container {
         margin-bottom: 0px;
@@ -306,6 +315,11 @@
     .mission-container,
     .story-container {
         gap: 20px;
+    }
+        .mission-text-container .mission-heading,
+        .story-text-container .story-heading {
+            text-align: center !important;
+            padding-bottom: 0 !important;
     }
 }
 
@@ -347,8 +361,7 @@
 
 @media (max-width: 900px) {
     .team-container {
-        width: 100%;
-        max-width: 700px;
+        width: 90%;
         margin: 0 auto;
         padding: 24px 16px;
         box-sizing: border-box;
@@ -361,13 +374,12 @@
         flex-direction: column;
         align-items: center;
         gap: 24px;
-        width: 100%;
-        max-width: 700px;
+        width: 90%;
         margin: 0 auto;
         box-sizing: border-box;
     }
     .team-member {
-        width: 100%;
+        width: 90%;
         max-width: 350px;
         margin: 0 auto;
         border-radius: 16px;
@@ -430,7 +442,7 @@
 @media (min-width: 901px) and (max-width: 1399px) {
     .mission-container,
     .story-container {
-        padding: 24px 64px;
+        padding: 24px 32px;
         gap: 48px;
     }
     .mission-image-container img,
@@ -444,7 +456,7 @@
     .mission-text-container,
     .story-text-container {
         font-size: 1rem;
-        line-height: 1.6;
+        line-height: 1.5;
     }
 }
 
@@ -462,27 +474,17 @@
     }
 }
 
-/* ===== Justify text on About Page ===== */
-.mission-text-container p,
-.story-text-container p,
-.member-description {
-    text-align: justify;
-    text-justify: inter-word;
+/* fuckass our story heading mobile fix */
+@media (max-width: 900px) {
+  .story-text-container .story-heading {
+    text-align: center !important;
+    display: block !important;
+  }
 }
-
-/* Keep headings centered */
-.mission-heading,
-.story-heading,
-.work-heading,
-.team-heading {
-    text-align: center;
-}
-
-/* Keep overall containers centered for layout */
-.mission-text-container,
-.story-text-container,
-.work-modal,
-.team-container {
-    margin-left: auto;
-    margin-right: auto;
+@media (max-width: 900px) {
+  .story-text-container .story-heading {
+    margin-left: auto !important;
+    margin-right: auto !important;
+    width: 100%;
+  }
 }

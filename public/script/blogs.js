@@ -45,6 +45,7 @@ async function renderBlogs(start, end, category, sortBy, searchString) {
             posterContainer.className = "card-poster";
             const img = document.createElement("img");
             img.src = item.poster;
+            img.alt = item.title ? item.title + " image" : "Blog image";
             posterContainer.appendChild(img);
             card.appendChild(posterContainer);
 
@@ -201,6 +202,8 @@ function showFilters() {
     document.querySelector("#footer-container").classList.toggle("no-display");
     document.querySelector(".filters-btn").classList.toggle("no-display");
     document.querySelector(".filters-container").classList.toggle("no-display");
+    document.querySelector(".blogs-heading").classList.toggle("no-display");
+    
 
     const selectedRadioButton = document.querySelector(`.sort-by > input[name="sort-by"][value="${globSortBy}"]`);
     selectedRadioButton.checked = true;
@@ -261,5 +264,6 @@ function closeFilters() {
     document.querySelector("#footer-container").classList.toggle("no-display");
     document.querySelector(".filters-btn").classList.toggle("no-display");
     document.querySelector(".filters-container").classList.toggle("no-display");
+    document.querySelector(".blogs-heading").classList.toggle("no-display");
     document.querySelector(".categories-filter").innerHTML = "";
 }

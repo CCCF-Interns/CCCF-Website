@@ -29,8 +29,8 @@ function createImage(link, thumbnail, index) {
     container.classList.add("grid-item");
     image.classList.add("image");
     image.classList.add("border-radius-8");
-    
     image.src = thumbnail;
+    image.alt = "CCCF Gallery Image";
 
     container.addEventListener("click", () => {
         imagePreview.src = link;
